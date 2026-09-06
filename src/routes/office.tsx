@@ -11,7 +11,7 @@ import {
   Users,
 } from "lucide-react";
 
-import benefitsVisual from "@/assets/prince-benefits.jpg";
+import heroOffice from "@/assets/prince-hero-office.png.asset.json";
 import { PublicPage } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
 import { settingString, useSettings } from "@/hooks/usePlatform";
@@ -60,12 +60,18 @@ function OfficePage() {
   return (
     <PublicPage>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-olive text-cream">
+      <section className="relative isolate overflow-hidden text-cream">
+        <img
+          src={heroOffice.url}
+          alt="Premium green gift box with gold ribbon and member benefits panel"
+          className="absolute inset-0 -z-20 size-full object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.17_0.05_148/0.95)_0%,oklch(0.19_0.055_147/0.86)_42%,oklch(0.2_0.05_146/0.35)_100%)]" />
         <div className="grid-lines pointer-events-none absolute inset-0 opacity-40" />
         <div className="hero-orb -left-28 -top-10 size-[26rem] bg-gold/20" />
         <div className="hero-orb -right-24 bottom-0 size-[30rem] bg-accent/25" />
 
-        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 py-20 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 py-20 sm:px-6 lg:py-32">
           <div className="reveal">
             <span className="pill-badge border-gold/40 bg-gold/12 text-gold">
               <Sparkles className="size-3.5" /> Our Office
@@ -92,17 +98,6 @@ function OfficePage() {
             </div>
           </div>
 
-          <div className="relative">
-            <div className="absolute inset-6 rounded-full bg-gold/10 blur-3xl" />
-            <img
-              src={benefitsVisual}
-              alt="PRINCE premium office and member benefits visual"
-              width={1024}
-              height={1024}
-              loading="lazy"
-              className="floaty relative mx-auto w-[85%] rounded-[2.5rem] object-contain mix-blend-lighten"
-            />
-          </div>
         </div>
       </section>
 
