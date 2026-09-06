@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 
-const title = "Kanyakumari Business Contact Directory | OliveEdge";
+const title = "Kanyakumari Business Contact Directory | PRINCE";
 const description =
   "Search a curated B2B directory of businesses by category and area. Phone numbers unlock for subscribed members and every view is logged.";
 
@@ -21,6 +21,8 @@ export const Route = createFileRoute("/contacts")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ContactsPage,

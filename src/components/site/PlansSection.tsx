@@ -4,7 +4,6 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { PlanCard } from "@/components/site/PlanCard";
-import { AdminManagedNote } from "@/components/site/PublicPage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "@/hooks/useAuth";
 import { settingString, usePlans, useSettings, useSlots } from "@/hooks/usePlatform";
@@ -60,12 +59,16 @@ export function PlansSection({
   const list = (plans ?? []).filter((p) => (filter ? filter(p.code) : true));
 
   return (
-    <section id="plans" className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+    <section id="plans" className="relative overflow-hidden bg-gradient-olive py-20 text-cream">
+      <div className="grid-lines pointer-events-none absolute inset-0 opacity-40" />
+      <div className="hero-orb -left-24 top-0 size-96 bg-accent/20" />
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
       <div className="max-w-2xl">
-        <span className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">Membership</span>
-        <h2 className="mt-3 text-3xl font-bold text-primary sm:text-4xl">{title}</h2>
-        <p className="mt-3 text-sm text-muted-foreground sm:text-base">{subtitle}</p>
+        <span className="pill-badge">Membership</span>
+        <h2 className="mt-4 text-3xl font-bold sm:text-4xl">{title}</h2>
+        <p className="mt-4 text-sm text-cream/70 sm:text-base">{subtitle}</p>
       </div>
+
 
       <div className="mt-12 grid gap-6 lg:grid-cols-3">
         {isLoading
@@ -92,10 +95,13 @@ export function PlansSection({
             ))}
       </div>
 
-      <AdminManagedNote>
-        Slot counters update live from active and pending subscriptions. Payments are only marked
-        successful after verification through the payment gateway — nothing is auto-confirmed.
-      </AdminManagedNote>
+      <p className="mt-6 text-xs text-cream/55">
+        <span className="font-semibold text-accent">Admin-managed:</span> Slot counters update live
+        from active and pending subscriptions. Payments are only marked successful after
+        verification through the payment gateway — nothing is auto-confirmed.
+      </p>
+      </div>
     </section>
+
   );
 }

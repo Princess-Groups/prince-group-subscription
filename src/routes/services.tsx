@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { useServices } from "@/hooks/usePlatform";
 import { inr } from "@/lib/format";
 
-const title = "Member Services & Discounted Pricing | OliveEdge";
+const title = "Member Services & Discounted Pricing | PRINCE";
 const description =
   "Loan assistance, documentation, digital marketing and software services with member pricing from 25% to 75% off, based on your active plan.";
 
@@ -17,6 +17,8 @@ export const Route = createFileRoute("/services")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ServicesPage,
@@ -27,7 +29,7 @@ type ServiceRow = {
   category: string;
   name: string;
   description: string | null;
-  base_price: number | null;
+  original_price: number | null;
 };
 
 function ServicesPage() {
@@ -68,9 +70,9 @@ function ServicesPage() {
                           <p className="mt-2 text-sm text-muted-foreground">{s.description}</p>
                         ) : null}
                         <div className="mt-5 flex flex-wrap items-center gap-2">
-                          {s.base_price ? (
+                          {s.original_price ? (
                             <span className="text-sm font-semibold text-primary">
-                              From {inr(s.base_price)}
+                              From {inr(s.original_price)}
                             </span>
                           ) : (
                             <span className="text-sm text-muted-foreground">Pricing on request</span>

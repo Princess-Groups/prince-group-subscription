@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { inr, shortDate } from "@/lib/format";
 
-const title = "Live Loan Opportunities & Enquiries | OliveEdge";
+const title = "Live Loan Opportunities & Enquiries | PRINCE";
 const description =
   "Browse current loan enquiry categories, locations and requirement sizes. Contact details unlock for subscribed members with available lead quota.";
 
@@ -20,6 +20,8 @@ export const Route = createFileRoute("/opportunities")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: OpportunitiesPage,

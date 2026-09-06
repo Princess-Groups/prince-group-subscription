@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { LegalPage } from "@/components/site/LegalPage";
 
-const title = "Terms & Conditions | OliveEdge";
+const title = "Terms & Conditions | PRINCE";
 const description =
-  "Membership terms covering subscriptions, lead allocation limits, contact access rules and acceptable use of the OliveEdge platform.";
+  "Membership terms covering subscriptions, lead allocation limits, contact access rules and acceptable use of the PRINCE platform.";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
@@ -13,6 +13,8 @@ export const Route = createFileRoute("/terms")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (

@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useOffers } from "@/hooks/usePlatform";
 import { shortDate } from "@/lib/format";
 
-const title = "Seasonal Offers & Loan Client Discounts | OliveEdge";
+const title = "Seasonal Offers & Loan Client Discounts | PRINCE";
 const description =
   "Current membership offers including December discounts and the special loan-client subscription, all switched on or off by administrators.";
 
@@ -18,6 +18,8 @@ export const Route = createFileRoute("/offers")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: OffersPage,

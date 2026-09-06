@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * OliveEdge design system — Olive / Lime / Cream premium fintech identity.
+ * PRINCE design system — Olive / Lime / Cream premium fintech identity.
  * All colors are oklch semantic tokens. Never hardcode colors in components.
  */
 
@@ -113,10 +113,12 @@
   --sidebar-border: oklch(0.46 0.075 126);
   --sidebar-ring: oklch(0.834 0.169 121.8);
 
-  --gradient-olive: linear-gradient(135deg, oklch(0.35 0.06 126) 0%, oklch(0.46 0.085 126) 45%, oklch(0.602 0.113 124.5) 100%);
-  --gradient-lime: linear-gradient(120deg, oklch(0.602 0.113 124.5) 0%, oklch(0.834 0.169 121.8) 100%);
+  --gradient-olive: linear-gradient(140deg, oklch(0.245 0.045 148) 0%, oklch(0.315 0.058 145) 48%, oklch(0.395 0.072 138) 100%);
+  --gradient-lime: linear-gradient(120deg, oklch(0.775 0.152 124) 0%, oklch(0.884 0.181 120) 100%);
   --gradient-cream: linear-gradient(180deg, oklch(0.984 0.011 95.2) 0%, oklch(0.955 0.02 100) 100%);
+  --glow-lime: 0 0 0 1px oklch(0.834 0.169 121.8 / 0.28), 0 18px 60px oklch(0.834 0.169 121.8 / 0.28);
 }
+
 
 .dark {
   --background: oklch(0.22 0.02 122);
@@ -238,4 +240,61 @@
 
 @utility floaty {
   animation: floaty 6s ease-in-out infinite;
+}
+
+/* ---- PRINCE premium fintech utilities ---- */
+
+@utility glow-lime {
+  box-shadow: var(--glow-lime);
+}
+
+@utility hero-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+@utility grid-lines {
+  background-image:
+    linear-gradient(to right, oklch(1 0 0 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(1 0 0 / 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+@utility glass-dark {
+  background-color: oklch(1 0 0 / 0.07);
+  backdrop-filter: blur(18px);
+  border: 1px solid oklch(1 0 0 / 0.14);
+  box-shadow: 0 24px 60px oklch(0.2 0.04 148 / 0.35);
+}
+
+@utility pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid oklch(0.834 0.169 121.8 / 0.4);
+  background-color: oklch(0.834 0.169 121.8 / 0.12);
+  padding: 0.375rem 0.875rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@utility reveal {
+  animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility hover-glow {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease;
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--glow-lime);
+  }
 }

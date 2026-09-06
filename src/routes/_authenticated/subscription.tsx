@@ -22,9 +22,9 @@ import { inr, shortDate, upcomingPeriods } from "@/lib/format";
 export const Route = createFileRoute("/_authenticated/subscription")({
   head: () => ({
     meta: [
-      { title: "Subscription & Billing | OliveEdge" },
+      { title: "Subscription & Billing | PRINCE" },
       { name: "description", content: "Manage your plan, advance access reservations and payment history." },
-      { property: "og:title", content: "Subscription & Billing | OliveEdge" },
+      { property: "og:title", content: "Subscription & Billing | PRINCE" },
       { property: "og:description", content: "Manage your plan, advance access and payment history." },
       { name: "robots", content: "noindex" },
     ],

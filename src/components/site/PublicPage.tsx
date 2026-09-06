@@ -16,27 +16,82 @@ export function PublicPage({ children }: { children: ReactNode }) {
 export function PageHero({
   eyebrow,
   title,
+  highlight,
   subtitle,
+  actions,
+  visual,
 }: {
   eyebrow?: string;
   title: string;
+  highlight?: string;
   subtitle?: string;
+  actions?: ReactNode;
+  visual?: ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden bg-gradient-olive px-4 py-16 text-primary-foreground sm:px-6 sm:py-20">
-      <div className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-accent/20 blur-3xl" />
-      <div className="mx-auto max-w-7xl">
-        {eyebrow ? (
-          <span className="inline-flex rounded-full border border-accent/40 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-accent">
-            {eyebrow}
-          </span>
-        ) : null}
-        <h1 className="mt-4 max-w-3xl text-3xl font-bold sm:text-5xl">{title}</h1>
-        {subtitle ? (
-          <p className="mt-4 max-w-2xl text-sm text-primary-foreground/75 sm:text-base">{subtitle}</p>
-        ) : null}
+    <section className="relative overflow-hidden bg-gradient-olive px-4 py-18 text-cream sm:px-6 sm:py-24">
+      <div className="grid-lines pointer-events-none absolute inset-0 opacity-50" />
+      <div className="hero-orb -right-20 -top-24 size-96 bg-accent/20" />
+      <div className="hero-orb -left-32 -bottom-10 size-80 bg-secondary/25" />
+
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="reveal">
+          {eyebrow ? <span className="pill-badge">{eyebrow}</span> : null}
+          <h1 className="mt-5 max-w-3xl text-3xl font-bold leading-[1.1] sm:text-5xl">
+            {title}
+            {highlight ? <span className="mt-1 block text-gradient-olive">{highlight}</span> : null}
+          </h1>
+          {subtitle ? (
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-cream/70 sm:text-base">
+              {subtitle}
+            </p>
+          ) : null}
+          {actions ? <div className="mt-8 flex flex-wrap gap-3">{actions}</div> : null}
+        </div>
+        {visual ? <div className="relative">{visual}</div> : null}
       </div>
     </section>
+  );
+}
+
+export function SectionHeading({
+  eyebrow,
+  title,
+  highlight,
+  subtitle,
+  tone = "light",
+}: {
+  eyebrow?: string;
+  title: string;
+  highlight?: string;
+  subtitle?: string;
+  tone?: "light" | "dark";
+}) {
+  const dark = tone === "dark";
+  return (
+    <div className="max-w-2xl">
+      {eyebrow ? (
+        <span
+          className={
+            dark
+              ? "pill-badge"
+              : "text-xs font-bold uppercase tracking-[0.25em] text-secondary"
+          }
+        >
+          {eyebrow}
+        </span>
+      ) : null}
+      <h2
+        className={`mt-4 text-3xl font-bold sm:text-4xl ${dark ? "text-cream" : "text-primary"}`}
+      >
+        {title} {highlight ? <span className="text-gradient-olive">{highlight}</span> : null}
+      </h2>
+      {subtitle ? (
+        <p className={`mt-4 text-sm sm:text-base ${dark ? "text-cream/70" : "text-muted-foreground"}`}>
+          {subtitle}
+        </p>
+      ) : null}
+    </div>
   );
 }
 

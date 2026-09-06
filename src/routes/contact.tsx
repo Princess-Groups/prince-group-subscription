@@ -5,9 +5,9 @@ import { AdminManagedNote, PageHero, PublicPage } from "@/components/site/Public
 import { Button } from "@/components/ui/button";
 import { settingString, useSettings } from "@/hooks/usePlatform";
 
-const title = "Contact Support & Membership Availability | OliveEdge";
+const title = "Contact Support & Membership Availability | PRINCE";
 const description =
-  "Talk to the OliveEdge team about plan availability, premium slots, lead allocation and business access.";
+  "Talk to the PRINCE team about plan availability, premium slots, lead allocation and business access.";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -16,6 +16,8 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ContactPage,

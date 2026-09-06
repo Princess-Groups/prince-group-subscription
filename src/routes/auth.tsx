@@ -11,7 +11,7 @@ import { useSession } from "@/hooks/useAuth";
 import { lovable } from "@/integrations/lovable/index";
 import { supabase } from "@/integrations/supabase/client";
 
-const title = "Sign In or Create Your Membership | OliveEdge";
+const title = "Sign In or Create Your Membership | PRINCE";
 const description =
   "Secure sign-in for customers and bank executives. Create an account to subscribe, claim leads and access member pricing.";
 
@@ -22,6 +22,8 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -104,7 +106,7 @@ function AuthPage() {
 
         <div className="flex items-center justify-center px-4 py-16 sm:px-8">
           <div className="w-full max-w-md">
-            <h1 className="text-3xl font-bold text-primary">Welcome to OliveEdge</h1>
+            <h1 className="text-3xl font-bold text-primary">Welcome to PRINCE</h1>
             <p className="mt-2 text-sm text-muted-foreground">
               Sign in to manage your subscription, leads and business access.
             </p>
