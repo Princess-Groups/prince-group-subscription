@@ -23,6 +23,9 @@ import {
   Users,
 } from "lucide-react";
 
+import benefitsVisual from "@/assets/prince-benefits.jpg";
+import branchesVisual from "@/assets/prince-branches.jpg";
+import loansVisual from "@/assets/prince-loans.jpg";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
 import { settingString, useSettings } from "@/hooks/usePlatform";
@@ -82,6 +85,14 @@ export function HeroSection() {
 
         <div className="relative hidden min-h-[30rem] lg:block">
           <div className="absolute inset-8 rounded-full bg-accent/10 blur-3xl" />
+          <img
+            src={benefitsVisual}
+            alt="Premium PRINCE membership benefits: offers, discounts and business opportunities"
+            width={1024}
+            height={1024}
+            className="floaty absolute inset-0 m-auto w-[86%] rounded-[2.5rem] object-contain mix-blend-lighten"
+          />
+
 
           <div className="floaty glass-dark absolute right-4 top-4 w-64 rounded-3xl p-5">
             <div className="flex items-center gap-2 text-accent">
@@ -185,7 +196,20 @@ export function LoanServicesSection() {
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="relative">
+            <div className="hero-orb left-1/4 top-1/3 size-72 bg-accent/20" />
+            <div className="relative mb-6 overflow-hidden rounded-[2rem] border border-cream/12 shadow-lift">
+              <img
+                src={loansVisual}
+                alt="Loan approval document with home, vehicle and gold coins"
+                width={1024}
+                height={1024}
+                loading="lazy"
+                className="h-56 w-full object-cover sm:h-64"
+              />
+            </div>
+            <div className="relative grid gap-4 sm:grid-cols-2">
+
             {LOAN_CATEGORIES.map((c, i) => (
               <div
                 key={c.title}
@@ -199,7 +223,9 @@ export function LoanServicesSection() {
                 <p className="mt-1.5 text-xs leading-relaxed text-cream/65">{c.body}</p>
               </div>
             ))}
+            </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -228,6 +254,21 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
             highlight="Across India"
             subtitle="A growing national footprint for loan assistance, documentation support and business services — with local teams and admin-verified coverage in every region."
           />
+          <div className="order-last lg:order-none">
+            <img
+              src={branchesVisual}
+              alt="Map of India with PRINCE branch location pins"
+              width={1024}
+              height={1024}
+              loading="lazy"
+              className="mx-auto w-full max-w-md rounded-[2rem] object-contain"
+            />
+          </div>
+        </div>
+
+        <div className="mt-12">
+
+
           <div className="relative overflow-hidden rounded-[2rem] bg-gradient-olive p-8 text-cream shadow-lift">
             <div className="hero-orb -right-16 -top-16 size-64 bg-accent/25" />
             <div className="relative grid gap-4 sm:grid-cols-3">
