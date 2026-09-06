@@ -96,10 +96,13 @@ export function PlansSection({
             ))}
       </div>
 
-      <AdminManagedNote>
-        Slot counters update live from active and pending subscriptions. Payments are only marked
-        successful after verification through the payment gateway — nothing is auto-confirmed.
-      </AdminManagedNote>
+      <p className="mt-6 text-xs text-cream/55">
+        <span className="font-semibold text-accent">Admin-managed:</span> Slot counters update live
+        from active and pending subscriptions. Payments are only marked successful after
+        verification through the payment gateway — nothing is auto-confirmed.
+      </p>
+      </div>
     </section>
+
   );
 }
