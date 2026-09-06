@@ -11,7 +11,6 @@ import {
   Users,
 } from "lucide-react";
 
-import benefitsVisual from "@/assets/prince-benefits.jpg";
 import heroOffice from "@/assets/prince-hero-office.png.asset.json";
 import { PublicPage } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
