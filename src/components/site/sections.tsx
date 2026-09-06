@@ -254,6 +254,21 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
             highlight="Across India"
             subtitle="A growing national footprint for loan assistance, documentation support and business services — with local teams and admin-verified coverage in every region."
           />
+          <div className="order-last lg:order-none">
+            <img
+              src={branchesVisual}
+              alt="Map of India with PRINCE branch location pins"
+              width={1024}
+              height={1024}
+              loading="lazy"
+              className="mx-auto w-full max-w-md rounded-[2rem] object-contain"
+            />
+          </div>
+        </div>
+
+        <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:items-center">
+          <div className="hidden lg:block" />
+
           <div className="relative overflow-hidden rounded-[2rem] bg-gradient-olive p-8 text-cream shadow-lift">
             <div className="hero-orb -right-16 -top-16 size-64 bg-accent/25" />
             <div className="relative grid gap-4 sm:grid-cols-3">
