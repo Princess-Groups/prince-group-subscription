@@ -86,8 +86,8 @@ export function HeroSection() {
         <div className="relative hidden min-h-[30rem] lg:block">
           <div className="absolute inset-8 rounded-full bg-accent/10 blur-3xl" />
           <img
-            src={benefitsVisual}
-            alt="Premium PRINCE membership benefits: offers, discounts and business opportunities"
+            src={branchesVisual}
+            alt="Glowing map of India showing PRINCE branch locations and connected network pins"
             width={1024}
             height={1024}
             className="floaty absolute inset-0 m-auto w-[86%] rounded-[2.5rem] object-contain mix-blend-lighten"
