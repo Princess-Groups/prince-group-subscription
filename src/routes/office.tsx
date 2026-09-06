@@ -82,7 +82,7 @@ function OfficePage() {
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/70">
               One address for membership support, bank executive data access and partnership
-              conversations — backed by our branch network across India.
+              conversations — backed by our branch network across Kanyakumari District.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">

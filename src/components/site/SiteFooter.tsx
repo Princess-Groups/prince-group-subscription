@@ -21,8 +21,8 @@ export function SiteFooter() {
             <span className="font-display text-lg font-extrabold tracking-[0.22em]">PRINCE</span>
           </div>
           <p className="mt-5 max-w-md text-sm leading-relaxed text-cream/70">
-            Premium access, opportunities, benefits and loan services. A subscription platform for
-            loan opportunities, business contacts, service discounts and managed lead access —
+            Premium access, opportunities, benefits and loan candidate data. A subscription platform for
+            loan candidate data, business contacts, service discounts and managed lead access —
             availability, pricing and data controlled by the platform administrator.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
@@ -36,7 +36,7 @@ export function SiteFooter() {
               to="/branches"
               className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-sm font-semibold text-cream/80 transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
             >
-              <MapPin className="size-4" /> 20 Branches Across India
+              <MapPin className="size-4" /> 20 Branches All Over Kanyakumari
             </Link>
           </div>
         </div>
@@ -49,7 +49,7 @@ export function SiteFooter() {
             <li><Link to="/services" className="hover:text-accent">Member Services</Link></li>
             <li><Link to="/office" className="hover:text-accent">Our Office</Link></li>
             <li><Link to="/branches" className="hover:text-accent">Branch Network</Link></li>
-            <li><Link to="/opportunities" className="hover:text-accent">Loan Opportunities</Link></li>
+            <li><Link to="/opportunities" className="hover:text-accent">Data Opportunities</Link></li>
             <li><Link to="/contacts" className="hover:text-accent">Business Contacts</Link></li>
             <li><Link to="/offers" className="hover:text-accent">Offers</Link></li>
             <li><Link to="/bank-executive" className="hover:text-accent">Bank Executive Portal</Link></li>
@@ -69,7 +69,7 @@ export function SiteFooter() {
       </div>
       <div className="relative border-t border-cream/10 px-4 py-6 text-center text-xs text-cream/50">
         © {new Date().getFullYear()} PRINCE. Subscription access is limited and admin-controlled.
-        Loan assistance services do not guarantee approval.
+        Prince Group provides data access and services — we do not provide loans.
       </div>
     </footer>
   );

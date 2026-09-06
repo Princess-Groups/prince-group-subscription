@@ -6,7 +6,7 @@ import { BranchesSection, ContactCtaSection } from "@/components/site/sections";
 import { Button } from "@/components/ui/button";
 import { settingString, useSettings } from "@/hooks/usePlatform";
 
-const title = "20 Branches Across India | PRINCE Branch Network";
+const title = "20 Branches All Over Kanyakumari | PRINCE Branch Network";
 const description =
   "Find your nearest PRINCE branch. 20 branches across India for loan assistance, documentation support, business services and premium membership access.";
 
@@ -34,7 +34,7 @@ function BranchesPage() {
         eyebrow="Branch Network"
         title="20 Branches."
         highlight="One National Network."
-        subtitle="PRINCE operates a growing branch network across India, giving members local support for loan assistance, documentation and business services wherever they are."
+        subtitle="PRINCE operates a growing branch network across Kanyakumari District, giving members local support for loan assistance, documentation and business services wherever they are."
         actions={
           <>
             <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
