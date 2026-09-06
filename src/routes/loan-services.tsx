@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import heroLoans from "@/assets/prince-hero-loans.png.asset.json";
 import { PublicPage } from "@/components/site/PublicPage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -92,7 +93,13 @@ function LoanDataPage() {
   return (
     <PublicPage>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-olive text-cream">
+      <section className="relative isolate overflow-hidden text-cream">
+        <img
+          src={heroLoans.url}
+          alt="Green financial visual with loan document, house, car and gold coins"
+          className="absolute inset-0 -z-20 size-full object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.17_0.05_148/0.95)_0%,oklch(0.19_0.055_147/0.88)_45%,oklch(0.2_0.05_146/0.45)_100%)]" />
         <div className="grid-lines pointer-events-none absolute inset-0 opacity-50" />
         <div className="hero-orb -left-24 top-0 size-[26rem] bg-accent/25" />
         <div className="hero-orb -right-20 bottom-0 size-[28rem] bg-secondary/30" />
