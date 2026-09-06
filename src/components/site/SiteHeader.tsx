@@ -10,11 +10,13 @@ import { settingString, useSettings } from "@/hooks/usePlatform";
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/plans", label: "Plans" },
-  { to: "/services", label: "Loan Services" },
+  { to: "/loan-services", label: "Loan Data" },
+  { to: "/services", label: "Services" },
   { to: "/branches", label: "Branches" },
   { to: "/opportunities", label: "Opportunities" },
   { to: "/contacts", label: "Directory" },
   { to: "/offers", label: "Offers" },
+  { to: "/office", label: "Office" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
