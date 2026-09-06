@@ -7,15 +7,16 @@ import {
   BranchesSection,
   ContactCtaSection,
   HeroSection,
+  LoanCandidateDataSection,
   LoanClientOfferSection,
-  LoanServicesSection,
-  ServiceCategoriesSection,
+  ServiceShowcaseSection,
+  SlotAvailabilitySection,
   TrustSection,
 } from "@/components/site/sections";
 
-const title = "PRINCE — Premium Access, Opportunities, Benefits & Loan Services";
+const title = "PRINCE GROUP — Premium Data Access, Offers & Services in Kanyakumari";
 const description =
-  "Subscribe to unlock exclusive service discounts, loan profiles, business contacts and managed premium leads, with 20 branches across India and live slot availability.";
+  "Subscribe to unlock 1,00,000+ loan candidate profiles, 6,00,000+ Kanyakumari business contacts, exclusive service discounts and live slot availability — 20 branches all over Kanyakumari.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -35,11 +36,12 @@ function Index() {
   return (
     <PublicPage>
       <HeroSection />
-      <ServiceCategoriesSection />
-      <LoanServicesSection />
+      <SlotAvailabilitySection />
+      <BankExecutiveSection />
+      <ServiceShowcaseSection />
+      <LoanCandidateDataSection />
       <PlansSection />
       <BranchesSection />
-      <BankExecutiveSection />
       <LoanClientOfferSection />
       <TrustSection />
       <ContactCtaSection />

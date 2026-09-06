@@ -9,9 +9,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { inr, shortDate } from "@/lib/format";
 
-const title = "Live Loan Opportunities & Enquiries | PRINCE";
+const title = "Live Loan Candidate Data & Enquiries | PRINCE GROUP";
 const description =
-  "Browse current loan enquiry categories, locations and requirement sizes. Contact details unlock for subscribed members with available lead quota.";
+  "Browse current loan candidate data categories, locations and requirement sizes. Contact details unlock for subscribed members with available lead quota.";
 
 export const Route = createFileRoute("/opportunities")({
   head: () => ({
@@ -56,7 +56,7 @@ function OpportunitiesPage() {
     <PublicPage>
       <PageHero
         eyebrow="Opportunities"
-        title="Available loan opportunities"
+        title="Available loan candidate data"
         subtitle="Requirement, category and location are public. Customer names and contact numbers are revealed only after a lead is allocated to your account."
       />
 
