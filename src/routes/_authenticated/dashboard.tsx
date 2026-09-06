@@ -59,7 +59,10 @@ function DashboardPage() {
     },
     onSuccess: (res) => {
       const err = res?.["error"] as string | undefined;
-      if (err) return toast.error(CLAIM_ERRORS[err] ?? err);
+      if (err) {
+        toast.error(CLAIM_ERRORS[err] ?? err);
+        return;
+      }
       toast.success(`${res["allocated"]} lead(s) allocated to your account.`);
       queryClient.invalidateQueries();
     },
