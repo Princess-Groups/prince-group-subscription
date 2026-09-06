@@ -156,9 +156,10 @@ function DashboardPage() {
               </AdminManagedNote>
             </div>
 
-            <div className="rounded-3xl bg-gradient-olive p-7 text-primary-foreground shadow-lift">
+            <div className="relative overflow-hidden rounded-[1.75rem] bg-gradient-olive p-7 text-cream shadow-lift">
+              <div className="grid-lines pointer-events-none absolute inset-0 opacity-40" />
               <h2 className="text-lg font-semibold">Advance access</h2>
-              <p className="mt-2 text-sm text-primary-foreground/75">
+              <p className="mt-2 text-sm text-cream/75">
                 Reserve an upcoming period in advance. Reservations stay pending until the payment
                 is verified.
               </p>

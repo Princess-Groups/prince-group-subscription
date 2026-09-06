@@ -59,7 +59,7 @@ export function PlanCard({
           /day
         </span>
       </div>
-      <p className={cn("text-sm font-semibold", highlight ? "text-accent" : "text-secondary")}>
+      <p className={cn("text-sm font-semibold", highlight ? "text-accent" : "text-accent/85")}>
         {inr(plan.price)}/{plan.billing_period === "monthly" ? "month" : plan.billing_period}
         {plan.code === "premium" ? ` · ${inr(plan.daily_display * 365)}/year equivalent` : ""}
       </p>
