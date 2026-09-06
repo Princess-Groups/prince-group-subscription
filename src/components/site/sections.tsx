@@ -2,47 +2,38 @@ import { Link } from "@tanstack/react-router";
 import {
   BadgeCheck,
   BarChart3,
-  Briefcase,
   Building2,
-  Car,
-  Code2,
-  FileText,
-  GraduationCap,
-  Home,
-  Landmark,
+  Database,
   Lock,
   MapPin,
-  Megaphone,
   Navigation,
   Phone,
   ShieldCheck,
   Sparkles,
-  Store,
+  Star,
   TrendingUp,
-  UserRound,
   Users,
 } from "lucide-react";
 
-import benefitsVisual from "@/assets/prince-benefits.jpg";
-import branchesVisual from "@/assets/prince-branches.jpg";
+import kanyakumariVisual from "@/assets/prince-kanyakumari.jpg";
 import heroMap from "@/assets/prince-hero-map.png.asset.json";
-import loansVisual from "@/assets/prince-loans.jpg";
+import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
 import { settingString, useSettings } from "@/hooks/usePlatform";
 import { inr } from "@/lib/format";
 
-type HeroStat = { label: string; value: string };
+export const BRANCH_TAGLINE = "20 Branches All Over Kanyakumari";
+
+/* ---------------- Hero with live animated statistics ---------------- */
+
+const HERO_STATS = [
+  { to: 100000, suffix: "+", label: "Original Loan Candidate Profiles" },
+  { to: 600000, suffix: "+", label: "Kanyakumari Business B2B Contacts" },
+  { to: 1000, suffix: "+", label: "Daily Enquiries Handled" },
+];
 
 export function HeroSection() {
-  const { data: settings } = useSettings();
-  const stats = (settings?.["hero_stats"] as HeroStat[] | undefined) ?? [
-    { label: "Business Contacts", value: "6,00,000+" },
-    { label: "Loan Profiles", value: "1,00,000+" },
-    { label: "Daily Enquiries", value: "1,000+" },
-    { label: "Branches In India", value: "20" },
-  ];
-
   return (
     <section className="relative isolate overflow-hidden text-cream">
       <img
@@ -53,34 +44,39 @@ export function HeroSection() {
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.18_0.05_148/0.94)_0%,oklch(0.2_0.06_146/0.86)_42%,oklch(0.22_0.06_144/0.42)_100%)]" />
       <div className="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-25" />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:py-32">
+      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
         <div className="reveal max-w-2xl">
           <span className="pill-badge">
             <Sparkles className="size-3.5" /> Limited Premium Membership
           </span>
           <h1 className="mt-6 text-4xl font-bold leading-[1.06] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)] sm:text-5xl lg:text-6xl">
-            Unlock Premium Access.
-            <span className="block text-gradient-olive">Unlock Better Opportunities.</span>
+            One Subscription.
+            <span className="block text-gradient-olive">All The Data You Need.</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/80 sm:text-lg">
-            Choose your subscription plan and unlock exclusive discounts, business opportunities,
-            loan profiles, premium leads and powerful business resources.
+            Unlock 1,00,000+ original loan candidate profiles, 6,00,000+ Kanyakumari business
+            contacts and exclusive member pricing across every Prince Group service.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
-              <Link to="/plans">Explore Plans →</Link>
+              <a href="#bank-executive-plans">Explore Bank Executive Plans →</a>
             </Button>
             <Button asChild size="lg" variant="onOlive" className="w-full sm:w-auto">
-              <Link to="/opportunities">View Available Opportunities</Link>
+              <Link to="/plans">View Subscription Plans</Link>
             </Button>
           </div>
         </div>
 
-        <div className="mt-14 grid grid-cols-2 gap-3 sm:mt-16 lg:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.label} className="glass-dark rounded-2xl px-4 py-4">
-              <p className="font-display text-xl font-bold text-accent">{s.value}</p>
-              <p className="mt-1 text-[11px] uppercase tracking-wider text-cream/70">{s.label}</p>
+        <div className="mt-14 grid gap-4 sm:mt-16 md:grid-cols-3">
+          {HERO_STATS.map((s) => (
+            <div key={s.label} className="glass-dark hover-glow rounded-3xl px-6 py-7">
+              <p className="font-display text-3xl font-bold text-accent sm:text-4xl">
+                <CountUp to={s.to} suffix={s.suffix} />
+              </p>
+              <p className="mt-2 text-xs uppercase tracking-wider text-cream/70">{s.label}</p>
+              <span className="mt-4 block h-1 overflow-hidden rounded-full bg-cream/12">
+                <span className="block h-full w-2/3 rounded-full bg-gradient-lime" />
+              </span>
             </div>
           ))}
         </div>
@@ -89,95 +85,277 @@ export function HeroSection() {
   );
 }
 
-/* ---------------- Loan services (reference 3) ---------------- */
+/* ---------------- Live plan slot availability ---------------- */
 
-const LOAN_CATEGORIES = [
-  { icon: Home, title: "Home Loan", body: "Purchase, construction and balance transfer profiles." },
-  { icon: UserRound, title: "Personal Loan", body: "Salaried and self-employed requirement profiles." },
-  { icon: Briefcase, title: "Business Loan", body: "Working capital and expansion requirements." },
-  { icon: GraduationCap, title: "Education Loan", body: "Domestic and overseas study financing." },
-  { icon: Car, title: "Vehicle Loan", body: "New, used and commercial vehicle profiles." },
-  { icon: Store, title: "MSME Loan", body: "Machinery, inventory and MSME scheme profiles." },
+const SLOT_PLANS = [
+  { name: "₹10 Plan", note: "Valid for 1 Day", slots: 500, emphasis: false },
+  { name: "₹100 Plan", note: "Monthly access", slots: 400, emphasis: false },
+  { name: "₹100 Yearly Plan", note: "Best value — yearly access", slots: 100, emphasis: true },
 ];
 
-export function LoanServicesSection() {
+export function SlotAvailabilitySection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-olive py-20 text-cream sm:py-24">
-      <div className="grid-lines pointer-events-none absolute inset-0 opacity-40" />
-      <div className="hero-orb -right-32 top-0 size-[26rem] bg-accent/20" />
+    <section className="relative overflow-hidden bg-gradient-cream py-16 sm:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <SectionHeading
+          eyebrow="Live Availability"
+          title="Subscription Slots"
+          highlight="Filling Fast"
+          subtitle="Slot availability is counted live and closes as soon as the limit is reached."
+        />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr]">
-          <div>
-            <span className="pill-badge">
-              <Landmark className="size-3.5" /> Loan Candidate Data
-            </span>
-            <h2 className="mt-5 text-3xl font-bold leading-[1.1] sm:text-4xl lg:text-5xl">
-              Loan Candidate Data.
-              <span className="block text-gradient-olive">Built for Banking Professionals.</span>
-            </h2>
-            <p className="mt-5 max-w-xl text-sm leading-relaxed text-cream/70 sm:text-base">
-              PRINCE supplies structured loan candidate and lead data — 1 lakh to 6 lakh+ records —
-              to bank managers and bank executives across every major loan category. We are a data
-              platform, not a direct loan provider.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
-                <Link to="/loan-services">Explore Available Candidate Data →</Link>
-              </Button>
-              <Button asChild size="lg" variant="onOlive" className="w-full sm:w-auto">
-                <Link to="/contact">Get Data Details</Link>
-              </Button>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="hero-orb left-1/4 top-1/3 size-72 bg-accent/20" />
-            <div className="relative mb-6 overflow-hidden rounded-[2rem] border border-cream/12 shadow-lift">
-              <img
-                src={loansVisual}
-                alt="Loan approval document with home, vehicle and gold coins"
-                width={1024}
-                height={1024}
-                loading="lazy"
-                className="h-56 w-full object-cover sm:h-64"
-              />
-            </div>
-            <div className="relative grid gap-4 sm:grid-cols-2">
-
-            {LOAN_CATEGORIES.map((c, i) => (
-              <div
-                key={c.title}
-                className="glass-dark hover-glow floaty rounded-3xl p-6"
-                style={{ animationDelay: `${(i % 3) * 0.6}s` }}
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {SLOT_PLANS.map((p) => (
+            <div
+              key={p.name}
+              className={`card-lift relative overflow-hidden rounded-3xl border p-7 shadow-soft ${
+                p.emphasis
+                  ? "border-secondary/40 bg-gradient-olive text-cream shadow-lift"
+                  : "border-primary/10 bg-card"
+              }`}
+            >
+              {p.emphasis ? <div className="hero-orb -right-10 -top-10 size-48 bg-accent/25" /> : null}
+              <p
+                className={`relative text-xs font-bold uppercase tracking-[0.2em] ${
+                  p.emphasis ? "text-accent" : "text-secondary"
+                }`}
               >
-                <span className="grid size-11 place-items-center rounded-2xl bg-accent/15 text-accent">
-                  <c.icon className="size-5" />
-                </span>
-                <h3 className="mt-4 text-base font-semibold text-cream">{c.title}</h3>
-                <p className="mt-1.5 text-xs leading-relaxed text-cream/65">{c.body}</p>
-              </div>
-            ))}
+                {p.emphasis ? "Only a few left" : "Available now"}
+              </p>
+              <h3
+                className={`relative mt-3 font-display text-2xl font-bold ${
+                  p.emphasis ? "text-cream" : "text-primary"
+                }`}
+              >
+                {p.name}
+              </h3>
+              <p className={`relative mt-1 text-sm ${p.emphasis ? "text-cream/70" : "text-muted-foreground"}`}>
+                {p.note}
+              </p>
+              <p
+                className={`relative mt-6 font-display font-bold ${
+                  p.emphasis
+                    ? "pulse text-5xl text-accent drop-shadow-[0_0_18px_oklch(0.85_0.19_125/0.45)]"
+                    : "text-4xl text-primary"
+                }`}
+              >
+                <CountUp to={p.slots} />
+              </p>
+              <p
+                className={`relative mt-1 text-xs font-semibold uppercase tracking-wider ${
+                  p.emphasis ? "text-cream/80" : "text-muted-foreground"
+                }`}
+              >
+                {p.emphasis ? "Only 100 slots available" : "Slots available"}
+              </p>
+              <span
+                className={`relative mt-5 block h-1.5 overflow-hidden rounded-full ${
+                  p.emphasis ? "bg-cream/15" : "bg-muted"
+                }`}
+              >
+                <span
+                  className="block h-full rounded-full bg-gradient-lime transition-[width] duration-1000"
+                  style={{ width: p.emphasis ? "18%" : p.slots === 500 ? "72%" : "55%" }}
+                />
+              </span>
+              <Button
+                asChild
+                variant={p.emphasis ? "lime" : "outline"}
+                className="relative mt-6 w-full"
+              >
+                <Link to="/plans">Claim your slot</Link>
+              </Button>
             </div>
-          </div>
-
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-/* ---------------- Branch network (reference 1) ---------------- */
+/* ---------------- Loan candidate data — profile previews ---------------- */
 
-const BRANCH_CITIES = [
-  "Chennai", "Bengaluru", "Hyderabad", "Kochi", "Coimbatore",
-  "Madurai", "Kanyakumari", "Trivandrum", "Mumbai", "Pune",
-  "Ahmedabad", "Delhi NCR", "Jaipur", "Lucknow", "Indore",
-  "Kolkata", "Bhubaneswar", "Nagpur", "Vijayawada", "Mysuru",
+const CANDIDATES = [
+  { name: "Arun Kumar", location: "Nagercoil", initials: "AK" },
+  { name: "Priya S", location: "Monday Market", initials: "PS" },
+  { name: "Vignesh R", location: "Thuckalay", initials: "VR" },
+  { name: "Divya Lakshmi", location: "Marthandam", initials: "DL" },
+  { name: "Suresh Babu", location: "Kanyakumari", initials: "SB" },
+];
+
+export function LoanCandidateDataSection() {
+  return (
+    <section className="relative overflow-hidden bg-gradient-olive py-20 text-cream sm:py-24">
+      <div className="grid-lines pointer-events-none absolute inset-0 opacity-40" />
+      <div className="hero-orb -right-32 top-0 size-[26rem] bg-accent/20" />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="max-w-2xl">
+          <span className="pill-badge">
+            <Database className="size-3.5" /> Loan Candidate Data
+          </span>
+          <h2 className="mt-5 text-3xl font-bold leading-[1.1] sm:text-4xl lg:text-5xl">
+            Unlock and Explore
+            <span className="block text-gradient-olive">Loan Candidate Data.</span>
+          </h2>
+          <p className="mt-5 text-sm leading-relaxed text-cream/70 sm:text-base">
+            Prince Group provides access to original loan candidate profiles and business data for
+            banking professionals. We are a data platform — we do not provide loans.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {CANDIDATES.map((c, i) => (
+            <div
+              key={c.name}
+              className="glass-dark hover-glow group relative overflow-hidden rounded-3xl p-6"
+              style={{ animationDelay: `${i * 0.15}s` }}
+            >
+              <div className="flex items-center gap-3">
+                <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-accent/15 font-display text-base font-bold text-accent">
+                  {c.initials}
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-cream">{c.name}</p>
+                  <p className="truncate text-xs text-cream/60">{c.location}</p>
+                </div>
+              </div>
+
+              <p className="mt-5 text-[11px] font-semibold uppercase tracking-wider text-accent">
+                Profile: Loan Candidate
+              </p>
+
+              <div className="mt-3 space-y-2 text-xs text-cream/70">
+                <div className="flex justify-between">
+                  <span>Contact</span>
+                  <span className="select-none blur-[4px]">+91 98765 43210</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Requirement</span>
+                  <span className="select-none blur-[4px]">₹ 4,50,000</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Profile status</span>
+                  <span className="select-none blur-[4px]">Verified — Active</span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full border border-accent/40 px-4 py-2 text-xs font-semibold text-accent transition-all group-hover:-translate-y-0.5 group-hover:bg-accent group-hover:text-accent-foreground"
+              >
+                <Lock className="size-3.5" /> Unlock Profile
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 flex flex-col items-center gap-3 text-center">
+          <Button asChild size="lg" variant="lime" className="floaty hover-scale w-full sm:w-auto">
+            <Link to="/loan-services">
+              EXPLORE ALL DATA <span aria-hidden>→</span>
+            </Link>
+          </Button>
+          <p className="text-xs text-cream/55">
+            Profiles shown are sample previews. Full details unlock with an active subscription.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Animated service showcase ---------------- */
+
+const SERVICES = [
+  "Documentation Services",
+  "Marriage Registration",
+  "Registration Services",
+  "Digital Marketing",
+  "Event Services",
+  "Graphic Designing",
+  "App Development",
+  "Software Development",
+  "Video Editing",
+  "Land Survey",
+  "Billing Software",
+  "Social Media Marketing",
+];
+
+function ServiceTicker({ reverse = false }: { reverse?: boolean }) {
+  const items = [...SERVICES, ...SERVICES];
+  return (
+    <div className="marquee">
+      <div className={reverse ? "marquee-track marquee-reverse" : "marquee-track"}>
+        {items.map((s, i) => (
+          <span
+            key={`${s}-${i}`}
+            className="mx-3 inline-flex shrink-0 items-center gap-2 rounded-full border border-primary/12 bg-card px-6 py-3 text-sm font-semibold text-primary shadow-soft"
+          >
+            <Star className="size-3.5 shrink-0 text-secondary" />
+            {s}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function ServiceShowcaseSection() {
+  return (
+    <section className="overflow-hidden bg-gradient-cream py-20">
+      <div className="mx-auto max-w-7xl px-4 text-center sm:px-6">
+        <span className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">Benefits</span>
+        <h2 className="mx-auto mt-3 max-w-3xl text-3xl font-bold text-primary sm:text-4xl">
+          You Can Get Exclusive Offers
+          <span className="block text-gradient-olive">Across All Our Services</span>
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">
+          Member pricing is applied automatically from your active plan across every Prince Group
+          service.
+        </p>
+      </div>
+
+      <div className="mt-12 space-y-4">
+        <ServiceTicker />
+        <ServiceTicker reverse />
+      </div>
+
+      <div className="mt-12 text-center">
+        <Button asChild size="lg" variant="lime">
+          <Link to="/services">View member pricing →</Link>
+        </Button>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Branch network — Kanyakumari ---------------- */
+
+export const BRANCHES = [
+  "Monday Market (Head Office)",
+  "Kollemcode",
+  "Palugal",
+  "Arumanai",
+  "Marthandam",
+  "Thiruvattar",
+  "Verkilambi",
+  "Munchirai",
+  "Karungal",
+  "Palliyadi",
+  "Thuckalay",
+  "Eraniel",
+  "Manavalakurichi",
+  "Rajakkamangalam",
+  "Nagercoil",
+  "Edalakudi",
+  "Kottaram",
+  "Thovalai",
+  "Boothapandi",
 ];
 
 export function BranchesSection({ full = false }: { full?: boolean }) {
-  const cities = full ? BRANCH_CITIES : BRANCH_CITIES.slice(0, 8);
+  const list = full ? BRANCHES : BRANCHES.slice(0, 10);
 
   return (
     <section className="bg-gradient-cream py-20">
@@ -186,41 +364,39 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
           <SectionHeading
             eyebrow="Branch Network"
             title="20 Branches"
-            highlight="Across India"
-            subtitle="A growing national footprint for loan assistance, documentation support and business services — with local teams and admin-verified coverage in every region."
+            highlight="All Over Kanyakumari"
+            subtitle="Local teams across Kanyakumari District for documentation, registration, business and data services — with admin-verified coverage in every town."
           />
           <div className="order-last lg:order-none">
             <img
-              src={branchesVisual}
-              alt="Map of India with PRINCE branch location pins"
-              width={1024}
+              src={kanyakumariVisual}
+              alt="Glowing map of Kanyakumari district with Prince Group branch location pins"
+              width={1280}
               height={1024}
               loading="lazy"
-              className="mx-auto w-full max-w-md rounded-[2rem] object-contain"
+              className="mx-auto w-full rounded-[2rem] object-cover shadow-lift"
             />
           </div>
         </div>
 
         <div className="mt-12">
-
-
           <div className="relative overflow-hidden rounded-[2rem] bg-gradient-olive p-8 text-cream shadow-lift">
             <div className="hero-orb -right-16 -top-16 size-64 bg-accent/25" />
             <div className="relative grid gap-4 sm:grid-cols-3">
               {[
                 { value: "20", label: "Branches" },
-                { value: "12+", label: "States covered" },
+                { value: "Kanyakumari", label: "District coverage" },
                 { value: "Local", label: "On-ground teams" },
               ].map((s) => (
                 <div key={s.label} className="glass-dark rounded-2xl px-4 py-5 text-center">
-                  <p className="font-display text-3xl font-bold text-accent">{s.value}</p>
+                  <p className="font-display text-2xl font-bold text-accent sm:text-3xl">{s.value}</p>
                   <p className="mt-1 text-[11px] uppercase tracking-wider text-cream/65">{s.label}</p>
                 </div>
               ))}
             </div>
             <p className="relative mt-6 text-sm text-cream/70">
               Branch discovery, coverage and contact routing are administered centrally so members
-              always reach the right regional team.
+              always reach the right local team.
             </p>
             <Button asChild variant="lime" className="relative mt-6 w-full sm:w-auto">
               <Link to="/branches">
@@ -230,18 +406,20 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {cities.map((city) => (
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {list.map((town, i) => (
             <div
-              key={city}
-              className="card-lift group rounded-3xl border border-primary/10 bg-card p-6 shadow-soft"
+              key={town}
+              className={`card-lift group rounded-3xl border p-6 shadow-soft ${
+                i === 0 ? "border-secondary/40 bg-card ring-1 ring-secondary/20" : "border-primary/10 bg-card"
+              }`}
             >
               <span className="grid size-11 place-items-center rounded-2xl bg-gradient-olive text-accent transition-transform group-hover:scale-105">
-                <MapPin className="size-5" />
+                {i === 0 ? <Star className="size-5" /> : <MapPin className="size-5" />}
               </span>
-              <h3 className="mt-5 text-lg font-semibold text-primary">{city}</h3>
+              <h3 className="mt-5 text-lg font-semibold text-primary">{town}</h3>
               <p className="mt-1 text-sm text-muted-foreground">
-                Loan assistance · Documentation · Business services
+                Documentation · Registration · Business services
               </p>
               <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-secondary">
                 Branch open
@@ -251,75 +429,9 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
         </div>
 
         <AdminManagedNote>
-          Branch cities, addresses and contact routing are configurable from Admin Settings; the
-          list above is the current published coverage.
+          Branch towns, addresses and contact routing are configurable from Admin Settings; the list
+          above is the current published coverage across Kanyakumari District.
         </AdminManagedNote>
-      </div>
-    </section>
-  );
-}
-
-const CATEGORY_ICON: Record<string, typeof Landmark> = {
-  "Loan Services": Landmark,
-  "Documentation Services": FileText,
-  "Digital Marketing": Megaphone,
-  "Software Services": Code2,
-};
-
-export function ServiceCategoriesSection() {
-  const groups = [
-    {
-      title: "Loan Services",
-      items: ["Personal Loans", "Business Loans", "Home Loans", "Vehicle Loans", "Education Loans", "Working Capital", "MSME Loans"],
-    },
-    {
-      title: "Documentation Services",
-      items: ["Marriage Registration", "Land Survey", "Documentation Services", "Registration Assistance"],
-    },
-    {
-      title: "Digital Marketing",
-      items: ["Website Development", "SEO", "Social Media Marketing", "Graphic Design", "Video Editing", "Reels Creation", "Google Ads", "Meta Ads", "WhatsApp Marketing"],
-    },
-    {
-      title: "Software Services",
-      items: ["Billing Software", "Accounting Software", "HR Software", "Business Management Software", "Custom Software"],
-    },
-  ];
-
-  return (
-    <section className="bg-gradient-cream py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading
-          eyebrow="Benefits"
-          title="Everything You Need"
-          highlight="in One Subscription"
-          subtitle="Member pricing is calculated automatically from your active plan discount."
-        />
-
-        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {groups.map((g) => {
-            const Icon = CATEGORY_ICON[g.title] ?? Briefcase;
-            return (
-              <div key={g.title} className="card-lift rounded-3xl border border-primary/10 bg-card p-6 shadow-soft">
-                <span className="grid size-11 place-items-center rounded-2xl bg-gradient-olive text-accent">
-                  <Icon className="size-5" />
-                </span>
-                <h3 className="mt-5 text-lg font-semibold text-primary">{g.title}</h3>
-                <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
-                  {g.items.map((i) => (
-                    <li key={i} className="flex gap-2">
-                      <BadgeCheck className="mt-0.5 size-3.5 shrink-0 text-secondary" />
-                      {i}
-                    </li>
-                  ))}
-                </ul>
-                <Button asChild variant="ghost" size="sm" className="mt-5 px-0">
-                  <Link to="/services">View member pricing →</Link>
-                </Button>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </section>
   );
@@ -327,7 +439,7 @@ export function ServiceCategoriesSection() {
 
 export function BankExecutiveSection() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+    <section id="bank-executive-plans" className="mx-auto max-w-7xl scroll-mt-28 px-4 py-20 sm:px-6">
       <div className="relative overflow-hidden rounded-[2rem] border border-primary/10 bg-gradient-olive p-8 text-cream shadow-lift sm:p-12">
         <div className="grid-lines pointer-events-none absolute inset-0 opacity-40" />
         <div className="hero-orb -right-20 -top-20 size-80 bg-accent/20" />
@@ -359,8 +471,8 @@ export function BankExecutiveSection() {
             {[
               { icon: ShieldCheck, title: "Secure Login", body: "Unique executive ID and password with role-based access control." },
               { icon: BadgeCheck, title: "Admin Approval", body: "Accounts stay pending until an administrator approves them." },
-              { icon: Users, title: "Customer Leads", body: "Allocated leads with status, requirement and assignment date." },
-              { icon: Lock, title: "Protected Contacts", body: "Contact numbers are revealed only for allocated leads, and every view is logged." },
+              { icon: Users, title: "Candidate Data", body: "Allocated candidate profiles with status, requirement and assignment date." },
+              { icon: Lock, title: "Protected Contacts", body: "Contact numbers are revealed only for allocated profiles, and every view is logged." },
             ].map((c) => (
               <div key={c.title} className="glass-dark hover-glow rounded-2xl p-5">
                 <c.icon className="size-5 text-accent" />
@@ -392,10 +504,10 @@ export function LoanClientOfferSection() {
       <div className="grid items-center gap-8 rounded-[2rem] border border-secondary/25 bg-card p-8 shadow-soft sm:p-12 lg:grid-cols-2">
         <div>
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">
-            Special Subscription for Loan Clients
+            Special Subscription for Data Members
           </span>
           <h2 className="mt-3 text-3xl font-bold text-primary sm:text-4xl">
-            One of the Best Subscription Plans for Loan Clients
+            One of the Best Subscription Plans for Data Access
           </h2>
           <p className="mt-4 text-sm text-muted-foreground">
             {offer.discount_label ?? "33% OFF for First Month"} — first month{" "}
@@ -428,8 +540,8 @@ export function TrustSection() {
     { icon: TrendingUp, title: "Exclusive Discounts", body: "25% to 75% member pricing across eligible services, applied automatically from your plan." },
     { icon: ShieldCheck, title: "Verified, Admin-Controlled Opportunities", body: "Every opportunity is reviewed and published by administrators before members see it." },
     { icon: Lock, title: "Limited Membership", body: "500 Business slots and 100 Premium slots. Availability is counted live." },
-    { icon: Building2, title: "Premium Business Access", body: "Business directory, B2B opportunities and loan profile categories in one place." },
-    { icon: BarChart3, title: "Powerful Lead Management", body: "Unique lead IDs, allocation history and duplicate prevention on every claim." },
+    { icon: Building2, title: "Premium Business Access", body: "Business directory, B2B opportunities and loan candidate data in one place." },
+    { icon: BarChart3, title: "Powerful Data Management", body: "Unique profile IDs, allocation history and duplicate prevention on every claim." },
     { icon: BadgeCheck, title: "Secure Subscription Payments", body: "Payments are confirmed only after gateway verification — never assumed successful." },
   ];
 
