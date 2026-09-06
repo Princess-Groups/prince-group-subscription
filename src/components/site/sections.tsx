@@ -266,8 +266,8 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div className="hidden lg:block" />
+        <div className="mt-12">
+
 
           <div className="relative overflow-hidden rounded-[2rem] bg-gradient-olive p-8 text-cream shadow-lift">
             <div className="hero-orb -right-16 -top-16 size-64 bg-accent/25" />
