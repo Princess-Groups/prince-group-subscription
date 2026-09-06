@@ -223,7 +223,9 @@ export function LoanServicesSection() {
                 <p className="mt-1.5 text-xs leading-relaxed text-cream/65">{c.body}</p>
               </div>
             ))}
+            </div>
           </div>
+
         </div>
       </div>
     </section>
