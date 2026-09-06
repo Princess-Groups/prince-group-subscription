@@ -8,7 +8,7 @@ import { inr } from "@/lib/format";
 
 const title = "Member Services & Discounted Pricing | PRINCE";
 const description =
-  "Loan assistance, documentation, digital marketing and software services with member pricing from 25% to 75% off, based on your active plan.";
+  "Documentation, registration, digital marketing and software services with member pricing from 25% to 75% off, based on your active plan.";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
