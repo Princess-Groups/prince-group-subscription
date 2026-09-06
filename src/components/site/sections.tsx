@@ -86,8 +86,8 @@ export function HeroSection() {
         <div className="relative hidden min-h-[30rem] lg:block">
           <div className="absolute inset-8 rounded-full bg-accent/10 blur-3xl" />
           <img
-            src={benefitsVisual}
-            alt="Premium PRINCE membership benefits: offers, discounts and business opportunities"
+            src={branchesVisual}
+            alt="Glowing map of India showing PRINCE branch locations and connected network pins"
             width={1024}
             height={1024}
             className="floaty absolute inset-0 m-auto w-[86%] rounded-[2.5rem] object-contain mix-blend-lighten"
@@ -175,23 +175,23 @@ export function LoanServicesSection() {
         <div className="grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
             <span className="pill-badge">
-              <Landmark className="size-3.5" /> Loan Services
+              <Landmark className="size-3.5" /> Loan Candidate Data
             </span>
             <h2 className="mt-5 text-3xl font-bold leading-[1.1] sm:text-4xl lg:text-5xl">
-              Premium Loan Assistance.
-              <span className="block text-gradient-olive">Every Category, One Platform.</span>
+              Loan Candidate Data.
+              <span className="block text-gradient-olive">Built for Banking Professionals.</span>
             </h2>
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-cream/70 sm:text-base">
-              Access curated loan requirement profiles across every major category. Documentation
-              support, eligibility guidance and lead allocation are managed end to end — approval is
-              always subject to the lender.
+              PRINCE supplies structured loan candidate and lead data — 1 lakh to 6 lakh+ records —
+              to bank managers and bank executives across every major loan category. We are a data
+              platform, not a direct loan provider.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
-                <Link to="/opportunities">Browse Loan Opportunities →</Link>
+                <Link to="/loan-services">Explore Available Candidate Data →</Link>
               </Button>
               <Button asChild size="lg" variant="onOlive" className="w-full sm:w-auto">
-                <Link to="/services">View Member Pricing</Link>
+                <Link to="/contact">Get Data Details</Link>
               </Button>
             </div>
           </div>

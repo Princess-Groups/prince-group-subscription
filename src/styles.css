@@ -48,6 +48,7 @@
   --color-lime: var(--lime);
   --color-cream: var(--cream);
   --color-cream-soft: var(--cream-soft);
+  --color-gold: var(--gold);
 
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -77,6 +78,7 @@
   --lime: oklch(0.834 0.169 121.8);
   --cream: oklch(0.969 0.016 95.2);
   --cream-soft: oklch(0.984 0.011 95.2);
+  --gold: oklch(0.812 0.132 85.6);
 
   --background: oklch(0.969 0.016 95.2);
   --foreground: oklch(0.258 0.019 121.3);

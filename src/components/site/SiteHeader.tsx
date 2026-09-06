@@ -10,11 +10,13 @@ import { settingString, useSettings } from "@/hooks/usePlatform";
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/plans", label: "Plans" },
-  { to: "/services", label: "Loan Services" },
+  { to: "/loan-services", label: "Loan Data" },
+  { to: "/services", label: "Services" },
   { to: "/branches", label: "Branches" },
   { to: "/opportunities", label: "Opportunities" },
   { to: "/contacts", label: "Directory" },
   { to: "/offers", label: "Offers" },
+  { to: "/office", label: "Office" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
@@ -32,7 +34,7 @@ export function BrandMark({ tone = "dark" }: { tone?: "dark" | "light" }) {
         >
           PRINCE
         </span>
-        <span className="mt-1 truncate text-[10px] font-semibold uppercase tracking-[0.18em] text-secondary">
+        <span className="mt-1 hidden truncate text-[10px] font-semibold uppercase tracking-[0.18em] text-secondary sm:block">
           Premium Access
         </span>
       </span>
@@ -53,12 +55,12 @@ export function SiteHeader() {
           <BrandMark />
         </Link>
 
-        <nav className="mx-auto hidden items-center gap-0.5 xl:flex">
+        <nav className="mx-auto hidden items-center gap-0 xl:flex">
           {NAV.map((item) => (
             <Link
               key={item.to}
               to={item.to}
-              className="rounded-full px-3 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-primary"
+              className="whitespace-nowrap rounded-full px-2.5 py-2 text-[13px] font-medium text-muted-foreground transition-all hover:bg-muted hover:text-primary"
               activeProps={{ className: "bg-muted text-primary shadow-soft" }}
               activeOptions={{ exact: item.to === "/" }}
             >

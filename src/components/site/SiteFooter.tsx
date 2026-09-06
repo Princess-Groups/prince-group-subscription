@@ -45,7 +45,9 @@ export function SiteFooter() {
           <h4 className="text-sm font-semibold text-accent">Platform</h4>
           <ul className="mt-4 space-y-2 text-sm text-cream/70">
             <li><Link to="/plans" className="hover:text-accent">Subscription Plans</Link></li>
-            <li><Link to="/services" className="hover:text-accent">Loan &amp; Business Services</Link></li>
+            <li><Link to="/loan-services" className="hover:text-accent">Loan Candidate Data</Link></li>
+            <li><Link to="/services" className="hover:text-accent">Member Services</Link></li>
+            <li><Link to="/office" className="hover:text-accent">Our Office</Link></li>
             <li><Link to="/branches" className="hover:text-accent">Branch Network</Link></li>
             <li><Link to="/opportunities" className="hover:text-accent">Loan Opportunities</Link></li>
             <li><Link to="/contacts" className="hover:text-accent">Business Contacts</Link></li>

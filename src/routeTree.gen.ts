@@ -16,7 +16,9 @@ import { Route as BankExecutiveRouteImport } from './routes/bank-executive'
 import { Route as BranchesRouteImport } from './routes/branches'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContactsRouteImport } from './routes/contacts'
+import { Route as LoanServicesRouteImport } from './routes/loan-services'
 import { Route as OffersRouteImport } from './routes/offers'
+import { Route as OfficeRouteImport } from './routes/office'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as PlansRouteImport } from './routes/plans'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -62,9 +64,19 @@ const ContactsRoute = ContactsRouteImport.update({
   path: '/contacts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoanServicesRoute = LoanServicesRouteImport.update({
+  id: '/loan-services',
+  path: '/loan-services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OffersRoute = OffersRouteImport.update({
   id: '/offers',
   path: '/offers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OfficeRoute = OfficeRouteImport.update({
+  id: '/office',
+  path: '/office',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OpportunitiesRoute = OpportunitiesRouteImport.update({
@@ -126,7 +138,9 @@ export interface FileRoutesByFullPath {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
+  '/loan-services': typeof LoanServicesRoute
   '/offers': typeof OffersRoute
+  '/office': typeof OfficeRoute
   '/opportunities': typeof OpportunitiesRoute
   '/plans': typeof PlansRoute
   '/privacy': typeof PrivacyRoute
@@ -145,7 +159,9 @@ export interface FileRoutesByTo {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
+  '/loan-services': typeof LoanServicesRoute
   '/offers': typeof OffersRoute
+  '/office': typeof OfficeRoute
   '/opportunities': typeof OpportunitiesRoute
   '/plans': typeof PlansRoute
   '/privacy': typeof PrivacyRoute
@@ -166,7 +182,9 @@ export interface FileRoutesById {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
+  '/loan-services': typeof LoanServicesRoute
   '/offers': typeof OffersRoute
+  '/office': typeof OfficeRoute
   '/opportunities': typeof OpportunitiesRoute
   '/plans': typeof PlansRoute
   '/privacy': typeof PrivacyRoute
@@ -187,7 +205,9 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/contacts'
+    | '/loan-services'
     | '/offers'
+    | '/office'
     | '/opportunities'
     | '/plans'
     | '/privacy'
@@ -206,7 +226,9 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/contacts'
+    | '/loan-services'
     | '/offers'
+    | '/office'
     | '/opportunities'
     | '/plans'
     | '/privacy'
@@ -226,7 +248,9 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/contacts'
+    | '/loan-services'
     | '/offers'
+    | '/office'
     | '/opportunities'
     | '/plans'
     | '/privacy'
@@ -247,7 +271,9 @@ export interface RootRouteChildren {
   BranchesRoute: typeof BranchesRoute
   ContactRoute: typeof ContactRoute
   ContactsRoute: typeof ContactsRoute
+  LoanServicesRoute: typeof LoanServicesRoute
   OffersRoute: typeof OffersRoute
+  OfficeRoute: typeof OfficeRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
   PlansRoute: typeof PlansRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -307,11 +333,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/loan-services': {
+      id: '/loan-services'
+      path: '/loan-services'
+      fullPath: '/loan-services'
+      preLoaderRoute: typeof LoanServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/offers': {
       id: '/offers'
       path: '/offers'
       fullPath: '/offers'
       preLoaderRoute: typeof OffersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/office': {
+      id: '/office'
+      path: '/office'
+      fullPath: '/office'
+      preLoaderRoute: typeof OfficeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/opportunities': {
@@ -412,7 +452,9 @@ const rootRouteChildren: RootRouteChildren = {
   BranchesRoute: BranchesRoute,
   ContactRoute: ContactRoute,
   ContactsRoute: ContactsRoute,
+  LoanServicesRoute: LoanServicesRoute,
   OffersRoute: OffersRoute,
+  OfficeRoute: OfficeRoute,
   OpportunitiesRoute: OpportunitiesRoute,
   PlansRoute: PlansRoute,
   PrivacyRoute: PrivacyRoute,
