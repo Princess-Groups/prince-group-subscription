@@ -196,7 +196,20 @@ export function LoanServicesSection() {
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="relative">
+            <div className="hero-orb left-1/4 top-1/3 size-72 bg-accent/20" />
+            <div className="relative mb-6 overflow-hidden rounded-[2rem] border border-cream/12 shadow-lift">
+              <img
+                src={loansVisual}
+                alt="Loan approval document with home, vehicle and gold coins"
+                width={1024}
+                height={1024}
+                loading="lazy"
+                className="h-56 w-full object-cover sm:h-64"
+              />
+            </div>
+            <div className="relative grid gap-4 sm:grid-cols-2">
+
             {LOAN_CATEGORIES.map((c, i) => (
               <div
                 key={c.title}
