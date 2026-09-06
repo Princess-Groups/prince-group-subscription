@@ -86,18 +86,25 @@ export function AppShell({
   );
 
   const sidebarInner = (
-    <div className="flex h-full flex-col p-6">
-      <Link to="/" className="flex items-center gap-2">
-        <span className="grid size-9 place-items-center rounded-xl bg-primary-foreground/10 text-accent">
-          <Sparkles className="size-4" />
+    <div className="relative flex h-full flex-col overflow-hidden p-6">
+      <div className="grid-lines pointer-events-none absolute inset-0 opacity-40" />
+      <div className="hero-orb -left-16 top-10 size-56 bg-accent/20" />
+      <Link to="/" className="relative flex items-center gap-2.5">
+        <span className="grid size-10 place-items-center rounded-2xl bg-accent/15 text-accent">
+          <Crown className="size-5" />
         </span>
-        <span className="font-display text-lg font-bold text-primary-foreground">
-          Olive<span className="text-accent">Edge</span>
+        <span className="flex flex-col leading-none">
+          <span className="font-display text-lg font-extrabold tracking-[0.22em] text-cream">
+            PRINCE
+          </span>
+          <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">
+            Member Area
+          </span>
         </span>
       </Link>
-      <div className="mt-8 flex-1">{nav}</div>
-      <div className="space-y-3">
-        <p className="truncate text-xs text-primary-foreground/50">{user?.email}</p>
+      <div className="relative mt-8 flex-1">{nav}</div>
+      <div className="relative space-y-3">
+        <p className="truncate text-xs text-cream/50">{user?.email}</p>
         <Button variant="onOlive" size="sm" className="w-full" onClick={signOut}>
           <LogOut className="size-4" /> Sign out
         </Button>
@@ -108,6 +115,7 @@ export function AppShell({
   return (
     <div className="flex min-h-screen bg-background">
       <aside className="hidden w-72 shrink-0 bg-gradient-olive lg:block">{sidebarInner}</aside>
+
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-40 flex items-center gap-3 border-b border-primary/10 bg-background/85 px-4 py-4 backdrop-blur-xl sm:px-8">
