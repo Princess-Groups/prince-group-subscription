@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BankExecutiveRouteImport } from './routes/bank-executive'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContactsRouteImport } from './routes/contacts'
 import { Route as OffersRouteImport } from './routes/offers'
@@ -35,6 +36,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BankExecutiveRoute = BankExecutiveRouteImport.update({
+  id: '/bank-executive',
+  path: '/bank-executive',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -92,6 +98,7 @@ const AuthenticatedSubscriptionRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bank-executive': typeof BankExecutiveRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
   '/offers': typeof OffersRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bank-executive': typeof BankExecutiveRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
   '/offers': typeof OffersRoute
@@ -122,6 +130,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/bank-executive': typeof BankExecutiveRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
   '/offers': typeof OffersRoute
@@ -138,6 +147,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/bank-executive'
     | '/contact'
     | '/contacts'
     | '/offers'
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/bank-executive'
     | '/contact'
     | '/contacts'
     | '/offers'
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/bank-executive'
     | '/contact'
     | '/contacts'
     | '/offers'
@@ -183,6 +195,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  BankExecutiveRoute: typeof BankExecutiveRoute
   ContactRoute: typeof ContactRoute
   ContactsRoute: typeof ContactsRoute
   OffersRoute: typeof OffersRoute
@@ -212,6 +225,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bank-executive': {
+      id: '/bank-executive'
+      path: '/bank-executive'
+      fullPath: '/bank-executive'
+      preLoaderRoute: typeof BankExecutiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -308,6 +328,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  BankExecutiveRoute: BankExecutiveRoute,
   ContactRoute: ContactRoute,
   ContactsRoute: ContactsRoute,
   OffersRoute: OffersRoute,
