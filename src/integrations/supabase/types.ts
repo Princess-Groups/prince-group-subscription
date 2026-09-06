@@ -577,6 +577,35 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_assign_lead: {
+        Args: { _lead_id: string; _user_id: string }
+        Returns: Json
+      }
+      admin_set_account_status: {
+        Args: {
+          _status: Database["public"]["Enums"]["account_status"]
+          _user_id: string
+        }
+        Returns: Json
+      }
+      admin_set_subscription_status: {
+        Args: {
+          _status: Database["public"]["Enums"]["sub_status"]
+          _sub_id: string
+        }
+        Returns: Json
+      }
+      admin_set_user_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: Json
+      }
+      admin_stats: { Args: never; Returns: Json }
+      cancel_my_subscription: { Args: never; Returns: Json }
+      claim_leads: { Args: never; Returns: Json }
+      claim_super_admin: { Args: never; Returns: Json }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -585,6 +614,24 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      my_dashboard: { Args: never; Returns: Json }
+      plan_slot_counts: {
+        Args: never
+        Returns: {
+          occupied: number
+          plan_code: string
+          remaining: number
+          slot_limit: number
+        }[]
+      }
+      quote_for_plan: {
+        Args: { _first_payment?: boolean; _plan_code: string }
+        Returns: Json
+      }
+      reserve_advance_period: { Args: { _period: string }; Returns: Json }
+      reveal_lead_contact: { Args: { _lead_id: string }; Returns: Json }
+      setting_num: { Args: { _default: number; _key: string }; Returns: number }
+      start_subscription: { Args: { _plan_code: string }; Returns: Json }
     }
     Enums: {
       account_status: "pending" | "active" | "suspended" | "rejected"
