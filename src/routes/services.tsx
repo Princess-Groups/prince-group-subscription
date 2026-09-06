@@ -29,7 +29,7 @@ type ServiceRow = {
   category: string;
   name: string;
   description: string | null;
-  base_price: number | null;
+  original_price: number | null;
 };
 
 function ServicesPage() {
@@ -70,9 +70,9 @@ function ServicesPage() {
                           <p className="mt-2 text-sm text-muted-foreground">{s.description}</p>
                         ) : null}
                         <div className="mt-5 flex flex-wrap items-center gap-2">
-                          {s.base_price ? (
+                          {s.original_price ? (
                             <span className="text-sm font-semibold text-primary">
-                              From {inr(s.base_price)}
+                              From {inr(s.original_price)}
                             </span>
                           ) : (
                             <span className="text-sm text-muted-foreground">Pricing on request</span>
