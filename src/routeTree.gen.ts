@@ -18,6 +18,7 @@ import { Route as ContactsRouteImport } from './routes/contacts'
 import { Route as OffersRouteImport } from './routes/offers'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as PlansRouteImport } from './routes/plans'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -69,6 +70,11 @@ const PlansRoute = PlansRouteImport.update({
   path: '/plans',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/offers': typeof OffersRoute
   '/opportunities': typeof OpportunitiesRoute
   '/plans': typeof PlansRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/offers': typeof OffersRoute
   '/opportunities': typeof OpportunitiesRoute
   '/plans': typeof PlansRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/offers': typeof OffersRoute
   '/opportunities': typeof OpportunitiesRoute
   '/plans': typeof PlansRoute
+  '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
     | '/offers'
     | '/opportunities'
     | '/plans'
+    | '/privacy'
     | '/services'
     | '/terms'
     | '/admin'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/offers'
     | '/opportunities'
     | '/plans'
+    | '/privacy'
     | '/services'
     | '/terms'
     | '/admin'
@@ -195,6 +206,7 @@ export interface FileRouteTypes {
     | '/offers'
     | '/opportunities'
     | '/plans'
+    | '/privacy'
     | '/services'
     | '/terms'
     | '/_authenticated/admin'
@@ -213,6 +225,7 @@ export interface RootRouteChildren {
   OffersRoute: typeof OffersRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
   PlansRoute: typeof PlansRoute
+  PrivacyRoute: typeof PrivacyRoute
   ServicesRoute: typeof ServicesRoute
   TermsRoute: typeof TermsRoute
 }
@@ -280,6 +293,13 @@ declare module '@tanstack/react-router' {
       path: '/plans'
       fullPath: '/plans'
       preLoaderRoute: typeof PlansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -354,6 +374,7 @@ const rootRouteChildren: RootRouteChildren = {
   OffersRoute: OffersRoute,
   OpportunitiesRoute: OpportunitiesRoute,
   PlansRoute: PlansRoute,
+  PrivacyRoute: PrivacyRoute,
   ServicesRoute: ServicesRoute,
   TermsRoute: TermsRoute,
 }
