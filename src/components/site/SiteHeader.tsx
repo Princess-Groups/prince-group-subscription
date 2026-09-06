@@ -45,11 +45,11 @@ export function BrandMark({ tone = "dark" }: { tone?: "dark" | "light" }) {
           PRINCE GROUP
         </span>
         <span
-          className={`mt-1 truncate text-[10px] font-semibold uppercase tracking-[0.18em] ${
+          className={`mt-1 hidden truncate text-[10px] font-semibold uppercase tracking-[0.18em] sm:block ${
             tone === "light" ? "text-accent" : "text-secondary"
           }`}
         >
-          {BRAND_STATEMENT}
+          Premium Access · Kanyakumari
         </span>
       </span>
     </span>
