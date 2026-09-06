@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { LegalPage } from "@/components/site/LegalPage";
 
-const title = "Refund & Cancellation Policy | OliveEdge";
+const title = "Refund & Cancellation Policy | PRINCE";
 const description =
-  "How subscription cancellations, renewals and refund requests are handled for OliveEdge memberships.";
+  "How subscription cancellations, renewals and refund requests are handled for PRINCE memberships.";
 
 export const Route = createFileRoute("/refund")({
   head: () => ({

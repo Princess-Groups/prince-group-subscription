@@ -4,7 +4,6 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { PlanCard } from "@/components/site/PlanCard";
-import { AdminManagedNote } from "@/components/site/PublicPage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "@/hooks/useAuth";
 import { settingString, usePlans, useSettings, useSlots } from "@/hooks/usePlatform";

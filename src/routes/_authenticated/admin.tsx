@@ -23,9 +23,9 @@ import { inr, shortDate } from "@/lib/format";
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
     meta: [
-      { title: "Admin Control Centre | OliveEdge" },
+      { title: "Admin Control Centre | PRINCE" },
       { name: "description", content: "Platform analytics, subscription approvals, account status and audit logs." },
-      { property: "og:title", content: "Admin Control Centre | OliveEdge" },
+      { property: "og:title", content: "Admin Control Centre | PRINCE" },
       { property: "og:description", content: "Platform analytics, approvals and audit logs." },
       { name: "robots", content: "noindex" },
     ],

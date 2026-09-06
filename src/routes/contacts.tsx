@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 
-const title = "Kanyakumari Business Contact Directory | OliveEdge";
+const title = "Kanyakumari Business Contact Directory | PRINCE";
 const description =
   "Search a curated B2B directory of businesses by category and area. Phone numbers unlock for subscribed members and every view is logged.";
 

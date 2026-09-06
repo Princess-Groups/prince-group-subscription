@@ -4,7 +4,7 @@ import { PageHero, PublicPage } from "@/components/site/PublicPage";
 import { PlansSection } from "@/components/site/PlansSection";
 import { LoanClientOfferSection, TrustSection } from "@/components/site/sections";
 
-const title = "Subscription Plans & Live Slot Availability | OliveEdge";
+const title = "Subscription Plans & Live Slot Availability | PRINCE";
 const description =
   "Compare Starter, Business and Premium memberships with member discounts, lead quotas and live slot availability, all admin-configurable.";
 

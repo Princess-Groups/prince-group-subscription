@@ -23,9 +23,9 @@ import { inr, shortDate } from "@/lib/format";
 export const Route = createFileRoute("/_authenticated/leads")({
   head: () => ({
     meta: [
-      { title: "My Allocated Leads | OliveEdge" },
+      { title: "My Allocated Leads | PRINCE" },
       { name: "description", content: "Every lead allocated to your account with status, requirement and protected contact reveal." },
-      { property: "og:title", content: "My Allocated Leads | OliveEdge" },
+      { property: "og:title", content: "My Allocated Leads | PRINCE" },
       { property: "og:description", content: "Allocated leads with protected contact reveal." },
       { name: "robots", content: "noindex" },
     ],

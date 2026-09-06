@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useOffers } from "@/hooks/usePlatform";
 import { shortDate } from "@/lib/format";
 
-const title = "Seasonal Offers & Loan Client Discounts | OliveEdge";
+const title = "Seasonal Offers & Loan Client Discounts | PRINCE";
 const description =
   "Current membership offers including December discounts and the special loan-client subscription, all switched on or off by administrators.";
 

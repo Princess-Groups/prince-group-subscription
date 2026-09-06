@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { LegalPage } from "@/components/site/LegalPage";
 
-const title = "Terms & Conditions | OliveEdge";
+const title = "Terms & Conditions | PRINCE";
 const description =
-  "Membership terms covering subscriptions, lead allocation limits, contact access rules and acceptable use of the OliveEdge platform.";
+  "Membership terms covering subscriptions, lead allocation limits, contact access rules and acceptable use of the PRINCE platform.";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({

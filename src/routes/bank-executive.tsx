@@ -5,7 +5,7 @@ import { AdminManagedNote, PageHero, PublicPage } from "@/components/site/Public
 import { PlansSection } from "@/components/site/PlansSection";
 import { Button } from "@/components/ui/button";
 
-const title = "Bank Executive Portal — Leads for Finance Professionals | OliveEdge";
+const title = "Bank Executive Portal — Leads for Finance Professionals | PRINCE";
 const description =
   "A dedicated portal for bank and finance executives with approved accounts, Business or Premium plans and allocated customer leads.";
 

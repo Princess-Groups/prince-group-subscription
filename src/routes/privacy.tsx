@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { LegalPage } from "@/components/site/LegalPage";
 
-const title = "Privacy Policy | OliveEdge";
+const title = "Privacy Policy | PRINCE";
 const description =
-  "How OliveEdge collects, protects and logs member data, lead records and business contact information.";
+  "How PRINCE collects, protects and logs member data, lead records and business contact information.";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({

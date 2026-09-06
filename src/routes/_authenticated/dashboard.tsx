@@ -15,9 +15,9 @@ import { inr, weeklyResetCountdown } from "@/lib/format";
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "Member Dashboard | OliveEdge" },
+      { title: "Member Dashboard | PRINCE" },
       { name: "description", content: "Track your subscription, lead quota, weekly claim attempts and allocations." },
-      { property: "og:title", content: "Member Dashboard | OliveEdge" },
+      { property: "og:title", content: "Member Dashboard | PRINCE" },
       { property: "og:description", content: "Track your subscription, lead quota and allocations." },
       { name: "robots", content: "noindex" },
     ],
