@@ -48,12 +48,12 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-primary/10 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto grid h-18 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 sm:px-6">
-        <Link to="/" className="min-w-0">
+      <div className="mx-auto flex h-18 max-w-7xl items-center gap-3 px-4 sm:px-6">
+        <Link to="/" className="min-w-0 shrink">
           <BrandMark />
         </Link>
 
-        <nav className="hidden items-center gap-0.5 xl:flex">
+        <nav className="mx-auto hidden items-center gap-0.5 xl:flex">
           {NAV.map((item) => (
             <Link
               key={item.to}
@@ -67,7 +67,8 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="ml-auto flex shrink-0 items-center gap-2 xl:ml-0">
+
           <a
             href={`tel:${phone}`}
             className="hidden items-center gap-2 rounded-full border border-primary/15 px-4 py-2 text-xs font-semibold text-primary transition-colors hover:border-secondary/50 hover:bg-muted lg:inline-flex"
