@@ -8,7 +8,7 @@ import { settingString, useSettings } from "@/hooks/usePlatform";
 
 const title = "20 Branches All Over Kanyakumari | PRINCE Branch Network";
 const description =
-  "Find your nearest PRINCE branch. 20 branches across India for loan assistance, documentation support, business services and premium membership access.";
+  "Find your nearest PRINCE branch. 20 branches all over Kanyakumari District for documentation, registration, business services and premium membership access.";
 
 export const Route = createFileRoute("/branches")({
   head: () => ({
@@ -33,8 +33,8 @@ function BranchesPage() {
       <PageHero
         eyebrow="Branch Network"
         title="20 Branches."
-        highlight="One National Network."
-        subtitle="PRINCE operates a growing branch network across Kanyakumari District, giving members local support for loan assistance, documentation and business services wherever they are."
+        highlight="All Over Kanyakumari."
+        subtitle="PRINCE GROUP operates 20 branches all over Kanyakumari District, giving members local support for documentation, registration and business services wherever they are."
         actions={
           <>
             <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
@@ -57,7 +57,7 @@ function BranchesPage() {
             <div className="relative mt-6 grid grid-cols-2 gap-4">
               {[
                 { value: "20", label: "Branches" },
-                { value: "12+", label: "States" },
+                { value: "Kanyakumari", label: "District" },
                 { value: "1,000+", label: "Daily enquiries" },
                 { value: "6L+", label: "Business contacts" },
               ].map((s) => (

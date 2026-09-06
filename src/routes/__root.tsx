@@ -78,11 +78,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "PRINCE — Premium Access, Opportunities, Benefits & Loan Services" },
+      { title: "PRINCE GROUP — Premium Access, Offers, Services & Loan Candidate Data" },
       {
         name: "description",
         content:
-          "PRINCE premium subscription platform for loan services, business opportunities, member discounts and managed leads, with 20 branches across India.",
+          "PRINCE GROUP premium subscription platform for loan candidate data, business contacts, member discounts and managed access, with 20 branches all over Kanyakumari.",
       },
       { name: "author", content: "PRINCE" },
       { property: "og:type", content: "website" },
