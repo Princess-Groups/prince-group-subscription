@@ -32,7 +32,7 @@ export function PageHero({
     <section className="relative overflow-hidden bg-gradient-olive px-4 py-18 text-cream sm:px-6 sm:py-24">
       <div className="grid-lines pointer-events-none absolute inset-0 opacity-50" />
       <div className="hero-orb -right-20 -top-24 size-96 bg-accent/20" />
-      <div className="hero-orb -left-32 bottom--10 size-80 bg-secondary/25" />
+      <div className="hero-orb -left-32 -bottom-10 size-80 bg-secondary/25" />
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="reveal">
