@@ -113,10 +113,12 @@
   --sidebar-border: oklch(0.46 0.075 126);
   --sidebar-ring: oklch(0.834 0.169 121.8);
 
-  --gradient-olive: linear-gradient(135deg, oklch(0.35 0.06 126) 0%, oklch(0.46 0.085 126) 45%, oklch(0.602 0.113 124.5) 100%);
-  --gradient-lime: linear-gradient(120deg, oklch(0.602 0.113 124.5) 0%, oklch(0.834 0.169 121.8) 100%);
+  --gradient-olive: linear-gradient(140deg, oklch(0.245 0.045 148) 0%, oklch(0.315 0.058 145) 48%, oklch(0.395 0.072 138) 100%);
+  --gradient-lime: linear-gradient(120deg, oklch(0.775 0.152 124) 0%, oklch(0.884 0.181 120) 100%);
   --gradient-cream: linear-gradient(180deg, oklch(0.984 0.011 95.2) 0%, oklch(0.955 0.02 100) 100%);
+  --glow-lime: 0 0 0 1px oklch(0.834 0.169 121.8 / 0.28), 0 18px 60px oklch(0.834 0.169 121.8 / 0.28);
 }
+
 
 .dark {
   --background: oklch(0.22 0.02 122);
