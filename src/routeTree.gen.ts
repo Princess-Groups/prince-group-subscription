@@ -19,6 +19,7 @@ import { Route as OffersRouteImport } from './routes/offers'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as PlansRouteImport } from './routes/plans'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as RefundRouteImport } from './routes/refund'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -75,6 +76,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RefundRoute = RefundRouteImport.update({
+  id: '/refund',
+  path: '/refund',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
@@ -117,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/opportunities': typeof OpportunitiesRoute
   '/plans': typeof PlansRoute
   '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -134,6 +141,7 @@ export interface FileRoutesByTo {
   '/opportunities': typeof OpportunitiesRoute
   '/plans': typeof PlansRoute
   '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -153,6 +161,7 @@ export interface FileRoutesById {
   '/opportunities': typeof OpportunitiesRoute
   '/plans': typeof PlansRoute
   '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
@@ -172,6 +181,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/plans'
     | '/privacy'
+    | '/refund'
     | '/services'
     | '/terms'
     | '/admin'
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/plans'
     | '/privacy'
+    | '/refund'
     | '/services'
     | '/terms'
     | '/admin'
@@ -207,6 +218,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/plans'
     | '/privacy'
+    | '/refund'
     | '/services'
     | '/terms'
     | '/_authenticated/admin'
@@ -226,6 +238,7 @@ export interface RootRouteChildren {
   OpportunitiesRoute: typeof OpportunitiesRoute
   PlansRoute: typeof PlansRoute
   PrivacyRoute: typeof PrivacyRoute
+  RefundRoute: typeof RefundRoute
   ServicesRoute: typeof ServicesRoute
   TermsRoute: typeof TermsRoute
 }
@@ -302,6 +315,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/refund': {
+      id: '/refund'
+      path: '/refund'
+      fullPath: '/refund'
+      preLoaderRoute: typeof RefundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
@@ -375,6 +395,7 @@ const rootRouteChildren: RootRouteChildren = {
   OpportunitiesRoute: OpportunitiesRoute,
   PlansRoute: PlansRoute,
   PrivacyRoute: PrivacyRoute,
+  RefundRoute: RefundRoute,
   ServicesRoute: ServicesRoute,
   TermsRoute: TermsRoute,
 }
