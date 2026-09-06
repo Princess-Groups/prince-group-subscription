@@ -25,6 +25,7 @@ import {
 
 import benefitsVisual from "@/assets/prince-benefits.jpg";
 import branchesVisual from "@/assets/prince-branches.jpg";
+import heroMap from "@/assets/prince-hero-map.png.asset.json";
 import loansVisual from "@/assets/prince-loans.jpg";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
@@ -43,25 +44,29 @@ export function HeroSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-gradient-olive text-cream">
-      <div className="grid-lines pointer-events-none absolute inset-0 opacity-50" />
-      <div className="hero-orb -left-32 top-10 size-96 bg-accent/25" />
-      <div className="hero-orb -right-24 bottom-0 size-[30rem] bg-secondary/30" />
+    <section className="relative isolate overflow-hidden text-cream">
+      <img
+        src={heroMap.url}
+        alt="Glowing green map with connected location pins representing the PRINCE branch network"
+        className="absolute inset-0 -z-20 size-full object-cover"
+      />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.18_0.05_148/0.94)_0%,oklch(0.2_0.06_146/0.86)_42%,oklch(0.22_0.06_144/0.42)_100%)]" />
+      <div className="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-25" />
 
-      <div className="relative mx-auto grid max-w-7xl gap-14 px-4 py-20 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
-        <div className="reveal">
+      <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:py-32">
+        <div className="reveal max-w-2xl">
           <span className="pill-badge">
             <Sparkles className="size-3.5" /> Limited Premium Membership
           </span>
-          <h1 className="mt-6 text-4xl font-bold leading-[1.06] sm:text-5xl lg:text-6xl">
+          <h1 className="mt-6 text-4xl font-bold leading-[1.06] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)] sm:text-5xl lg:text-6xl">
             Unlock Premium Access.
             <span className="block text-gradient-olive">Unlock Better Opportunities.</span>
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/70 sm:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/80 sm:text-lg">
             Choose your subscription plan and unlock exclusive discounts, business opportunities,
             loan profiles, premium leads and powerful business resources.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
               <Link to="/plans">Explore Plans →</Link>
             </Button>
@@ -69,85 +74,15 @@ export function HeroSection() {
               <Link to="/opportunities">View Available Opportunities</Link>
             </Button>
           </div>
-
-          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} className="glass-dark rounded-2xl px-4 py-4">
-                <p className="font-display text-xl font-bold text-accent">{s.value}</p>
-                <p className="mt-1 text-[11px] uppercase tracking-wider text-cream/60">{s.label}</p>
-              </div>
-            ))}
-          </div>
-          <p className="mt-3 text-[11px] text-cream/45">
-            Statistics shown here are admin-managed display values, editable from Admin Settings.
-          </p>
         </div>
 
-        <div className="relative hidden min-h-[30rem] lg:block">
-          <div className="absolute inset-8 rounded-full bg-accent/10 blur-3xl" />
-          <img
-            src={branchesVisual}
-            alt="Glowing map of India showing PRINCE branch locations and connected network pins"
-            width={1024}
-            height={1024}
-            className="floaty absolute inset-0 m-auto w-[86%] rounded-[2.5rem] object-contain mix-blend-lighten"
-          />
-
-
-          <div className="floaty glass-dark absolute right-4 top-4 w-64 rounded-3xl p-5">
-            <div className="flex items-center gap-2 text-accent">
-              <Landmark className="size-4" />
-              <span className="text-xs font-semibold uppercase tracking-wider">Loan Profiles</span>
+        <div className="mt-14 grid grid-cols-2 gap-3 sm:mt-16 lg:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.label} className="glass-dark rounded-2xl px-4 py-4">
+              <p className="font-display text-xl font-bold text-accent">{s.value}</p>
+              <p className="mt-1 text-[11px] uppercase tracking-wider text-cream/70">{s.label}</p>
             </div>
-            <p className="mt-3 font-display text-3xl font-bold">1,00,000+</p>
-            <div className="mt-4 space-y-2">
-              {["Personal", "Business", "Home", "MSME"].map((t, i) => (
-                <div key={t} className="flex items-center justify-between text-xs text-cream/70">
-                  <span>{t} Loan</span>
-                  <span className="h-1.5 w-24 overflow-hidden rounded-full bg-cream/15">
-                    <span
-                      className="block h-full rounded-full bg-gradient-lime"
-                      style={{ width: `${90 - i * 15}%` }}
-                    />
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div
-            className="floaty glass-dark absolute bottom-12 left-0 w-72 rounded-3xl p-5"
-            style={{ animationDelay: "1.4s" }}
-          >
-            <div className="flex items-center gap-2 text-accent">
-              <BarChart3 className="size-4" />
-              <span className="text-xs font-semibold uppercase tracking-wider">Lead Engine</span>
-            </div>
-            <div className="mt-4 flex items-end gap-1.5">
-              {[38, 62, 45, 80, 55, 92, 70].map((h, i) => (
-                <span
-                  key={i}
-                  className="w-6 rounded-t-md bg-gradient-lime"
-                  style={{ height: `${h}px`, opacity: 0.45 + i * 0.08 }}
-                />
-              ))}
-            </div>
-            <p className="mt-4 text-xs text-cream/70">
-              Weekly claim attempts, quotas and duplicate prevention enforced server-side.
-            </p>
-          </div>
-
-          <div
-            className="floaty absolute bottom-0 right-16 w-56 rounded-2xl border border-accent/30 bg-accent/15 p-4 backdrop-blur-xl"
-            style={{ animationDelay: "0.7s" }}
-          >
-            <div className="flex items-center gap-2 text-accent">
-              <Users className="size-4" />
-              <span className="text-xs font-semibold uppercase tracking-wider">B2B Directory</span>
-            </div>
-            <p className="mt-2 font-display text-2xl font-bold">6,00,000+</p>
-            <p className="text-[11px] text-cream/70">Verified business directory</p>
-          </div>
+          ))}
         </div>
       </div>
     </section>
