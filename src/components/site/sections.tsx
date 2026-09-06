@@ -23,6 +23,9 @@ import {
   Users,
 } from "lucide-react";
 
+import benefitsVisual from "@/assets/prince-benefits.jpg";
+import branchesVisual from "@/assets/prince-branches.jpg";
+import loansVisual from "@/assets/prince-loans.jpg";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
 import { settingString, useSettings } from "@/hooks/usePlatform";
@@ -82,6 +85,14 @@ export function HeroSection() {
 
         <div className="relative hidden min-h-[30rem] lg:block">
           <div className="absolute inset-8 rounded-full bg-accent/10 blur-3xl" />
+          <img
+            src={benefitsVisual}
+            alt="Premium PRINCE membership benefits: offers, discounts and business opportunities"
+            width={1024}
+            height={1024}
+            className="floaty absolute inset-0 m-auto w-[86%] rounded-[2.5rem] object-contain mix-blend-lighten"
+          />
+
 
           <div className="floaty glass-dark absolute right-4 top-4 w-64 rounded-3xl p-5">
             <div className="flex items-center gap-2 text-accent">
