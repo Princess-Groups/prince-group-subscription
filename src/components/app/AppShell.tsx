@@ -2,11 +2,11 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   CreditCard,
+  Crown,
   LayoutDashboard,
   LogOut,
   Menu,
   ShieldCheck,
-  Sparkles,
   Users,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -59,8 +59,8 @@ export function AppShell({
           className={cn(
             "flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-medium transition-colors",
             pathname === item.to
-              ? "bg-primary-foreground/10 text-accent"
-              : "text-primary-foreground/70 hover:bg-primary-foreground/5 hover:text-primary-foreground",
+              ? "bg-accent/15 text-accent shadow-soft"
+              : "text-cream/70 hover:bg-cream/5 hover:text-cream",
           )}
         >
           <item.icon className="size-4" />
@@ -74,8 +74,8 @@ export function AppShell({
           className={cn(
             "flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-medium transition-colors",
             pathname === "/admin"
-              ? "bg-primary-foreground/10 text-accent"
-              : "text-primary-foreground/70 hover:bg-primary-foreground/5 hover:text-primary-foreground",
+              ? "bg-accent/15 text-accent shadow-soft"
+              : "text-cream/70 hover:bg-cream/5 hover:text-cream",
           )}
         >
           <ShieldCheck className="size-4" />
