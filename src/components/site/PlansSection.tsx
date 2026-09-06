@@ -74,7 +74,10 @@ export function PlansSection({
               <PlanCard
                 key={plan.id}
                 plan={plan}
-                slot={slots?.find((s) => s.plan_code === plan.code)}
+                {...(() => {
+                  const slot = slots?.find((s) => s.plan_code === plan.code);
+                  return slot ? { slot } : {};
+                })()}
                 supportPhone={phone}
                 busy={busy === plan.code}
                 onSubscribe={(code) => {

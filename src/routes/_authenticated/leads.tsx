@@ -69,7 +69,10 @@ function LeadsPage() {
       return { leadId, res: data as Record<string, unknown> };
     },
     onSuccess: ({ leadId, res }) => {
-      if (res?.["error"]) return toast.error("This lead is not allocated to your account.");
+      if (res?.["error"]) {
+        toast.error("This lead is not allocated to your account.");
+        return;
+      }
       setRevealed((r) => ({ ...r, [leadId]: String(res["phone"] ?? "Not available") }));
       toast.success("Contact revealed — this view has been logged.");
     },

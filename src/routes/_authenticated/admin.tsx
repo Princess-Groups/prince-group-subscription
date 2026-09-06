@@ -113,7 +113,10 @@ function AdminPage() {
       return data as Record<string, unknown>;
     },
     onSuccess: (res) => {
-      if (res?.["error"]) return toast.error("An administrator already exists.");
+      if (res?.["error"]) {
+        toast.error("An administrator already exists.");
+        return;
+      }
       toast.success("You are now the platform administrator.");
       queryClient.invalidateQueries();
     },

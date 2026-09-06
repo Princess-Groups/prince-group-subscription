@@ -42,3 +42,26 @@ export function upcomingMonths(count = 3) {
   }
   return out;
 }
+
+export function weeklyResetCountdown(now: Date = new Date()) {
+  const next = new Date(now);
+  const daysUntilMonday = (8 - now.getDay()) % 7 || 7;
+  next.setDate(now.getDate() + daysUntilMonday);
+  next.setHours(0, 0, 0, 0);
+  const hours = Math.max(Math.round((next.getTime() - now.getTime()) / 3600000), 0);
+  const days = Math.floor(hours / 24);
+  return days > 0 ? `Resets in ${days}d ${hours % 24}h` : `Resets in ${hours}h`;
+}
+
+export function upcomingPeriods(count = 3, from: Date = new Date()) {
+  const out: { value: string; label: string }[] = [];
+  for (let i = 1; i <= count; i++) {
+    const d = new Date(from.getFullYear(), from.getMonth() + i, 1);
+    const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    out.push({
+      value,
+      label: d.toLocaleDateString("en-IN", { month: "long", year: "numeric" }),
+    });
+  }
+  return out;
+}

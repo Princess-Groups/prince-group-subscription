@@ -102,7 +102,10 @@ function SubscriptionPage() {
       return data as Record<string, unknown>;
     },
     onSuccess: (res) => {
-      if (res?.["error"]) return toast.error("An active subscription is required.");
+      if (res?.["error"]) {
+        toast.error("An active subscription is required.");
+        return;
+      }
       toast.success("Advance period reserved — pending payment verification.");
       queryClient.invalidateQueries();
     },
@@ -173,7 +176,7 @@ function SubscriptionPage() {
               <span className="font-semibold text-accent">{sub.advance_period ?? "none"}</span>
             </p>
             <div className="mt-5 space-y-2">
-              {upcomingPeriods(3).map((p) => (
+              {upcomingPeriods(3).map((p: { value: string; label: string }) => (
                 <Button
                   key={p.value}
                   variant="onOlive"
