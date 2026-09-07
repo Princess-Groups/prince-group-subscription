@@ -476,7 +476,7 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
           </header>
 
           <div className="mt-10 grid items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-5">
-            {HOMEPAGE_BRANCHES.map((branch, index) => (
+            {HOMEPAGE_BRANCHES.map((branch) => (
               <article
                 key={branch.name}
                 className="group flex min-h-[25rem] flex-col overflow-hidden rounded-2xl border border-primary/10 bg-primary text-cream shadow-soft transition-[transform,box-shadow] duration-500 ease-out motion-safe:hover:-translate-y-1.5 motion-safe:hover:shadow-lift"
