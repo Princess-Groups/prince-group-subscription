@@ -432,7 +432,21 @@ export const BRANCHES = [
   "Boothapandi",
 ];
 
-const BRANCH_PHOTOS = [
+const BRANCH_PHOTOS: Record<string, string> = {
+  "Monday Market (Head Office)": nagercoilBranch.url,
+  Kollemcode: kollemcodeBranch.url,
+  Palugal: palugalBranch.url,
+  Arumanai: arumanaiBranch.url,
+  Marthandam: marthandamBranch.url,
+  Thiruvattar: thiruvattarBranch.url,
+  Verkilambi: verkilambiBranch.url,
+  Munchirai: munchiraiBranch.url,
+  Karungal: karungalBranch.url,
+  Palliyadi: palliyadiBranch.url,
+  Nagercoil: nagercoilBranch.url,
+};
+
+const REFERENCE_BRANCH_PHOTOS = [
   nagercoilBranch.url,
   kollemcodeBranch.url,
   palugalBranch.url,
@@ -448,7 +462,7 @@ const BRANCH_PHOTOS = [
 const HOMEPAGE_BRANCHES = BRANCHES.map((name, index) => ({
   name,
   address: `${name.replace(" (Head Office)", "")}, Kanyakumari District`,
-  image: BRANCH_PHOTOS[index % BRANCH_PHOTOS.length],
+  image: BRANCH_PHOTOS[name] ?? REFERENCE_BRANCH_PHOTOS[index % REFERENCE_BRANCH_PHOTOS.length],
 }));
 
 export function BranchesSection({ full = false }: { full?: boolean }) {
