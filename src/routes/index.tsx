@@ -8,7 +8,6 @@ import {
   ContactCtaSection,
   HeroSection,
   LoanCandidateDataSection,
-  LoanClientOfferSection,
   ServiceShowcaseSection,
   SlotAvailabilitySection,
   TrustSection,
@@ -42,7 +41,6 @@ function Index() {
       <LoanCandidateDataSection />
       <PlansSection />
       <BranchesSection />
-      <LoanClientOfferSection />
       <TrustSection />
       <ContactCtaSection />
     </PublicPage>

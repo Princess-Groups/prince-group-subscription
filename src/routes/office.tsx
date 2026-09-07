@@ -14,6 +14,7 @@ import {
 import heroOffice from "@/assets/prince-hero-office.png.asset.json";
 import { PublicPage } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
+import { phoneDisplay } from "@/lib/format";
 import { settingString, useSettings } from "@/hooks/usePlatform";
 
 const title = "PRINCE Corporate Office — Address, Hours & Departments";
@@ -36,7 +37,7 @@ export const Route = createFileRoute("/office")({
 
 function OfficePage() {
   const { data: settings } = useSettings();
-  const phone = settingString(settings, "support_phone", "95559155535");
+  const phone = settingString(settings, "support_phone", "9559155535");
   const email = settingString(settings, "support_email", "support@prince.in");
   const address = settingString(
     settings,
@@ -46,7 +47,7 @@ function OfficePage() {
 
   const cards = [
     { icon: MapPin, title: "Head Office", body: address },
-    { icon: Phone, title: "Direct Line", body: phone, href: `tel:${phone}` },
+    { icon: Phone, title: "Direct Line", body: phoneDisplay(phone), href: `tel:${phone}` },
     { icon: Mail, title: "Email Desk", body: email, href: `mailto:${email}` },
     { icon: Clock, title: "Working Hours", body: "Monday – Saturday · 9:30 AM to 7:00 PM IST" },
   ];
@@ -167,7 +168,7 @@ function OfficePage() {
                   <Link to="/contact">Send an enquiry</Link>
                 </Button>
                 <Button asChild variant="onOlive">
-                  <a href={`tel:${phone}`}>Call {phone}</a>
+                  <a href={`tel:${phone}`}>Call {phoneDisplay(phone)}</a>
                 </Button>
               </div>
             </div>

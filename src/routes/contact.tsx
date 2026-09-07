@@ -3,6 +3,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 
 import { AdminManagedNote, PageHero, PublicPage } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
+import { phoneDisplay } from "@/lib/format";
 import { settingString, useSettings } from "@/hooks/usePlatform";
 
 const title = "Contact Support & Membership Availability | PRINCE";
@@ -25,7 +26,7 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const { data: settings } = useSettings();
-  const phone = settingString(settings, "support_phone", "95559155535");
+  const phone = settingString(settings, "support_phone", "9559155535");
   const email = settingString(settings, "support_email", "support@oliveedge.in");
   const address = settingString(settings, "support_address", "Kanyakumari, Tamil Nadu");
 
@@ -39,7 +40,7 @@ function ContactPage() {
 
       <div className="mx-auto grid max-w-7xl gap-6 px-4 py-16 sm:px-6 lg:grid-cols-3">
         {[
-          { icon: Phone, label: "Call us", value: phone, href: `tel:${phone}` },
+          { icon: Phone, label: "Call us", value: phoneDisplay(phone), href: `tel:${phone}` },
           { icon: Mail, label: "Email", value: email, href: `mailto:${email}` },
           { icon: MapPin, label: "Office", value: address },
         ].map((c) => (

@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { PageHero, PublicPage } from "@/components/site/PublicPage";
+import { PlansHero } from "@/components/site/PlansHero";
+import { PublicPage } from "@/components/site/PublicPage";
 import { PlansSection } from "@/components/site/PlansSection";
-import { LoanClientOfferSection, TrustSection } from "@/components/site/sections";
+import { TrustSection } from "@/components/site/sections";
 
 const title = "Subscription Plans & Live Slot Availability | PRINCE";
 const description =
@@ -25,13 +26,8 @@ export const Route = createFileRoute("/plans")({
 function PlansPage() {
   return (
     <PublicPage>
-      <PageHero
-        eyebrow="Membership"
-        title="Plans built for discounts, opportunities and leads"
-        subtitle="Prices, discounts, lead limits and slot counts are managed by administrators and validated on the server at checkout."
-      />
+      <PlansHero />
       <PlansSection title="All Subscription Plans" />
-      <LoanClientOfferSection />
       <TrustSection />
     </PublicPage>
   );
