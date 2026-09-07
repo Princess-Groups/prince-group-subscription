@@ -20,6 +20,7 @@ import heroMap from "@/assets/prince-hero-map.png.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
+import { phoneDisplay } from "@/lib/format";
 import { settingString, useSettings } from "@/hooks/usePlatform";
 
 export const BRANCH_TAGLINE = "20 Branches All Over Kanyakumari";
@@ -540,7 +541,7 @@ export function ContactCtaSection() {
         <div className="relative mt-8 flex flex-wrap justify-center gap-3">
           <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
             <a href={`tel:${phone}`}>
-              <Phone className="size-4" /> Call Now — {phone}
+              <Phone className="size-4" /> Call Now — {phoneDisplay(phone)}
             </a>
           </Button>
           <Button asChild size="lg" variant="onOlive" className="w-full sm:w-auto">

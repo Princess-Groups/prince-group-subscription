@@ -65,3 +65,8 @@ export function upcomingPeriods(count = 3, from: Date = new Date()) {
   }
   return out;
 }
+
+export function phoneDisplay(raw: string) {
+  const d = raw.replace(/\D/g, "");
+  return d.length === 10 ? `${d.slice(0, 5)} ${d.slice(5)}` : raw;
+}

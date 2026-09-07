@@ -14,6 +14,7 @@ import {
 import heroOffice from "@/assets/prince-hero-office.png.asset.json";
 import { PublicPage } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
+import { phoneDisplay } from "@/lib/format";
 import { settingString, useSettings } from "@/hooks/usePlatform";
 
 const title = "PRINCE Corporate Office — Address, Hours & Departments";
@@ -167,7 +168,7 @@ function OfficePage() {
                   <Link to="/contact">Send an enquiry</Link>
                 </Button>
                 <Button asChild variant="onOlive">
-                  <a href={`tel:${phone}`}>Call {phone}</a>
+                  <a href={`tel:${phone}`}>Call {phoneDisplay(phone)}</a>
                 </Button>
               </div>
             </div>

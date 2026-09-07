@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { PlanCard } from "@/components/site/PlanCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "@/hooks/useAuth";
+import { phoneDisplay } from "@/lib/format";
 import { settingString, usePlans, useSettings, useSlots } from "@/hooks/usePlatform";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -81,7 +82,7 @@ export function PlansSection({
                   const slot = slots?.find((s) => s.plan_code === plan.code);
                   return slot ? { slot } : {};
                 })()}
-                supportPhone={phone}
+                supportPhone={phoneDisplay(phone)}
                 busy={busy === plan.code}
                 onSubscribe={(code) => {
                   if (!user) {

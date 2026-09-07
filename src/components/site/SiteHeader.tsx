@@ -6,6 +6,7 @@ import princeLogo from "@/assets/prince-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useSession } from "@/hooks/useAuth";
+import { phoneDisplay } from "@/lib/format";
 import { settingString, useSettings } from "@/hooks/usePlatform";
 
 const NAV = [
@@ -100,7 +101,7 @@ export function SiteHeader() {
             href={`tel:${phone}`}
             className="hidden items-center gap-2 rounded-full border border-primary/15 px-4 py-2 text-xs font-semibold text-primary transition-colors hover:border-secondary/50 hover:bg-muted lg:inline-flex"
           >
-            <Phone className="size-3.5 text-secondary" /> {phone}
+            <Phone className="size-3.5 text-secondary" /> {phoneDisplay(phone)}
           </a>
 
           {user ? (
@@ -158,7 +159,7 @@ export function SiteHeader() {
                 </div>
                 <Button asChild variant="lime" className="mt-6 w-full">
                   <a href={`tel:${phone}`}>
-                    <Phone className="size-4" /> Call {phone}
+                    <Phone className="size-4" /> Call {phoneDisplay(phone)}
                   </a>
                 </Button>
               </div>

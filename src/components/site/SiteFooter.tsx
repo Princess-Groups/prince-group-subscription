@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { MapPin, Phone } from "lucide-react";
 
 import princeLogo from "@/assets/prince-logo.png.asset.json";
+import { phoneDisplay } from "@/lib/format";
 import { settingString, useSettings } from "@/hooks/usePlatform";
 
 export function SiteFooter() {
@@ -40,7 +41,7 @@ export function SiteFooter() {
               href={`tel:${phone}`}
               className="inline-flex items-center gap-2 rounded-full border border-accent/40 px-4 py-2 text-sm font-semibold text-accent transition-all hover:-translate-y-0.5 hover:bg-accent hover:text-accent-foreground"
             >
-              <Phone className="size-4" /> {phone}
+              <Phone className="size-4" /> {phoneDisplay(phone)}
             </a>
             <Link
               to="/branches"
