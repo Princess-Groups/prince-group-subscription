@@ -16,8 +16,8 @@ import {
   Users,
 } from "lucide-react";
 
-import kanyakumariVisual from "@/assets/prince-kanyakumari.jpg";
 import bankExecutiveTeam from "@/assets/bank-executive-team.webp";
+import branchesBackground from "@/assets/prince-kanyakumari-branches-bg.png.asset.json";
 import heroMap from "@/assets/prince-homepage-hero-map.png.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
@@ -425,26 +425,26 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
   const list = full ? BRANCHES : BRANCHES.slice(0, 10);
 
   return (
-    <section className="bg-gradient-cream py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <SectionHeading
-            eyebrow="Branch Network"
-            title="20 Branches"
-            highlight="All Over Kanyakumari"
-            subtitle="Local teams across Kanyakumari District for documentation, registration, business and data services — with admin-verified coverage in every town."
-          />
-          <div className="order-last lg:order-none">
-            <img
-              src={kanyakumariVisual}
-              alt="Glowing map of Kanyakumari district with Prince Group branch location pins"
-              width={1280}
-              height={1024}
-              loading="lazy"
-              className="mx-auto w-full rounded-[2rem] object-cover shadow-lift"
-            />
-          </div>
-        </div>
+    <section
+      className="relative bg-cover bg-center bg-no-repeat py-20"
+      style={{ backgroundImage: `url(${branchesBackground.url})` }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, oklch(0.18 0.05 148 / 0.72) 0%, oklch(0.18 0.05 148 / 0.42) 50%, oklch(0.18 0.05 148 / 0.72) 100%)",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
+        <SectionHeading
+          tone="light"
+          eyebrow="Branch Network"
+          title="20 Branches"
+          highlight="All Over Kanyakumari"
+          subtitle="Local teams across Kanyakumari District for documentation, registration, business and data services — with admin-verified coverage in every town."
+        />
 
         <div className="mt-12">
           <div className="relative overflow-hidden rounded-[2rem] bg-gradient-olive p-8 text-cream shadow-lift">
@@ -495,10 +495,12 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
           ))}
         </div>
 
-        <AdminManagedNote>
-          Branch towns, addresses and contact routing are configurable from Admin Settings; the list
-          above is the current published coverage across Kanyakumari District.
-        </AdminManagedNote>
+        <div className="mt-3 rounded-2xl bg-olive-dark/60 px-4 py-3 text-cream/70">
+          <AdminManagedNote>
+            Branch towns, addresses and contact routing are configurable from Admin Settings; the list
+            above is the current published coverage across Kanyakumari District.
+          </AdminManagedNote>
+        </div>
       </div>
     </section>
   );
