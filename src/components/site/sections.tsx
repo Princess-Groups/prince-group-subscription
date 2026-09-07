@@ -18,10 +18,18 @@ import {
 } from "lucide-react";
 
 import bankExecutiveTeam from "@/assets/bank-executive-team.webp";
-import branchNetworkImage from "@/assets/prince-branches.jpg";
+import arumanaiBranch from "@/assets/branches/branch-arumanai.webp.asset.json";
+import karungalBranch from "@/assets/branches/branch-karungal.webp.asset.json";
+import kollemcodeBranch from "@/assets/branches/branch-kollemcode.webp.asset.json";
+import marthandamBranch from "@/assets/branches/branch-marthandam.webp.asset.json";
+import munchiraiBranch from "@/assets/branches/branch-munchirai.webp.asset.json";
+import nagercoilBranch from "@/assets/branches/branch-nagercoil.webp.asset.json";
+import palliyadiBranch from "@/assets/branches/branch-palliyadi.webp.asset.json";
+import palugalBranch from "@/assets/branches/branch-palugal.webp.asset.json";
+import thiruvattarBranch from "@/assets/branches/branch-thiruvattar.webp.asset.json";
+import verkilambiBranch from "@/assets/branches/branch-verkilambi.webp.asset.json";
 import branchesBackground from "@/assets/prince-kanyakumari-branches-bg.png.asset.json";
 import heroMap from "@/assets/prince-homepage-hero-map.png.asset.json";
-import kanyakumariImage from "@/assets/prince-kanyakumari.jpg";
 import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
@@ -424,11 +432,37 @@ export const BRANCHES = [
   "Boothapandi",
 ];
 
-const HOMEPAGE_BRANCHES = BRANCHES.slice(0, 10).map((name, index) => ({
+const BRANCH_PHOTOS: Record<string, string> = {
+  "Monday Market (Head Office)": nagercoilBranch.url,
+  Kollemcode: kollemcodeBranch.url,
+  Palugal: palugalBranch.url,
+  Arumanai: arumanaiBranch.url,
+  Marthandam: marthandamBranch.url,
+  Thiruvattar: thiruvattarBranch.url,
+  Verkilambi: verkilambiBranch.url,
+  Munchirai: munchiraiBranch.url,
+  Karungal: karungalBranch.url,
+  Palliyadi: palliyadiBranch.url,
+  Nagercoil: nagercoilBranch.url,
+};
+
+const REFERENCE_BRANCH_PHOTOS = [
+  nagercoilBranch.url,
+  kollemcodeBranch.url,
+  palugalBranch.url,
+  arumanaiBranch.url,
+  marthandamBranch.url,
+  thiruvattarBranch.url,
+  verkilambiBranch.url,
+  munchiraiBranch.url,
+  karungalBranch.url,
+  palliyadiBranch.url,
+];
+
+const HOMEPAGE_BRANCHES = BRANCHES.map((name, index) => ({
   name,
   address: `${name.replace(" (Head Office)", "")}, Kanyakumari District`,
-  image: index % 2 === 0 ? kanyakumariImage : branchNetworkImage,
-  imagePosition: index % 4 === 0 ? "center 28%" : index % 4 === 1 ? "center 62%" : index % 4 === 2 ? "left center" : "right center",
+  image: BRANCH_PHOTOS[name] ?? REFERENCE_BRANCH_PHOTOS[index % REFERENCE_BRANCH_PHOTOS.length],
 }));
 
 export function BranchesSection({ full = false }: { full?: boolean }) {
@@ -440,7 +474,7 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
     return (
       <section className="relative overflow-hidden bg-cream-soft py-20 sm:py-24">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-secondary/35 to-transparent" />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="relative mx-auto max-w-[90rem] px-4 sm:px-6">
           <header className="mx-auto max-w-2xl text-center">
             <span className="mx-auto grid size-12 place-items-center rounded-full bg-accent/15 text-secondary shadow-soft">
               <MapPin className="size-6" aria-hidden />
@@ -455,50 +489,48 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
             </p>
           </header>
 
-          <div className="mt-12 grid items-stretch gap-7 sm:grid-cols-2 lg:gap-8">
-            {HOMEPAGE_BRANCHES.map((branch, index) => (
+          <div className="mt-10 grid items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-5">
+            {HOMEPAGE_BRANCHES.map((branch) => (
               <article
                 key={branch.name}
-                className="group flex min-h-[31rem] flex-col overflow-hidden rounded-3xl border border-primary/10 bg-primary text-cream shadow-soft transition-[transform,box-shadow] duration-500 ease-out motion-safe:hover:-translate-y-1.5 motion-safe:hover:shadow-lift"
+                className="group flex min-h-[25rem] flex-col overflow-hidden rounded-2xl border border-primary/10 bg-primary text-cream shadow-soft transition-[transform,box-shadow] duration-500 ease-out motion-safe:hover:-translate-y-1.5 motion-safe:hover:shadow-lift"
               >
-                <div className="relative min-h-64 flex-[1.08] overflow-hidden">
+                <div className="relative aspect-[1.52/1] shrink-0 overflow-hidden">
                   <img
                     src={branch.image}
                     alt={`${branch.name.replace(" (Head Office)", "")} branch location in Kanyakumari District`}
                     loading="lazy"
                     className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.035]"
-                    style={{ objectPosition: branch.imagePosition }}
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary" />
-                  <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-cream/20 bg-primary/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-cream shadow-soft backdrop-blur-md">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary" />
+                  <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-cream/20 bg-primary/85 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-cream shadow-soft backdrop-blur-md">
                     <Building2 className="size-3" aria-hidden /> Branch Office
                   </span>
-                  <div className="absolute inset-x-0 bottom-0 px-6 pb-5 sm:px-7">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-accent">
-                      {index === 0 ? "Head office" : `Kanyakumari branch ${String(index + 1).padStart(2, "0")}`}
-                    </p>
-                    <h3 className="mt-1 text-2xl font-bold text-cream">{branch.name}</h3>
-                    <p className="mt-1 text-sm text-cream/75">
+                </div>
+
+                <div className="-mt-10 flex flex-1 flex-col bg-gradient-to-b from-transparent via-primary/95 to-olive-dark px-5 pb-5 pt-3">
+                  <div className="relative min-h-[5.5rem]">
+                    <h3 className="text-xl font-bold text-cream">{branch.name}</h3>
+                    <p className="mt-1 text-xs leading-relaxed text-cream/80">
                       Documentation · Registration · Business services
                     </p>
                   </div>
-                </div>
-
-                <div className="grid min-h-48 flex-[0.92] content-center gap-4 border-t border-cream/10 bg-olive-dark px-6 py-6 sm:px-7">
-                  <div className="grid grid-cols-[1.25rem_minmax(0,1fr)] items-start gap-3">
-                    <MapPin className="mt-0.5 size-5 text-accent" aria-hidden />
-                    <p className="text-sm leading-relaxed text-cream/80">{branch.address}</p>
-                  </div>
-                  <a
-                    href={`tel:${phone}`}
-                    className="grid grid-cols-[1.25rem_minmax(0,1fr)] items-center gap-3 text-sm font-semibold text-cream transition-colors hover:text-accent"
-                  >
-                    <Phone className="size-5 text-accent" aria-hidden />
-                    <span>+91 {phoneDisplay(phone)}</span>
-                  </a>
-                  <div className="grid grid-cols-[1.25rem_minmax(0,1fr)] items-center gap-3">
-                    <Clock3 className="size-5 text-accent" aria-hidden />
-                    <p className="text-sm text-cream/80">Mon – Sat · 9:00 AM – 7:00 PM</p>
+                  <div className="mt-auto grid gap-3 rounded-xl border border-cream/10 bg-olive-dark/65 p-4">
+                    <div className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-start gap-2.5">
+                      <MapPin className="mt-0.5 size-4 text-accent" aria-hidden />
+                      <p className="text-xs leading-relaxed text-cream/80">{branch.address}</p>
+                    </div>
+                    <a
+                      href={`tel:${phone}`}
+                      className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-center gap-2.5 text-xs font-semibold text-cream transition-colors hover:text-accent"
+                    >
+                      <Phone className="size-4 text-accent" aria-hidden />
+                      <span>+91 {phoneDisplay(phone)}</span>
+                    </a>
+                    <div className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-center gap-2.5">
+                      <Clock3 className="size-4 text-accent" aria-hidden />
+                      <p className="text-xs text-cream/80">Mon – Sat · 9:00 AM – 7:00 PM</p>
+                    </div>
                   </div>
                 </div>
               </article>
