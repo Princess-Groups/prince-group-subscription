@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 import kanyakumariVisual from "@/assets/prince-kanyakumari.jpg";
-import heroMap from "@/assets/prince-hero-map.png.asset.json";
+import heroMap from "@/assets/prince-hero-kanyakumari-map.png.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
@@ -35,14 +35,16 @@ const HERO_STATS = [
 
 export function HeroSection() {
   return (
-    <section className="relative isolate overflow-hidden text-cream">
-      <img
-        src={heroMap.url}
-        alt="Glowing green map with connected location pins representing the PRINCE branch network"
-        className="absolute inset-0 -z-20 size-full object-cover"
+    <section className="relative isolate overflow-hidden bg-gradient-olive text-cream">
+      <div
+        role="img"
+        aria-label="Glowing green Kanyakumari map with connected location pins representing the PRINCE branch network"
+        className="absolute inset-0 -z-20 size-full bg-contain bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${heroMap.url})` }}
       />
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.18_0.05_148/0.94)_0%,oklch(0.2_0.06_146/0.86)_42%,oklch(0.22_0.06_144/0.42)_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.18_0.05_148/0.72)_0%,oklch(0.2_0.06_146/0.5)_45%,oklch(0.22_0.06_144/0.22)_100%)]" />
       <div className="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-25" />
+
 
       <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
         <div className="reveal max-w-2xl">
@@ -88,9 +90,33 @@ export function HeroSection() {
 /* ---------------- Live plan slot availability ---------------- */
 
 const SLOT_PLANS = [
-  { name: "₹10 Plan", note: "Valid for 1 Day", slots: 500, emphasis: false },
-  { name: "₹100 Plan", note: "Monthly access", slots: 400, emphasis: false },
-  { name: "₹100 Yearly Plan", note: "Best value — yearly access", slots: 100, emphasis: true },
+  {
+    name: "₹10 Plan",
+    note: "Valid for 1 Day",
+    slots: 500,
+    price: "₹10",
+    per: "per day",
+    badge: "Available now",
+    emphasis: false,
+  },
+  {
+    name: "₹100 Plan",
+    note: "Monthly access",
+    slots: 400,
+    price: "₹100",
+    per: "per month",
+    badge: "Available now",
+    emphasis: false,
+  },
+  {
+    name: "₹100 Yearly Plan",
+    note: "Best value — yearly access",
+    slots: 100,
+    price: "₹100",
+    per: "per year",
+    badge: "Only a few left",
+    emphasis: true,
+  },
 ];
 
 export function SlotAvailabilitySection() {
@@ -104,64 +130,102 @@ export function SlotAvailabilitySection() {
           subtitle="Slot availability is counted live and closes as soon as the limit is reached."
         />
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
           {SLOT_PLANS.map((p) => (
             <div
               key={p.name}
-              className={`card-lift relative overflow-hidden rounded-3xl border p-7 shadow-soft ${
+              className={`relative overflow-hidden rounded-[2rem] border p-7 shadow-soft transition-shadow duration-500 ${
                 p.emphasis
                   ? "border-secondary/40 bg-gradient-olive text-cream shadow-lift"
                   : "border-primary/10 bg-card"
               }`}
             >
-              {p.emphasis ? <div className="hero-orb -right-10 -top-10 size-48 bg-accent/25" /> : null}
-              <p
-                className={`relative text-xs font-bold uppercase tracking-[0.2em] ${
-                  p.emphasis ? "text-accent" : "text-secondary"
+              {p.emphasis ? (
+                <div className="hero-orb -right-10 -top-10 size-48 bg-accent/25" />
+              ) : null}
+
+              <span
+                className={`relative inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] ${
+                  p.emphasis
+                    ? "bg-accent/15 text-accent"
+                    : "bg-secondary/10 text-secondary"
                 }`}
               >
-                {p.emphasis ? "Only a few left" : "Available now"}
-              </p>
+                <span
+                  className={`size-2 rounded-full ${p.emphasis ? "bg-accent" : "bg-secondary"}`}
+                />
+                {p.badge}
+              </span>
+
               <h3
-                className={`relative mt-3 font-display text-2xl font-bold ${
+                className={`relative mt-4 font-display text-2xl font-bold ${
                   p.emphasis ? "text-cream" : "text-primary"
                 }`}
               >
                 {p.name}
               </h3>
-              <p className={`relative mt-1 text-sm ${p.emphasis ? "text-cream/70" : "text-muted-foreground"}`}>
+              <p
+                className={`relative mt-1 text-sm ${
+                  p.emphasis ? "text-cream/70" : "text-muted-foreground"
+                }`}
+              >
                 {p.note}
               </p>
-              <p
-                className={`relative mt-6 font-display font-bold ${
-                  p.emphasis
-                    ? "pulse text-5xl text-accent drop-shadow-[0_0_18px_oklch(0.85_0.19_125/0.45)]"
-                    : "text-4xl text-primary"
-                }`}
-              >
-                <CountUp to={p.slots} />
-              </p>
-              <p
-                className={`relative mt-1 text-xs font-semibold uppercase tracking-wider ${
-                  p.emphasis ? "text-cream/80" : "text-muted-foreground"
-                }`}
-              >
-                {p.emphasis ? "Only 100 slots available" : "Slots available"}
-              </p>
-              <span
-                className={`relative mt-5 block h-1.5 overflow-hidden rounded-full ${
-                  p.emphasis ? "bg-cream/15" : "bg-muted"
-                }`}
-              >
-                <span
-                  className="block h-full rounded-full bg-gradient-lime transition-[width] duration-1000"
-                  style={{ width: p.emphasis ? "18%" : p.slots === 500 ? "72%" : "55%" }}
-                />
-              </span>
+
+              <div className="relative mt-7 flex items-center justify-between gap-4">
+                <div className="relative grid size-[9.5rem] shrink-0 place-items-center sm:size-40">
+                  <span
+                    aria-hidden
+                    className={`slot-ring absolute inset-0 ${p.emphasis ? "slot-ring-neon" : ""}`}
+                  />
+                  <span
+                    aria-hidden
+                    className={`absolute inset-[10px] rounded-full ${
+                      p.emphasis ? "bg-primary/70" : "bg-card"
+                    }`}
+                  />
+                  <span className="relative text-center">
+                    <span
+                      className={`block font-display text-4xl font-bold leading-none sm:text-[2.75rem] ${
+                        p.emphasis ? "text-cream" : "text-primary"
+                      }`}
+                    >
+                      <CountUp to={p.slots} />
+                    </span>
+                    <span
+                      className={`mt-1 block text-[10px] font-semibold uppercase tracking-[0.14em] ${
+                        p.emphasis ? "text-cream/75" : "text-muted-foreground"
+                      }`}
+                    >
+                      Slots available
+                    </span>
+                  </span>
+                </div>
+
+                <div
+                  className={`border-l pl-4 text-right ${
+                    p.emphasis ? "border-cream/20" : "border-primary/10"
+                  }`}
+                >
+                  <p
+                    className={`font-display text-3xl font-bold ${
+                      p.emphasis ? "text-cream" : "text-primary"
+                    }`}
+                  >
+                    {p.price}
+                  </p>
+                  <p
+                    className={`text-xs ${p.emphasis ? "text-cream/70" : "text-muted-foreground"}`}
+                  >
+                    {p.per}
+                  </p>
+                </div>
+              </div>
+
               <Button
                 asChild
                 variant={p.emphasis ? "lime" : "outline"}
-                className="relative mt-6 w-full"
+                className="relative mt-7 w-full"
               >
                 <Link to="/plans">Claim your slot</Link>
               </Button>
@@ -172,6 +236,7 @@ export function SlotAvailabilitySection() {
     </section>
   );
 }
+
 
 /* ---------------- Loan candidate data — profile previews ---------------- */
 
