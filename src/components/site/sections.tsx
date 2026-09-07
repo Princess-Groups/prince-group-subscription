@@ -35,14 +35,16 @@ const HERO_STATS = [
 
 export function HeroSection() {
   return (
-    <section className="relative isolate overflow-hidden text-cream">
-      <img
-        src={heroMap.url}
-        alt="Glowing green map with connected location pins representing the PRINCE branch network"
-        className="absolute inset-0 -z-20 size-full object-cover"
+    <section className="relative isolate overflow-hidden bg-gradient-olive text-cream">
+      <div
+        role="img"
+        aria-label="Glowing green Kanyakumari map with connected location pins representing the PRINCE branch network"
+        className="absolute inset-0 -z-20 size-full bg-contain bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${heroMap.url})` }}
       />
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.18_0.05_148/0.94)_0%,oklch(0.2_0.06_146/0.86)_42%,oklch(0.22_0.06_144/0.42)_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.18_0.05_148/0.88)_0%,oklch(0.2_0.06_146/0.74)_42%,oklch(0.22_0.06_144/0.35)_100%)]" />
       <div className="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-25" />
+
 
       <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
         <div className="reveal max-w-2xl">
