@@ -4,6 +4,7 @@ import {
   BadgeCheck,
   BarChart3,
   Building2,
+  Clock3,
   Database,
   Lock,
   MapPin,
@@ -17,8 +18,10 @@ import {
 } from "lucide-react";
 
 import bankExecutiveTeam from "@/assets/bank-executive-team.webp";
+import branchNetworkImage from "@/assets/prince-branches.jpg";
 import branchesBackground from "@/assets/prince-kanyakumari-branches-bg.png.asset.json";
 import heroMap from "@/assets/prince-homepage-hero-map.png.asset.json";
+import kanyakumariImage from "@/assets/prince-kanyakumari.jpg";
 import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
@@ -421,8 +424,98 @@ export const BRANCHES = [
   "Boothapandi",
 ];
 
+const HOMEPAGE_BRANCHES = BRANCHES.slice(0, 10).map((name, index) => ({
+  name,
+  address: `${name.replace(" (Head Office)", "")}, Kanyakumari District`,
+  image: index % 2 === 0 ? kanyakumariImage : branchNetworkImage,
+  imagePosition: index % 4 === 0 ? "center 28%" : index % 4 === 1 ? "center 62%" : index % 4 === 2 ? "left center" : "right center",
+}));
+
 export function BranchesSection({ full = false }: { full?: boolean }) {
   const list = full ? BRANCHES : BRANCHES.slice(0, 10);
+  const { data: settings } = useSettings();
+  const phone = settingString(settings, "support_phone", "9559155535");
+
+  if (!full) {
+    return (
+      <section className="relative overflow-hidden bg-cream-soft py-20 sm:py-24">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-secondary/35 to-transparent" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <header className="mx-auto max-w-2xl text-center">
+            <span className="mx-auto grid size-12 place-items-center rounded-full bg-accent/15 text-secondary shadow-soft">
+              <MapPin className="size-6" aria-hidden />
+            </span>
+            <div className="mt-5 flex items-center justify-center gap-4 sm:gap-7">
+              <span className="h-px w-12 bg-secondary/55 sm:w-20" aria-hidden />
+              <h2 className="text-3xl font-bold text-primary sm:text-4xl">Our Branches</h2>
+              <span className="h-px w-12 bg-secondary/55 sm:w-20" aria-hidden />
+            </div>
+            <p className="mt-3 text-sm text-muted-foreground sm:text-base">
+              Serving you across Kanyakumari District
+            </p>
+          </header>
+
+          <div className="mt-12 grid items-stretch gap-7 sm:grid-cols-2 lg:gap-8">
+            {HOMEPAGE_BRANCHES.map((branch, index) => (
+              <article
+                key={branch.name}
+                className="group flex min-h-[31rem] flex-col overflow-hidden rounded-3xl border border-primary/10 bg-primary text-cream shadow-soft transition-[transform,box-shadow] duration-500 ease-out motion-safe:hover:-translate-y-1.5 motion-safe:hover:shadow-lift"
+              >
+                <div className="relative min-h-64 flex-[1.08] overflow-hidden">
+                  <img
+                    src={branch.image}
+                    alt={`${branch.name.replace(" (Head Office)", "")} branch location in Kanyakumari District`}
+                    loading="lazy"
+                    className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.035]"
+                    style={{ objectPosition: branch.imagePosition }}
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary" />
+                  <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-cream/20 bg-primary/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-cream shadow-soft backdrop-blur-md">
+                    <Building2 className="size-3" aria-hidden /> Branch Office
+                  </span>
+                  <div className="absolute inset-x-0 bottom-0 px-6 pb-5 sm:px-7">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-accent">
+                      {index === 0 ? "Head office" : `Kanyakumari branch ${String(index + 1).padStart(2, "0")}`}
+                    </p>
+                    <h3 className="mt-1 text-2xl font-bold text-cream">{branch.name}</h3>
+                    <p className="mt-1 text-sm text-cream/75">
+                      Documentation · Registration · Business services
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid min-h-48 flex-[0.92] content-center gap-4 border-t border-cream/10 bg-olive-dark px-6 py-6 sm:px-7">
+                  <div className="grid grid-cols-[1.25rem_minmax(0,1fr)] items-start gap-3">
+                    <MapPin className="mt-0.5 size-5 text-accent" aria-hidden />
+                    <p className="text-sm leading-relaxed text-cream/80">{branch.address}</p>
+                  </div>
+                  <a
+                    href={`tel:${phone}`}
+                    className="grid grid-cols-[1.25rem_minmax(0,1fr)] items-center gap-3 text-sm font-semibold text-cream transition-colors hover:text-accent"
+                  >
+                    <Phone className="size-5 text-accent" aria-hidden />
+                    <span>+91 {phoneDisplay(phone)}</span>
+                  </a>
+                  <div className="grid grid-cols-[1.25rem_minmax(0,1fr)] items-center gap-3">
+                    <Clock3 className="size-5 text-accent" aria-hidden />
+                    <p className="text-sm text-cream/80">Mon – Sat · 9:00 AM – 7:00 PM</p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <Button asChild variant="lime" size="lg" className="w-full sm:w-auto">
+              <Link to="/branches">
+                <Navigation className="size-4" /> View all 20 branches
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
