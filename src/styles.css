@@ -271,6 +271,16 @@
   box-shadow: 0 24px 60px oklch(0.2 0.04 148 / 0.35);
 }
 
+@utility bank-portal-visual {
+  mask-image: linear-gradient(to bottom, transparent 0%, black 13%, black 78%, transparent 100%);
+}
+
+@media (min-width: 64rem) {
+  .bank-portal-visual {
+    mask-image: linear-gradient(to right, transparent 0%, black 18%, black 78%, transparent 100%);
+  }
+}
+
 @utility pill-badge {
   display: inline-flex;
   align-items: center;

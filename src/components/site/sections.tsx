@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import {
+  ArrowRight,
   BadgeCheck,
   BarChart3,
   Building2,
@@ -16,6 +17,7 @@ import {
 } from "lucide-react";
 
 import kanyakumariVisual from "@/assets/prince-kanyakumari.jpg";
+import bankExecutiveTeam from "@/assets/bank-executive-team.webp";
 import heroMap from "@/assets/prince-hero-kanyakumari-map.png.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
@@ -503,55 +505,79 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
 }
 
 export function BankExecutiveSection() {
+  const features = [
+    { icon: ShieldCheck, title: "Secure Login", body: "Unique executive ID and password with role-based access control." },
+    { icon: BadgeCheck, title: "Admin Approval", body: "Accounts stay pending until an administrator approves them." },
+    { icon: Users, title: "Candidate Data", body: "Allocated candidate profiles with status, requirement and assignment date." },
+    { icon: Lock, title: "Protected Contacts", body: "Contact numbers are revealed only for allocated profiles, and every view is logged." },
+  ];
+
   return (
     <section id="bank-executive-plans" className="mx-auto max-w-7xl scroll-mt-28 px-4 py-20 sm:px-6">
-      <div className="relative overflow-hidden rounded-[2rem] border border-primary/10 bg-gradient-olive p-8 text-cream shadow-lift sm:p-12">
-        <div className="grid-lines pointer-events-none absolute inset-0 opacity-40" />
-        <div className="hero-orb -right-20 -top-20 size-80 bg-accent/20" />
-        <div className="relative grid gap-10 lg:grid-cols-2">
-          <div>
+      <div className="relative isolate overflow-hidden rounded-[2rem] border border-primary/10 bg-gradient-olive text-cream shadow-lift">
+        <div className="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-25" />
+        <div
+          aria-hidden="true"
+          className="bank-portal-visual pointer-events-none absolute inset-x-0 top-[25rem] -z-10 h-[31rem] bg-cover bg-center opacity-80 sm:top-[20rem] lg:inset-y-0 lg:left-[26%] lg:right-[27%] lg:h-auto lg:bg-center"
+          style={{ backgroundImage: `url(${bankExecutiveTeam})` }}
+        />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,oklch(0.245_0.045_148/0.92)_0%,transparent_48%,oklch(0.245_0.045_148/0.9)_100%)] lg:bg-[linear-gradient(90deg,oklch(0.245_0.045_148)_0%,oklch(0.245_0.045_148/0.78)_29%,transparent_52%,oklch(0.94_0.03_115/0.95)_76%,oklch(0.97_0.02_105)_100%)]" />
+
+        <div className="relative grid min-h-[39rem] gap-10 p-7 sm:p-10 lg:grid-cols-[0.92fr_0.72fr_1.12fr] lg:items-center lg:p-12">
+          <div className="fade-up z-10 max-w-xl lg:self-center">
             <span className="pill-badge">
               <Building2 className="size-3.5" /> Bank Executive Plans
             </span>
-            <h2 className="mt-5 text-3xl font-bold sm:text-4xl">
+            <h2 className="mt-5 text-3xl font-bold leading-[1.1] sm:text-4xl lg:text-[2.65rem]">
               A dedicated portal for
               <span className="block text-gradient-olive">bank &amp; finance executives</span>
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-cream/70">
+            <p className="mt-5 text-sm leading-relaxed text-cream/75">
               Bank Executives subscribe on the Business plan or the Premium plan only. The Starter
               plan is not offered inside the Bank Executive portal. Every account requires a unique
               user ID, password and administrator approval before access is granted.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
               <Button asChild variant="lime" className="w-full sm:w-auto">
-                <Link to="/bank-executive">Bank Executive Login</Link>
+                <Link to="/bank-executive">Bank Executive Login <ArrowRight className="size-4" /></Link>
               </Button>
               <Button asChild variant="onOlive" className="w-full sm:w-auto">
-                <Link to="/auth">Request an Account</Link>
+                <Link to="/auth">Request an Account <ArrowRight className="size-4" /></Link>
               </Button>
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            {[
-              { icon: ShieldCheck, title: "Secure Login", body: "Unique executive ID and password with role-based access control." },
-              { icon: BadgeCheck, title: "Admin Approval", body: "Accounts stay pending until an administrator approves them." },
-              { icon: Users, title: "Candidate Data", body: "Allocated candidate profiles with status, requirement and assignment date." },
-              { icon: Lock, title: "Protected Contacts", body: "Contact numbers are revealed only for allocated profiles, and every view is logged." },
-            ].map((c) => (
-              <div key={c.title} className="glass-dark hover-glow rounded-2xl p-5">
-                <c.icon className="size-5 text-accent" />
-                <h3 className="mt-3 text-sm font-semibold">{c.title}</h3>
-                <p className="mt-1.5 text-xs text-cream/70">{c.body}</p>
+          <div aria-hidden="true" className="h-[17rem] sm:h-[22rem] lg:h-auto" />
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:self-stretch lg:content-center">
+            {features.map((feature, index) => (
+              <div
+                key={feature.title}
+                className="card-lift fade-up group relative min-h-44 rounded-3xl border border-card/65 bg-card/88 p-5 text-card-foreground shadow-soft backdrop-blur-xl sm:p-6"
+                style={{ animationDelay: `${index * 90}ms` }}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <span className="grid size-12 place-items-center rounded-full bg-gradient-olive text-accent shadow-soft">
+                    <feature.icon className="size-5" />
+                  </span>
+                  <span className="grid size-8 place-items-center rounded-full bg-accent/15 text-primary transition-transform duration-300 group-hover:translate-x-1">
+                    <ArrowRight className="size-3.5" />
+                  </span>
+                </div>
+                <h3 className="mt-5 text-base font-semibold text-primary">{feature.title}</h3>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{feature.body}</p>
               </div>
             ))}
           </div>
         </div>
-        <p className="relative mt-8 text-xs text-cream/55">
-          <DemoBadge className="mr-2" />
-          Executive dashboards currently show synthetic records. Administrators replace them with
-          imported data before go-live.
-        </p>
+
+        <div className="relative border-t border-cream/10 px-7 py-4 sm:px-10 lg:px-12">
+          <p className="text-xs text-cream/60">
+            <DemoBadge className="mr-2" />
+            Executive dashboards currently show synthetic records. Administrators replace them with
+            imported data before go-live.
+          </p>
+        </div>
       </div>
     </section>
   );
