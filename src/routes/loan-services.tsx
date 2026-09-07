@@ -8,6 +8,7 @@ import {
   GraduationCap,
   Home,
   Landmark,
+  MapPin,
   Search,
   ShieldCheck,
   Store,
@@ -41,12 +42,13 @@ export const Route = createFileRoute("/loan-services")({
 
 const VOLUMES = [
   { value: "1 Lakh+", label: "Candidate Data", note: "Entry data pack" },
-  { value: "2 Lakh+", label: "Candidate Data", note: "Regional coverage" },
-  { value: "3 Lakh+", label: "Candidate Data", note: "Multi-district" },
-  { value: "4 Lakh+", label: "Candidate Data", note: "State level" },
-  { value: "5 Lakh+", label: "Candidate Data", note: "Multi-state" },
-  { value: "6 Lakh+", label: "Candidate Data", note: "Full network" },
+  { value: "2 Lakh+", label: "Candidate Data", note: "Taluk-level coverage" },
+  { value: "3 Lakh+", label: "Candidate Data", note: "Nagercoil & Marthandam belt" },
+  { value: "4 Lakh+", label: "Candidate Data", note: "Coastal & inland Kanyakumari" },
+  { value: "5 Lakh+", label: "Candidate Data", note: "District-wide coverage" },
+  { value: "6 Lakh+", label: "Candidate Data", note: "Full Kanyakumari network" },
 ];
+
 
 const CATEGORIES = [
   { icon: Home, name: "Home Loan" },
@@ -106,17 +108,22 @@ function LoanDataPage() {
 
         <div className="relative mx-auto grid max-w-7xl gap-14 px-4 py-20 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
           <div className="reveal">
-            <span className="pill-badge">
-              <Database className="size-3.5" /> Loan Candidate Data Platform
-            </span>
+            <div className="flex flex-wrap gap-2">
+              <span className="pill-badge">
+                <Database className="size-3.5" /> Loan Candidate Data Platform
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/12 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
+                <MapPin className="size-3.5" /> Kanyakumari District Data
+              </span>
+            </div>
             <h1 className="mt-6 text-4xl font-bold leading-[1.06] sm:text-5xl lg:text-[3.4rem]">
               Loan Candidate Data.
               <span className="block text-gradient-olive">Built for Banking Professionals.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/70">
-              PRINCE supplies structured loan candidate and lead data to bank managers and bank
-              executives. We are a data platform — we do not issue loans or process loan
-              applications for customers.
+              PRINCE supplies structured loan candidate and lead data from Kanyakumari district to
+              bank managers and bank executives. We are a data platform — we do not issue loans or
+              process loan applications for customers.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
@@ -137,7 +144,7 @@ function LoanDataPage() {
                 <Landmark className="size-4 text-accent" />
               </div>
               <p className="mt-4 font-display text-5xl font-bold text-accent">6,00,000+</p>
-              <p className="text-sm text-cream/65">Loan candidate records across categories</p>
+              <p className="text-sm text-cream/65">Kanyakumari district candidate records</p>
               <div className="mt-6 space-y-3">
                 {CATEGORIES.slice(0, 4).map((c, i) => (
                   <div key={c.name} className="flex items-center gap-3 text-xs text-cream/75">
@@ -169,11 +176,11 @@ function LoanDataPage() {
               Available Volumes
             </span>
             <h2 className="mt-3 text-3xl font-bold text-primary sm:text-4xl">
-              Candidate data packs by volume
+              Kanyakumari district candidate data packs
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
-              Choose the coverage that matches your branch target. Every pack is category-tagged and
-              refreshed by our data team.
+              Every pack is sourced from Kanyakumari district, category-tagged and refreshed by our
+              data team. Choose the coverage that matches your branch target.
             </p>
           </div>
 
@@ -300,7 +307,7 @@ function LoanDataPage() {
           <div className="mt-12 rounded-[2rem] border border-accent/25 bg-accent/10 p-8 text-center">
             <h3 className="text-2xl font-bold text-cream">Need data for your branch targets?</h3>
             <p className="mx-auto mt-2 max-w-2xl text-sm text-cream/70">
-              Share your loan category, region and volume requirement. Our team will confirm current
+              Share your loan category and volume requirement for Kanyakumari district. Our team will confirm current
               availability and data terms.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">

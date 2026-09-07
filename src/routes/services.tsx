@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { FileText, Sparkles } from "lucide-react";
 
 import { AdminManagedNote, PageHero, PublicPage } from "@/components/site/PublicPage";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -32,10 +33,46 @@ type ServiceRow = {
   original_price: number | null;
 };
 
+const PRIMARY_CATEGORY = "Documentation Services";
+
+function ServiceGlassCard({ service }: { service: ServiceRow }) {
+  return (
+    <article className="liquid-glass group relative overflow-hidden rounded-[1.75rem] p-6">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -right-10 -top-12 size-32 rounded-full bg-gradient-lime opacity-25 blur-2xl transition-opacity duration-500 group-hover:opacity-45"
+      />
+      <span className="relative grid size-11 place-items-center rounded-2xl bg-gradient-olive text-accent">
+        <FileText className="size-5" />
+      </span>
+      <h3 className="relative mt-5 text-base font-semibold text-primary">{service.name}</h3>
+      {service.description ? (
+        <p className="relative mt-2 text-sm leading-relaxed text-muted-foreground">
+          {service.description}
+        </p>
+      ) : null}
+      <div className="relative mt-5 flex flex-wrap items-center gap-2">
+        {service.original_price ? (
+          <span className="text-sm font-semibold text-primary">
+            From {inr(service.original_price)}
+          </span>
+        ) : (
+          <span className="text-sm text-muted-foreground">Pricing on request</span>
+        )}
+        <Badge variant="secondary">Member discount applies</Badge>
+      </div>
+    </article>
+  );
+}
+
 function ServicesPage() {
   const { data, isLoading } = useServices();
   const rows = (data ?? []) as unknown as ServiceRow[];
-  const categories = [...new Set(rows.map((r) => r.category))];
+  const categories = [...new Set(rows.map((r) => r.category))].sort((a, b) =>
+    a === PRIMARY_CATEGORY ? -1 : b === PRIMARY_CATEGORY ? 1 : 0,
+  );
+  const primary = categories.filter((c) => c === PRIMARY_CATEGORY);
+  const rest = categories.filter((c) => c !== PRIMARY_CATEGORY);
 
   return (
     <PublicPage>
@@ -44,6 +81,44 @@ function ServicesPage() {
         title="Every service, one member discount"
         subtitle="Your plan discount is applied automatically to eligible services. Starter members save 25%, Business 50% and Premium 75%."
       />
+
+      {/* Documentation Services — premium cream + liquid glass */}
+      {primary.map((cat) => (
+        <section key={cat} className="relative overflow-hidden bg-gradient-cream py-20">
+          <span
+            aria-hidden
+            className="hero-orb -left-24 top-10 size-96 bg-secondary/15"
+          />
+          <span aria-hidden className="hero-orb -right-24 bottom-0 size-80 bg-accent/20" />
+
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
+            <span className="inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-card/70 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-secondary backdrop-blur">
+              <Sparkles className="size-3.5" /> Most requested
+            </span>
+            <h2 className="mt-4 text-3xl font-bold text-primary sm:text-4xl">{cat}</h2>
+            <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+              Certificates, registrations and legal paperwork handled end to end by our branch teams
+              across Kanyakumari district.
+            </p>
+
+            {isLoading ? (
+              <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {[0, 1, 2].map((i) => (
+                  <Skeleton key={i} className="h-48 rounded-[1.75rem]" />
+                ))}
+              </div>
+            ) : (
+              <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {rows
+                  .filter((r) => r.category === cat)
+                  .map((s) => (
+                    <ServiceGlassCard key={s.id} service={s} />
+                  ))}
+              </div>
+            )}
+          </div>
+        </section>
+      ))}
 
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
         {isLoading ? (
@@ -54,7 +129,7 @@ function ServicesPage() {
           </div>
         ) : (
           <div className="space-y-14">
-            {categories.map((cat) => (
+            {rest.map((cat) => (
               <section key={cat}>
                 <h2 className="text-2xl font-bold text-primary">{cat}</h2>
                 <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -75,7 +150,9 @@ function ServicesPage() {
                               From {inr(s.original_price)}
                             </span>
                           ) : (
-                            <span className="text-sm text-muted-foreground">Pricing on request</span>
+                            <span className="text-sm text-muted-foreground">
+                              Pricing on request
+                            </span>
                           )}
                           <Badge variant="secondary">Member discount applies</Badge>
                         </div>

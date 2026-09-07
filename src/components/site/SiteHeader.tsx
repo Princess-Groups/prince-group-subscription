@@ -59,7 +59,7 @@ export function BrandMark({ tone = "dark" }: { tone?: "dark" | "light" }) {
 export function SiteHeader() {
   const { user } = useSession();
   const { data: settings } = useSettings();
-  const phone = settingString(settings, "support_phone", "95559155535");
+  const phone = settingString(settings, "support_phone", "9559155535");
   const [open, setOpen] = useState(false);
 
   return (

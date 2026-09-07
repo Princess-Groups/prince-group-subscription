@@ -21,7 +21,6 @@ import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
 import { settingString, useSettings } from "@/hooks/usePlatform";
-import { inr } from "@/lib/format";
 
 export const BRANCH_TAGLINE = "20 Branches All Over Kanyakumari";
 
@@ -492,49 +491,6 @@ export function BankExecutiveSection() {
   );
 }
 
-export function LoanClientOfferSection() {
-  const { data: settings } = useSettings();
-  const offer = (settings?.["loan_client_offer"] as
-    | { enabled?: boolean; first_month?: number; next_month?: number; discount_label?: string; advance_mode?: boolean }
-    | undefined) ?? {};
-  if (offer.enabled === false) return null;
-
-  return (
-    <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
-      <div className="grid items-center gap-8 rounded-[2rem] border border-secondary/25 bg-card p-8 shadow-soft sm:p-12 lg:grid-cols-2">
-        <div>
-          <span className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">
-            Special Subscription for Data Members
-          </span>
-          <h2 className="mt-3 text-3xl font-bold text-primary sm:text-4xl">
-            One of the Best Subscription Plans for Data Access
-          </h2>
-          <p className="mt-4 text-sm text-muted-foreground">
-            {offer.discount_label ?? "33% OFF for First Month"} — first month{" "}
-            {inr(offer.first_month ?? 99)} + GST, from the second month {inr(offer.next_month ?? 10)} + GST.
-            {offer.advance_mode ? " Advance payable mode available." : ""}
-          </p>
-          <Button asChild size="lg" variant="lime" className="mt-7 w-full sm:w-auto">
-            <Link to="/plans">Get Started →</Link>
-          </Button>
-          <AdminManagedNote>All amounts on this offer are configurable from Admin Settings.</AdminManagedNote>
-        </div>
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-olive p-7 text-cream">
-          <div className="hero-orb -right-10 -top-10 size-48 bg-accent/25" />
-          <p className="relative text-xs font-semibold uppercase tracking-widest text-accent">First month</p>
-          <p className="relative mt-2 font-display text-5xl font-bold">{inr(offer.first_month ?? 99)}</p>
-          <p className="relative mt-1 text-sm text-cream/70">+ GST, applied on first payment only</p>
-          <div className="relative mt-6 space-y-2 border-t border-cream/15 pt-6 text-sm text-cream/80">
-            <div className="flex justify-between"><span>From month 2</span><span>{inr(offer.next_month ?? 10)} + GST</span></div>
-            <div className="flex justify-between"><span>Advance payable mode</span><span>{offer.advance_mode ? "Available" : "Disabled"}</span></div>
-            <div className="flex justify-between"><span>Recurring payment</span><span>Enabled</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function TrustSection() {
   const cards = [
     { icon: TrendingUp, title: "Exclusive Discounts", body: "25% to 75% member pricing across eligible services, applied automatically from your plan." },
@@ -567,7 +523,7 @@ export function TrustSection() {
 
 export function ContactCtaSection() {
   const { data: settings } = useSettings();
-  const phone = settingString(settings, "support_phone", "95559155535");
+  const phone = settingString(settings, "support_phone", "9559155535");
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">

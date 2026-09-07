@@ -36,7 +36,7 @@ export const Route = createFileRoute("/office")({
 
 function OfficePage() {
   const { data: settings } = useSettings();
-  const phone = settingString(settings, "support_phone", "95559155535");
+  const phone = settingString(settings, "support_phone", "9559155535");
   const email = settingString(settings, "support_email", "support@prince.in");
   const address = settingString(
     settings,

@@ -34,7 +34,7 @@ export function PlansSection({
   const queryClient = useQueryClient();
   const [busy, setBusy] = useState<string | null>(null);
 
-  const phone = settingString(settings, "support_phone", "95559155535");
+  const phone = settingString(settings, "support_phone", "9559155535");
 
   const subscribe = useMutation({
     mutationFn: async (planCode: string) => {

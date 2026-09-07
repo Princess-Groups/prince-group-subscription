@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { Crown, MapPin, Phone } from "lucide-react";
+import { MapPin, Phone } from "lucide-react";
 
+import princeLogo from "@/assets/prince-logo.png.asset.json";
 import { settingString, useSettings } from "@/hooks/usePlatform";
 
 export function SiteFooter() {
   const { data: settings } = useSettings();
-  const phone = settingString(settings, "support_phone", "95559155535");
+  const phone = settingString(settings, "support_phone", "9559155535");
 
   return (
     <footer className="relative mt-24 overflow-hidden bg-gradient-olive text-cream">
@@ -15,11 +16,20 @@ export function SiteFooter() {
       <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2.5">
-            <span className="grid size-10 place-items-center rounded-2xl bg-accent/15 text-accent">
-              <Crown className="size-5" />
+            <span className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-2xl bg-cream shadow-soft ring-1 ring-cream/20">
+              <img
+                src={princeLogo.url}
+                alt="Prince Group logo"
+                width={44}
+                height={44}
+                className="size-9 object-contain"
+              />
             </span>
-            <span className="font-display text-lg font-extrabold tracking-[0.22em]">PRINCE</span>
+            <span className="font-display text-lg font-extrabold tracking-[0.22em]">
+              PRINCE GROUP
+            </span>
           </div>
+
           <p className="mt-5 max-w-md text-sm leading-relaxed text-cream/70">
             Premium access, opportunities, benefits and loan candidate data. A subscription platform for
             loan candidate data, business contacts, service discounts and managed lead access —

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { PlanPromoPopup } from "@/components/site/PlanPromoPopup";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 
@@ -9,6 +10,7 @@ export function PublicPage({ children }: { children: ReactNode }) {
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />
+      <PlanPromoPopup />
     </div>
   );
 }
