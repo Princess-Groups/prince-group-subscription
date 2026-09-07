@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 import kanyakumariVisual from "@/assets/prince-kanyakumari.jpg";
-import heroMap from "@/assets/prince-hero-map.png.asset.json";
+import heroMap from "@/assets/prince-hero-kanyakumari-map.png.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
