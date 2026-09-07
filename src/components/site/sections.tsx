@@ -42,7 +42,7 @@ export function HeroSection() {
         className="absolute inset-0 -z-20 size-full bg-contain bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroMap.url})` }}
       />
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.18_0.05_148/0.88)_0%,oklch(0.2_0.06_146/0.74)_42%,oklch(0.22_0.06_144/0.35)_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.18_0.05_148/0.72)_0%,oklch(0.2_0.06_146/0.5)_45%,oklch(0.22_0.06_144/0.22)_100%)]" />
       <div className="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-25" />
 
 
