@@ -47,7 +47,7 @@ function OfficePage() {
 
   const cards = [
     { icon: MapPin, title: "Head Office", body: address },
-    { icon: Phone, title: "Direct Line", body: phone, href: `tel:${phone}` },
+    { icon: Phone, title: "Direct Line", body: phoneDisplay(phone), href: `tel:${phone}` },
     { icon: Mail, title: "Email Desk", body: email, href: `mailto:${email}` },
     { icon: Clock, title: "Working Hours", body: "Monday – Saturday · 9:30 AM to 7:00 PM IST" },
   ];
