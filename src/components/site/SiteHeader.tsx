@@ -185,7 +185,7 @@ export function SiteHeader() {
           </div>
 
           {/* Floating liquid-glass navigation bar */}
-          <div className="hidden justify-center pb-3 xl:flex">
+          <div className="hidden pb-3 md:flex md:justify-center">
             <GlassNav />
           </div>
         </div>
