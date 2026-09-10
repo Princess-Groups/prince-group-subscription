@@ -124,12 +124,6 @@ export function PlansSection({
 
       <div
         className={cinematicFocus ? "subscription-focus-stage mt-12 grid gap-6 lg:grid-cols-3" : "mt-12 grid gap-6 lg:grid-cols-3"}
-        onPointerEnter={() => cinematicFocus && setIsInteracting(true)}
-        onPointerLeave={() => cinematicFocus && setIsInteracting(false)}
-        onFocusCapture={() => cinematicFocus && setIsInteracting(true)}
-        onBlurCapture={(event) => {
-          if (cinematicFocus && !event.currentTarget.contains(event.relatedTarget)) setIsInteracting(false);
-        }}
       >
         {isLoading
           ? [0, 1, 2].map((i) => <Skeleton key={i} className="h-[520px] rounded-3xl" />)
@@ -138,6 +132,12 @@ export function PlansSection({
                 key={plan.id}
                 className={cinematicFocus ? "subscription-focus-card h-full" : "h-full"}
                 data-focus-active={cinematicFocus && activeCard === index ? "true" : "false"}
+                onPointerEnter={() => cinematicFocus && setIsInteracting(true)}
+                onPointerLeave={() => cinematicFocus && setIsInteracting(false)}
+                onFocusCapture={() => cinematicFocus && setIsInteracting(true)}
+                onBlurCapture={(event) => {
+                  if (cinematicFocus && !event.currentTarget.contains(event.relatedTarget)) setIsInteracting(false);
+                }}
               >
                 <PlanCard
                   plan={plan}
