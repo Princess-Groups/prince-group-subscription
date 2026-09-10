@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { PlanCard } from "@/components/site/PlanCard";
@@ -21,10 +21,12 @@ export function PlansSection({
   title = "Choose Your Subscription",
   subtitle = "Every price, discount, slot limit and lead rule below is configured by the administrator and enforced on the server.",
   filter,
+  cinematicFocus = false,
 }: {
   title?: string;
   subtitle?: string;
   filter?: (code: string) => boolean;
+  cinematicFocus?: boolean;
 }) {
   const { data: plans, isLoading } = usePlans();
   const { data: slots } = useSlots();
@@ -33,6 +35,10 @@ export function PlansSection({
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [busy, setBusy] = useState<string | null>(null);
+  const [activeCard, setActiveCard] = useState<number | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const phone = settingString(settings, "support_phone", "9559155535");
 
@@ -58,8 +64,54 @@ export function PlansSection({
 
   const list = (plans ?? []).filter((p) => (filter ? filter(p.code) : true));
 
+  useEffect(() => {
+    if (!cinematicFocus) return;
+
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry?.isIntersecting ?? false),
+      { threshold: 0.3 },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [cinematicFocus]);
+
+  useEffect(() => {
+    if (!cinematicFocus || !isVisible || isInteracting || list.length === 0) {
+      setActiveCard(null);
+      return;
+    }
+
+    let current = 0;
+    let focusTimer: ReturnType<typeof setTimeout> | undefined;
+    let gapTimer: ReturnType<typeof setTimeout> | undefined;
+    let cancelled = false;
+
+    const runCard = () => {
+      if (cancelled) return;
+      setActiveCard(current);
+      focusTimer = setTimeout(() => {
+        setActiveCard(null);
+        const completedLastCard = current === list.length - 1;
+        current = (current + 1) % list.length;
+        gapTimer = setTimeout(runCard, completedLastCard ? 1500 : 750);
+      }, 1900);
+    };
+
+    gapTimer = setTimeout(runCard, 700);
+
+    return () => {
+      cancelled = true;
+      if (focusTimer) clearTimeout(focusTimer);
+      if (gapTimer) clearTimeout(gapTimer);
+      setActiveCard(null);
+    };
+  }, [cinematicFocus, isInteracting, isVisible, list.length]);
+
   return (
-    <section id="plans" className="relative overflow-hidden bg-gradient-olive py-20 text-cream">
+    <section ref={sectionRef} id="plans" className="relative overflow-hidden bg-gradient-olive py-20 text-cream">
       <div className="grid-lines pointer-events-none absolute inset-0 opacity-40" />
       <div className="hero-orb -left-24 top-0 size-96 bg-accent/20" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
@@ -70,28 +122,41 @@ export function PlansSection({
       </div>
 
 
-      <div className="mt-12 grid gap-6 lg:grid-cols-3">
+      <div
+        className={cinematicFocus ? "subscription-focus-stage mt-12 grid gap-6 lg:grid-cols-3" : "mt-12 grid gap-6 lg:grid-cols-3"}
+      >
         {isLoading
           ? [0, 1, 2].map((i) => <Skeleton key={i} className="h-[520px] rounded-3xl" />)
-          : list.map((plan) => (
-              <PlanCard
+          : list.map((plan, index) => (
+              <div
                 key={plan.id}
-                plan={plan}
-                {...(() => {
-                  const slot = slots?.find((s) => s.plan_code === plan.code);
-                  return slot ? { slot } : {};
-                })()}
-                supportPhone={phone}
-                busy={busy === plan.code}
-                onSubscribe={(code) => {
-                  if (!user) {
-                    navigate({ to: "/auth" });
-                    return;
-                  }
-                  setBusy(code);
-                  subscribe.mutate(code);
+                className={cinematicFocus ? "subscription-focus-card h-full" : "h-full"}
+                data-focus-active={cinematicFocus && activeCard === index ? "true" : "false"}
+                onPointerEnter={() => cinematicFocus && setIsInteracting(true)}
+                onPointerLeave={() => cinematicFocus && setIsInteracting(false)}
+                onFocusCapture={() => cinematicFocus && setIsInteracting(true)}
+                onBlurCapture={(event) => {
+                  if (cinematicFocus && !event.currentTarget.contains(event.relatedTarget)) setIsInteracting(false);
                 }}
-              />
+              >
+                <PlanCard
+                  plan={plan}
+                  {...(() => {
+                    const slot = slots?.find((s) => s.plan_code === plan.code);
+                    return slot ? { slot } : {};
+                  })()}
+                  supportPhone={phone}
+                  busy={busy === plan.code}
+                  onSubscribe={(code) => {
+                    if (!user) {
+                      navigate({ to: "/auth" });
+                      return;
+                    }
+                    setBusy(code);
+                    subscribe.mutate(code);
+                  }}
+                />
+              </div>
             ))}
       </div>
 
