@@ -39,7 +39,7 @@ function Index() {
       <BankExecutiveSection />
       <ServiceShowcaseSection />
       <LoanCandidateDataSection />
-      <PlansSection />
+      <PlansSection cinematicFocus />
       <BranchesSection />
       <TrustSection />
       <ContactCtaSection />
