@@ -91,6 +91,8 @@ export function SiteHeader() {
   const { data: settings } = useSettings();
   const phone = settingString(settings, "support_phone", "9559155535");
   const [open, setOpen] = useState(false);
+  const isHome = useRouterState({ select: (s) => s.location.pathname === "/" });
+
 
   return (
     <header className="sticky top-0 z-50">
@@ -112,7 +114,7 @@ export function SiteHeader() {
           {/* Top brand row */}
           <div className="flex items-center justify-between gap-3 py-3">
             <Link to="/" className="min-w-0 shrink">
-              <BrandMark />
+              <BrandMark animate={isHome} />
             </Link>
 
             <div className="flex shrink-0 items-center gap-2">
