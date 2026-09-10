@@ -29,7 +29,7 @@ import palugalBranch from "@/assets/branches/branch-palugal.webp.asset.json";
 import thiruvattarBranch from "@/assets/branches/branch-thiruvattar.webp.asset.json";
 import verkilambiBranch from "@/assets/branches/branch-verkilambi.webp.asset.json";
 import branchesBackground from "@/assets/prince-kanyakumari-branches-bg.png.asset.json";
-import heroMap from "@/assets/prince-homepage-hero-map.png.asset.json";
+import heroImage from "@/assets/prince-homepage-hero.png.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
