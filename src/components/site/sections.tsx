@@ -29,7 +29,7 @@ import palugalBranch from "@/assets/branches/branch-palugal.webp.asset.json";
 import thiruvattarBranch from "@/assets/branches/branch-thiruvattar.webp.asset.json";
 import verkilambiBranch from "@/assets/branches/branch-verkilambi.webp.asset.json";
 import branchesBackground from "@/assets/prince-kanyakumari-branches-bg.png.asset.json";
-import heroMap from "@/assets/prince-homepage-hero-map.png.asset.json";
+import heroImage from "@/assets/prince-homepage-hero.png.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
@@ -52,8 +52,8 @@ export function HeroSection() {
       <div
         role="img"
         aria-label="Glowing green Kanyakumari map with connected location pins representing the PRINCE branch network"
-        className="absolute inset-0 -z-20 size-full bg-center bg-no-repeat [background-size:100%_100%]"
-        style={{ backgroundImage: `url(${heroMap.url})` }}
+        className="absolute inset-0 -z-20 size-full bg-top bg-no-repeat [background-size:100%_auto]"
+        style={{ backgroundImage: `url(${heroImage.url})` }}
       />
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.18_0.05_148/0.64)_0%,oklch(0.2_0.06_146/0.38)_45%,oklch(0.22_0.06_144/0.12)_100%)]" />
       <div className="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-25" />
