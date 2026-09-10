@@ -27,33 +27,59 @@ export const BRAND_STATEMENT = "THE ONE BRAND ALL YOUR NEEDS";
 
 export function BrandMark({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
-    <span className="flex min-w-0 items-center gap-2.5">
-      <span className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-2xl bg-cream shadow-soft ring-1 ring-primary/10">
+    <span className="flex min-w-0 items-center gap-3">
+      <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-2xl bg-cream shadow-soft ring-1 ring-primary/10">
         <img
           src={princeLogo.url}
           alt="Prince Group logo"
-          width={44}
-          height={44}
-          className="size-9 object-contain"
+          width={48}
+          height={48}
+          className="size-10 object-contain"
         />
       </span>
       <span className="flex min-w-0 flex-col leading-none">
         <span
-          className={`font-display text-base font-extrabold tracking-[0.2em] sm:text-lg ${
+          className={`font-brand text-xl font-semibold tracking-wide sm:text-2xl ${
             tone === "light" ? "text-cream" : "text-primary"
           }`}
         >
-          PRINCE GROUP
+          Prince Group
         </span>
         <span
-          className={`mt-1 hidden truncate text-[10px] font-semibold uppercase tracking-[0.18em] sm:block ${
+          className={`mt-1.5 text-[9px] font-medium italic tracking-[0.14em] sm:text-[10px] ${
             tone === "light" ? "text-accent" : "text-secondary"
           }`}
+          style={{ fontFamily: "var(--font-brand)" }}
         >
-          Premium Access · Kanyakumari
+          The One Brand All Your Needs
         </span>
       </span>
     </span>
+  );
+}
+
+function GlassNav({ onNavigate }: { onNavigate?: () => void }) {
+  return (
+    <nav
+      aria-label="Primary"
+      className="relative flex items-center gap-0.5 overflow-x-auto rounded-full border border-white/50 bg-white/45 px-1.5 py-1.5 shadow-[0_18px_40px_-22px_oklch(0.28_0.06_148/0.45),inset_0_1px_0_oklch(1_0_0/0.6)] backdrop-blur-xl backdrop-saturate-150 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    >
+      {NAV.map((item) => (
+        <Link
+          key={item.to}
+          to={item.to}
+          onClick={onNavigate}
+          className="whitespace-nowrap rounded-full px-3 py-1.5 text-[12.5px] font-semibold text-primary/75 transition-all duration-300 hover:bg-white/70 hover:text-primary hover:shadow-[inset_0_1px_0_oklch(1_0_0/0.7),0_6px_16px_-8px_oklch(0.28_0.06_148/0.5)]"
+          activeProps={{
+            className:
+              "bg-primary text-cream shadow-[0_8px_20px_-8px_oklch(0.28_0.06_148/0.7),inset_0_1px_0_oklch(1_0_0/0.25)] hover:bg-primary hover:text-cream",
+          }}
+          activeOptions={{ exact: item.to === "/" }}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </nav>
   );
 }
 
@@ -64,10 +90,10 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-primary/10 bg-background/80 backdrop-blur-xl">
-      {/* Brand strip — always visible on every screen size */}
+    <header className="sticky top-0 z-50">
+      {/* Tagline strip */}
       <div className="bg-gradient-olive text-cream">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-4 py-2 text-center sm:px-6 md:justify-between">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-4 py-1.5 text-center sm:px-6 md:justify-between">
           <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent sm:text-[11px]">
             <MapPin className="size-3.5 shrink-0" /> {BRANCH_TAGLINE}
           </span>
@@ -77,94 +103,91 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <div className="mx-auto flex h-18 max-w-7xl items-center gap-3 px-4 py-2 sm:px-6">
-        <Link to="/" className="min-w-0 shrink">
-          <BrandMark />
-        </Link>
-
-        <nav className="mx-auto hidden items-center gap-0 xl:flex">
-          {NAV.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className="whitespace-nowrap rounded-full px-2.5 py-2 text-[13px] font-medium text-muted-foreground transition-all hover:bg-muted hover:text-primary"
-              activeProps={{ className: "bg-muted text-primary shadow-soft" }}
-              activeOptions={{ exact: item.to === "/" }}
-            >
-              {item.label}
+      {/* Brand + glass navigation area */}
+      <div className="border-b border-primary/10 bg-background/70 backdrop-blur-2xl backdrop-saturate-150">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          {/* Top brand row */}
+          <div className="flex items-center justify-between gap-3 py-3">
+            <Link to="/" className="min-w-0 shrink">
+              <BrandMark />
             </Link>
-          ))}
-        </nav>
 
-        <div className="ml-auto flex shrink-0 items-center gap-2 xl:ml-0">
-          <a
-            href={`tel:${phone}`}
-            className="hidden items-center gap-2 rounded-full border border-primary/15 px-4 py-2 text-xs font-semibold text-primary transition-colors hover:border-secondary/50 hover:bg-muted lg:inline-flex"
-          >
-            <Phone className="size-3.5 text-secondary" /> {phoneDisplay(phone)}
-          </a>
+            <div className="flex shrink-0 items-center gap-2">
+              <a
+                href={`tel:${phone}`}
+                className="hidden items-center gap-2 rounded-full border border-white/50 bg-white/45 px-4 py-2 text-xs font-semibold text-primary shadow-[inset_0_1px_0_oklch(1_0_0/0.6)] backdrop-blur-xl transition-all hover:bg-white/70 lg:inline-flex"
+              >
+                <Phone className="size-3.5 text-secondary" /> {phoneDisplay(phone)}
+              </a>
 
-          {user ? (
-            <Button asChild size="sm" variant="lime">
-              <Link to="/dashboard">Dashboard</Link>
-            </Button>
-          ) : (
-            <>
-              <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex">
-                <Link to="/auth">Login</Link>
-              </Button>
-              <Button asChild size="sm" variant="lime">
-                <Link to="/plans">Explore Plans</Link>
-              </Button>
-            </>
-          )}
-
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button size="icon" variant="outline" className="xl:hidden">
-                <Menu className="size-4" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-80 border-l border-cream/10 bg-gradient-olive">
-              <div className="mt-8 flex flex-col gap-1">
-                <BrandMark tone="light" />
-                <p className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">
-                  <MapPin className="size-3.5" /> {BRANCH_TAGLINE}
-                </p>
-                <div className="mt-6 flex flex-col gap-1">
-                  {NAV.map((item) => (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      onClick={() => setOpen(false)}
-                      className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/85 transition-colors hover:bg-cream/10 hover:text-accent"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                  <Link
-                    to="/bank-executive"
-                    onClick={() => setOpen(false)}
-                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/85 transition-colors hover:bg-cream/10 hover:text-accent"
-                  >
-                    Bank Executive Portal
-                  </Link>
-                  <Link
-                    to="/auth"
-                    onClick={() => setOpen(false)}
-                    className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/85 transition-colors hover:bg-cream/10 hover:text-accent"
-                  >
-                    Login / Register
-                  </Link>
-                </div>
-                <Button asChild variant="lime" className="mt-6 w-full">
-                  <a href={`tel:${phone}`}>
-                    <Phone className="size-4" /> Call {phoneDisplay(phone)}
-                  </a>
+              {user ? (
+                <Button asChild size="sm" variant="lime">
+                  <Link to="/dashboard">Dashboard</Link>
                 </Button>
-              </div>
-            </SheetContent>
-          </Sheet>
+              ) : (
+                <>
+                  <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex">
+                    <Link to="/auth">Login</Link>
+                  </Button>
+                  <Button asChild size="sm" variant="lime">
+                    <Link to="/plans">Explore Plans</Link>
+                  </Button>
+                </>
+              )}
+
+              <Sheet open={open} onOpenChange={setOpen}>
+                <SheetTrigger asChild>
+                  <Button size="icon" variant="outline" className="xl:hidden">
+                    <Menu className="size-4" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-80 border-l border-cream/10 bg-gradient-olive">
+                  <div className="mt-8 flex flex-col gap-1">
+                    <BrandMark tone="light" />
+                    <p className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">
+                      <MapPin className="size-3.5" /> {BRANCH_TAGLINE}
+                    </p>
+                    <div className="mt-6 flex flex-col gap-1">
+                      {NAV.map((item) => (
+                        <Link
+                          key={item.to}
+                          to={item.to}
+                          onClick={() => setOpen(false)}
+                          className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/85 transition-colors hover:bg-cream/10 hover:text-accent"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                      <Link
+                        to="/bank-executive"
+                        onClick={() => setOpen(false)}
+                        className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/85 transition-colors hover:bg-cream/10 hover:text-accent"
+                      >
+                        Bank Executive Portal
+                      </Link>
+                      <Link
+                        to="/auth"
+                        onClick={() => setOpen(false)}
+                        className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/85 transition-colors hover:bg-cream/10 hover:text-accent"
+                      >
+                        Login / Register
+                      </Link>
+                    </div>
+                    <Button asChild variant="lime" className="mt-6 w-full">
+                      <a href={`tel:${phone}`}>
+                        <Phone className="size-4" /> Call {phoneDisplay(phone)}
+                      </a>
+                    </Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          </div>
+
+          {/* Floating liquid-glass navigation bar */}
+          <div className="hidden justify-center pb-3 xl:flex">
+            <GlassNav />
+          </div>
         </div>
       </div>
     </header>
