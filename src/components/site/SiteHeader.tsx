@@ -137,7 +137,7 @@ export function SiteHeader() {
 
               <Sheet open={open} onOpenChange={setOpen}>
                 <SheetTrigger asChild>
-                  <Button size="icon" variant="outline" className="xl:hidden">
+                  <Button size="icon" variant="outline" className="md:hidden">
                     <Menu className="size-4" />
                   </Button>
                 </SheetTrigger>
