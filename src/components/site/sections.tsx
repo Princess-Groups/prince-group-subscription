@@ -132,8 +132,9 @@ export function HeroSection() {
             <Sparkles className="size-3.5" /> Limited Premium Membership
           </span>
           <h1 className="mt-6 text-4xl font-bold leading-[1.06] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)] sm:text-5xl lg:text-6xl">
-            One Subscription.
-            <span className="block text-gradient-olive">All The Data You Need.</span>
+            SUBSCRIBE @ JUST ₹1.
+            <span className="block text-gradient-olive">GET LOAN CANDIDATE DATA @ JUST ₹10.</span>
+            <span className="block">GO PREMIUM @ JUST ₹100.</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/80 sm:text-lg">
             Unlock 1,00,000+ original loan candidate profiles, 6,00,000+ Kanyakumari business
