@@ -607,3 +607,86 @@
     will-change: auto;
   }
 }
+
+/* ---- Header logo 3D character flight (homepage only) ---- */
+.logo-stage {
+  perspective: 900px;
+  perspective-origin: 50% 50%;
+}
+
+.logo-flyer {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.logo-stage-animate .logo-flyer {
+  will-change: transform;
+  animation: logo-character-flight 14s cubic-bezier(0.45, 0.05, 0.35, 1) infinite;
+}
+
+@keyframes logo-character-flight {
+  0%,
+  10% {
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+  6% {
+    transform: translate3d(0, -2px, 0) rotateY(6deg) scale(1.02);
+  }
+  20% {
+    transform: translate3d(24px, 78px, 60px) rotateX(6deg) rotateY(-16deg) scale(1.35);
+  }
+  32% {
+    transform: translate3d(96px, 150px, 180px) rotateX(9deg) rotateY(-28deg) scale(2);
+  }
+  44%,
+  52% {
+    transform: translate3d(120px, 190px, 260px) rotateX(4deg) rotateY(12deg) scale(2.6);
+  }
+  64% {
+    transform: translate3d(86px, 150px, 170px) rotateX(-4deg) rotateY(24deg) scale(1.95);
+  }
+  78% {
+    transform: translate3d(22px, 72px, 56px) rotateX(-2deg) rotateY(12deg) scale(1.3);
+  }
+  88%,
+  100% {
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+}
+
+@media (max-width: 63.999rem) {
+  @keyframes logo-character-flight {
+    0%,
+    10% {
+      transform: translate3d(0, 0, 0) rotateY(0deg) scale(1);
+    }
+    20% {
+      transform: translate3d(14px, 52px, 40px) rotateX(5deg) rotateY(-12deg) scale(1.22);
+    }
+    32% {
+      transform: translate3d(46px, 96px, 110px) rotateX(7deg) rotateY(-20deg) scale(1.6);
+    }
+    44%,
+    52% {
+      transform: translate3d(58px, 118px, 150px) rotateX(3deg) rotateY(10deg) scale(1.9);
+    }
+    64% {
+      transform: translate3d(42px, 94px, 105px) rotateX(-3deg) rotateY(18deg) scale(1.55);
+    }
+    78% {
+      transform: translate3d(12px, 48px, 36px) rotateY(9deg) scale(1.18);
+    }
+    88%,
+    100% {
+      transform: translate3d(0, 0, 0) rotateY(0deg) scale(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-stage-animate .logo-flyer {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+}

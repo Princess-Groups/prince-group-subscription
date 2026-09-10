@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { MapPin, Menu, Phone, Sparkles } from "lucide-react";
 import { useState } from "react";
 
@@ -25,18 +25,21 @@ const NAV = [
 export const BRANCH_TAGLINE = "20 Branches All Over Kanyakumari";
 export const BRAND_STATEMENT = "THE ONE BRAND ALL YOUR NEEDS";
 
-export function BrandMark({ tone = "dark" }: { tone?: "dark" | "light" }) {
+export function BrandMark({ tone = "dark", animate = false }: { tone?: "dark" | "light"; animate?: boolean }) {
   return (
     <span className="flex min-w-0 items-center gap-3">
-      <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-2xl bg-cream shadow-soft ring-1 ring-primary/10">
-        <img
-          src={princeLogo.url}
-          alt="Prince Group logo"
-          width={48}
-          height={48}
-          className="size-10 object-contain"
-        />
+      <span className={`logo-stage grid size-12 shrink-0 place-items-center rounded-2xl${animate ? " logo-stage-animate" : ""}`}>
+        <span className="logo-flyer grid size-12 place-items-center overflow-hidden rounded-2xl bg-cream shadow-soft ring-1 ring-primary/10">
+          <img
+            src={princeLogo.url}
+            alt="Prince Group logo"
+            width={48}
+            height={48}
+            className="size-10 object-contain"
+          />
+        </span>
       </span>
+
       <span className="flex min-w-0 flex-col leading-none">
         <span
           className={`font-brand text-xl font-semibold tracking-wide sm:text-2xl ${
@@ -88,6 +91,8 @@ export function SiteHeader() {
   const { data: settings } = useSettings();
   const phone = settingString(settings, "support_phone", "9559155535");
   const [open, setOpen] = useState(false);
+  const isHome = useRouterState({ select: (s) => s.location.pathname === "/" });
+
 
   return (
     <header className="sticky top-0 z-50">
@@ -109,7 +114,7 @@ export function SiteHeader() {
           {/* Top brand row */}
           <div className="flex items-center justify-between gap-3 py-3">
             <Link to="/" className="min-w-0 shrink">
-              <BrandMark />
+              <BrandMark animate={isHome} />
             </Link>
 
             <div className="flex shrink-0 items-center gap-2">
