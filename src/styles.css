@@ -432,3 +432,131 @@
 @media (prefers-reduced-motion: reduce) {
   .slot-ring, .slot-ring-neon { animation: none; }
 }
+
+/* ---- Homepage live statistic cards ---- */
+@keyframes stat-wave-flow {
+  to { stroke-dashoffset: -72; }
+}
+
+@keyframes stat-dot-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.78); }
+  50% { opacity: 0.9; transform: scale(1.18); }
+}
+
+@keyframes stat-progress-breathe {
+  0%, 100% { filter: drop-shadow(0 0 4px oklch(0.884 0.181 120 / 0.35)); }
+  50% { filter: drop-shadow(0 0 9px oklch(0.884 0.181 120 / 0.65)); }
+}
+
+@utility stat-card {
+  position: relative;
+  display: flex;
+  min-height: 28rem;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1.75rem;
+  border: 1px solid oklch(0.834 0.169 121.8 / 0.5);
+  background:
+    linear-gradient(145deg, oklch(0.31 0.075 144 / 0.88), oklch(0.205 0.052 147 / 0.94));
+  padding: 2rem 1.75rem 1.75rem;
+  box-shadow:
+    0 0 0 1px oklch(0.834 0.169 121.8 / 0.08),
+    0 18px 42px oklch(0.14 0.045 145 / 0.35),
+    inset 0 1px 0 oklch(1 0 0 / 0.1);
+  backdrop-filter: blur(18px) saturate(135%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(120deg, oklch(1 0 0 / 0.08), transparent 34%);
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: oklch(0.834 0.169 121.8 / 0.78);
+    box-shadow:
+      0 0 0 1px oklch(0.834 0.169 121.8 / 0.14),
+      0 22px 54px oklch(0.14 0.045 145 / 0.45),
+      0 0 28px oklch(0.834 0.169 121.8 / 0.13);
+  }
+}
+
+@utility stat-graph {
+  position: relative;
+  margin-top: 2rem;
+  min-height: 11rem;
+  flex: 1 1 auto;
+}
+
+@utility stat-grid-lines {
+  fill: none;
+  stroke: oklch(0.834 0.169 121.8 / 0.08);
+  stroke-width: 0.75;
+}
+
+@utility stat-wave-glow {
+  fill: none;
+  stroke: oklch(0.834 0.169 121.8 / 0.32);
+  stroke-width: 9;
+  stroke-linecap: round;
+  filter: blur(5px);
+}
+
+@utility stat-wave-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 18 6;
+  animation: stat-wave-flow 3s linear infinite;
+}
+
+@utility stat-dot-halo {
+  fill: oklch(0.884 0.181 120 / 0.42);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: stat-dot-pulse 1.8s ease-in-out infinite;
+}
+
+@utility stat-dot-core {
+  fill: oklch(0.98 0.08 110);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+@utility stat-static-dot {
+  display: none;
+}
+
+@utility stat-progress-track {
+  position: relative;
+  display: block;
+  height: 0.5rem;
+  overflow: hidden;
+  border-radius: 9999px;
+  background-color: oklch(0.52 0.075 143 / 0.32);
+  box-shadow: inset 0 1px 3px oklch(0.13 0.04 145 / 0.55);
+}
+
+@utility stat-progress-fill {
+  display: block;
+  height: 100%;
+  width: 68%;
+  border-radius: inherit;
+  background-image: var(--gradient-lime);
+  animation: stat-progress-breathe 2.8s ease-in-out infinite;
+}
+
+@media (max-width: 47.999rem) {
+  .stat-card { min-height: 27rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-card { transition: none; }
+  .stat-wave-line, .stat-dot-halo, .stat-progress-fill { animation: none; }
+  .stat-moving-dot { display: none; }
+  .stat-static-dot { display: block; }
+}

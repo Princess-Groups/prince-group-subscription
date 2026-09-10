@@ -46,6 +46,73 @@ const HERO_STATS = [
   { to: 1000, suffix: "+", label: "Daily Enquiries Handled" },
 ];
 
+const HERO_STAT_GRAPHS = [
+  {
+    line: "M0 128 C34 110 72 111 106 96 C145 79 164 55 187 16 C203 -9 220 -3 236 27 C254 61 273 70 300 61",
+    area: "M0 128 C34 110 72 111 106 96 C145 79 164 55 187 16 C203 -9 220 -3 236 27 C254 61 273 70 300 61 L300 160 L0 160 Z",
+  },
+  {
+    line: "M0 130 C28 112 45 90 76 101 C112 113 145 94 165 54 C183 18 196 -8 216 9 C234 26 234 66 263 75 C278 80 291 75 300 67",
+    area: "M0 130 C28 112 45 90 76 101 C112 113 145 94 165 54 C183 18 196 -8 216 9 C234 26 234 66 263 75 C278 80 291 75 300 67 L300 160 L0 160 Z",
+  },
+  {
+    line: "M0 136 C38 112 74 111 111 93 C147 76 168 49 189 8 C200 -13 219 0 230 29 C242 61 263 73 300 59",
+    area: "M0 136 C38 112 74 111 111 93 C147 76 168 49 189 8 C200 -13 219 0 230 29 C242 61 263 73 300 59 L300 160 L0 160 Z",
+  },
+];
+
+function LiveStatGraph({ index }: { index: number }) {
+  const graph = HERO_STAT_GRAPHS[index] ?? HERO_STAT_GRAPHS[0];
+  if (!graph) return null;
+
+  const gradientId = `stat-area-${index}`;
+  const glowId = `stat-glow-${index}`;
+
+  return (
+    <div className="stat-graph" aria-hidden="true">
+      <svg viewBox="0 -18 300 178" preserveAspectRatio="none" className="size-full overflow-visible">
+        <defs>
+          <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
+            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+          </linearGradient>
+          <filter id={glowId} x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        <g className="stat-grid-lines">
+          <path d="M0 40 H300 M0 80 H300 M0 120 H300" />
+          <path d="M50 0 V160 M100 0 V160 M150 0 V160 M200 0 V160 M250 0 V160" />
+        </g>
+        <path d={graph.area} fill={`url(#${gradientId})`} />
+        <path d={graph.line} className="stat-wave-glow" />
+        <path d={graph.line} className="stat-wave-line" />
+        <g className="stat-moving-dot" filter={`url(#${glowId})`}>
+          <circle r="9" className="stat-dot-halo" />
+          <circle r="4.5" className="stat-dot-core" />
+          <animateMotion
+            path={graph.line}
+            dur={`${5.4 + index * 0.5}s`}
+            begin={`${index * -1.25}s`}
+            repeatCount="indefinite"
+            calcMode="spline"
+            keyTimes="0;1"
+            keySplines="0.45 0 0.55 1"
+          />
+        </g>
+        <g className="stat-static-dot">
+          <circle cx="190" cy="8" r="9" className="stat-dot-halo" />
+          <circle cx="190" cy="8" r="4.5" className="stat-dot-core" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 export function HeroSection() {
   return (
     <section className="relative isolate overflow-hidden bg-gradient-olive text-cream">
@@ -82,15 +149,18 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="mt-14 grid gap-4 sm:mt-16 md:grid-cols-3">
-          {HERO_STATS.map((s) => (
-            <div key={s.label} className="glass-dark hover-glow rounded-3xl px-6 py-7">
-              <p className="font-display text-3xl font-bold text-accent sm:text-4xl">
+        <div className="mt-14 grid gap-5 sm:mt-16 md:grid-cols-3 lg:gap-6">
+          {HERO_STATS.map((s, index) => (
+            <div key={s.label} className="stat-card">
+              <p className="font-display text-4xl font-bold leading-none text-accent sm:text-5xl lg:text-[3.25rem]">
                 <CountUp to={s.to} suffix={s.suffix} />
               </p>
-              <p className="mt-2 text-xs uppercase tracking-wider text-cream/70">{s.label}</p>
-              <span className="mt-4 block h-1 overflow-hidden rounded-full bg-cream/12">
-                <span className="block h-full w-2/3 rounded-full bg-gradient-lime" />
+              <p className="mt-4 min-h-10 text-sm font-medium uppercase leading-snug text-cream/90">
+                {s.label}
+              </p>
+              <LiveStatGraph index={index} />
+              <span className="stat-progress-track">
+                <span className="stat-progress-fill" />
               </span>
             </div>
           ))}
