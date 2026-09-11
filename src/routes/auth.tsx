@@ -96,7 +96,7 @@ function AuthPage() {
               Premium access to discounts, leads and business data.
             </h2>
             <ul className="mt-8 space-y-3 text-sm text-primary-foreground/75">
-              <li>• Member pricing of 25% to 75% on eligible services</li>
+              <li>• Member pricing of 10% to 50% on eligible services</li>
               <li>• Lead allocation with permanent duplicate prevention</li>
               <li>• Live premium slot availability</li>
               <li>• Payments confirmed only after gateway verification</li>

@@ -70,7 +70,9 @@ export function PlanCard({
           highlight ? "bg-cream/12 text-accent" : "bg-cream/8 text-cream",
         )}
       >
-        {plan.discount_percentage}% discount on eligible services
+        {plan.code === "premium"
+          ? `Flat ${plan.discount_percentage}% Discount on eligible services`
+          : `${plan.discount_percentage}% discount on eligible services`}
         <span className={cn("mt-1 block text-xs font-normal", highlight ? "text-cream/70" : "text-cream/60")}>
           {plan.lead_limit} lead allocations · {plan.weekly_attempt_limit} claim attempt/week
         </span>
