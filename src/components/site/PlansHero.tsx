@@ -33,7 +33,7 @@ export function PlansHero() {
         className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-center"
       />
       <div className="pointer-events-none absolute inset-0 -z-10 bg-primary/45" />
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/85 via-primary/60 to-primary/90" />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/90 via-primary/75 to-primary/90" />
       {/* ambient background */}
       <div className="plans-aurora pointer-events-none absolute inset-0 -z-10 opacity-60" />
       <div className="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-40" />
