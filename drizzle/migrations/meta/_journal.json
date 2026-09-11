@@ -22,6 +22,13 @@
       "when": 1789120189373,
       "tag": "0002_directory_opportunities_upgrade",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789120553355,
+      "tag": "0003_public_directory_read_without_phone",
+      "breakpoints": true
     }
   ]
 }
