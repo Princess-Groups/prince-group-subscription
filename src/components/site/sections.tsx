@@ -131,8 +131,8 @@ export function HeroSection() {
           <span className="pill-badge">
             <Sparkles className="size-3.5" /> Limited Premium Membership
           </span>
-          <h1 className="mt-6 text-3xl font-bold leading-[1.06] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)] sm:text-4xl lg:text-5xl">
-            SUBSCRIPTION GET STARTED WITH ₹1.
+          <h1 className="mt-6 font-hero text-[1.125rem] font-bold leading-[1.05] tracking-[-0.03em] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)] whitespace-nowrap sm:text-[1.375rem] md:text-[1.875rem] lg:text-[2.25rem]">
+            <span className="block">SUBSCRIPTION GET STARTED WITH ₹1.</span>
             <span className="block text-gradient-olive">UNLOCK MORE. GO PREMIUM.</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/80 sm:text-lg">
