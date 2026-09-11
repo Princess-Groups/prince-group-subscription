@@ -42,8 +42,8 @@ export function PageHero({
             aria-hidden
             className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/80" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/85 via-primary/30 to-primary/60" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-primary/30" />
+          <div className="pointer-events-none absolute inset-0 bg-primary/10" />
         </>
       ) : null}
       <div className="grid-lines pointer-events-none absolute inset-0 opacity-50" />
