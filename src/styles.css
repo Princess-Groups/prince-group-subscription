@@ -21,6 +21,7 @@
   --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-brand: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-hero: "Bricolage Grotesque", "Sora", ui-sans-serif, system-ui, sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
