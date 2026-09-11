@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Crown, IndianRupee, Sparkles } from "lucide-react";
 
+import plansHeroBg from "@/assets/page-themes/plans-hero-bg.png.asset.json";
+
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePlans, useSlots } from "@/hooks/usePlatform";
@@ -23,8 +25,17 @@ export function PlansHero() {
 
   return (
     <section className="relative isolate overflow-hidden bg-gradient-olive px-4 pb-24 pt-16 text-cream sm:px-6 sm:pt-20">
+      {/* immersive background image */}
+      <img
+        src={plansHeroBg.url}
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-center"
+      />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-primary/45" />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/90 via-primary/75 to-primary/90" />
       {/* ambient background */}
-      <div className="plans-aurora pointer-events-none absolute inset-0 -z-10" />
+      <div className="plans-aurora pointer-events-none absolute inset-0 -z-10 opacity-60" />
       <div className="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-40" />
       <div className="hero-orb -left-24 top-0 size-[26rem] bg-accent/25" />
       <div className="hero-orb -right-24 bottom-10 size-[24rem] bg-secondary/30" />
