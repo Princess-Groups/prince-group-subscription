@@ -90,7 +90,9 @@ export function PlanPromoPopup() {
         </div>
 
         <p className="relative mt-3 text-xs text-cream/70">
-          {plan.discount_percentage}% member discount on eligible services
+          {plan.code === "premium"
+            ? `Flat ${plan.discount_percentage}% Discount on eligible services`
+            : `${plan.discount_percentage}% member discount on eligible services`}
           {plan.slot_limit != null ? ` · only ${plan.slot_limit} slots` : ""}.
         </p>
 
