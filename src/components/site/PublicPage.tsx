@@ -43,6 +43,7 @@ export function PageHero({
             className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-primary/30" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/45 via-primary/15 to-transparent" />
           <div className="pointer-events-none absolute inset-0 bg-primary/10" />
         </>
       ) : null}
