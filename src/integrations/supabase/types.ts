@@ -49,37 +49,58 @@ export type Database = {
           business_name: string
           business_type: string | null
           category: string | null
+          contact_locked: boolean
           created_at: string
+          description: string
           district: string | null
           id: string
           is_demo: boolean
+          is_popular: boolean
+          is_premium: boolean
           location: string | null
           phone: string | null
+          services: string[]
+          social_links: Json
           status: string
+          website: string | null
         }
         Insert: {
           business_name: string
           business_type?: string | null
           category?: string | null
+          contact_locked?: boolean
           created_at?: string
+          description?: string
           district?: string | null
           id?: string
           is_demo?: boolean
+          is_popular?: boolean
+          is_premium?: boolean
           location?: string | null
           phone?: string | null
+          services?: string[]
+          social_links?: Json
           status?: string
+          website?: string | null
         }
         Update: {
           business_name?: string
           business_type?: string | null
           category?: string | null
+          contact_locked?: boolean
           created_at?: string
+          description?: string
           district?: string | null
           id?: string
           is_demo?: boolean
+          is_popular?: boolean
+          is_premium?: boolean
           location?: string | null
           phone?: string | null
+          services?: string[]
+          social_links?: Json
           status?: string
+          website?: string | null
         }
         Relationships: []
       }
@@ -303,6 +324,72 @@ export type Database = {
           title?: string
         }
         Relationships: []
+      }
+      opportunities: {
+        Row: {
+          business_id: string | null
+          category: string
+          contact_locked: boolean
+          created_at: string
+          description: string
+          id: string
+          is_demo: boolean
+          lead_id: string | null
+          location: string
+          opportunity_type: string
+          potential_value: string | null
+          premium_only: boolean
+          status: string
+          title: string
+        }
+        Insert: {
+          business_id?: string | null
+          category: string
+          contact_locked?: boolean
+          created_at?: string
+          description?: string
+          id?: string
+          is_demo?: boolean
+          lead_id?: string | null
+          location?: string
+          opportunity_type: string
+          potential_value?: string | null
+          premium_only?: boolean
+          status?: string
+          title: string
+        }
+        Update: {
+          business_id?: string | null
+          category?: string
+          contact_locked?: boolean
+          created_at?: string
+          description?: string
+          id?: string
+          is_demo?: boolean
+          lead_id?: string | null
+          location?: string
+          opportunity_type?: string
+          potential_value?: string | null
+          premium_only?: boolean
+          status?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "opportunities_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "opportunities_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       payments: {
         Row: {
@@ -629,6 +716,7 @@ export type Database = {
         Returns: Json
       }
       reserve_advance_period: { Args: { _period: string }; Returns: Json }
+      reveal_business_contact: { Args: { _business_id: string }; Returns: Json }
       reveal_lead_contact: { Args: { _lead_id: string }; Returns: Json }
       setting_num: { Args: { _default: number; _key: string }; Returns: number }
       start_subscription: { Args: { _plan_code: string }; Returns: Json }
