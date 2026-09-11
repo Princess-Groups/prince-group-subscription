@@ -781,7 +781,7 @@ export function BankExecutiveSection() {
 
 export function TrustSection() {
   const cards = [
-    { icon: TrendingUp, title: "Exclusive Discounts", body: "25% to 75% member pricing across eligible services, applied automatically from your plan." },
+    { icon: TrendingUp, title: "Exclusive Discounts", body: "10% to flat 50% member pricing across eligible services, applied automatically from your plan." },
     { icon: ShieldCheck, title: "Verified, Admin-Controlled Opportunities", body: "Every opportunity is reviewed and published by administrators before members see it." },
     { icon: Lock, title: "Limited Membership", body: "500 Business slots and 100 Premium slots. Availability is counted live." },
     { icon: Building2, title: "Premium Business Access", body: "Business directory, B2B opportunities and loan candidate data in one place." },

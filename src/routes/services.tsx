@@ -9,7 +9,7 @@ import { inr } from "@/lib/format";
 
 const title = "Member Services & Discounted Pricing | PRINCE";
 const description =
-  "Documentation, registration, digital marketing and software services with member pricing from 25% to 75% off, based on your active plan.";
+  "Documentation, registration, digital marketing and software services with member pricing from 10% to 50% off, based on your active plan.";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -79,7 +79,7 @@ function ServicesPage() {
       <PageHero
         eyebrow="Services"
         title="Every service, one member discount"
-        subtitle="Your plan discount is applied automatically to eligible services. Starter members save 25%, Business 50% and Premium 75%."
+        subtitle="Your plan discount is applied automatically to eligible services. Starter members save 10%, Business 25% and Premium a flat 50%."
       />
 
       {/* Documentation Services — premium cream + liquid glass */}
