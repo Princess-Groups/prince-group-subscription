@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Navigation, Phone } from "lucide-react";
 
+import branchesHeroBg from "@/assets/page-themes/branches-hero-bg.png.asset.json";
+
 import { PageHero, PublicPage } from "@/components/site/PublicPage";
 import { BranchesSection, ContactCtaSection } from "@/components/site/sections";
 import { Button } from "@/components/ui/button";
@@ -31,6 +33,7 @@ function BranchesPage() {
   return (
     <PublicPage>
       <PageHero
+        bgImage={branchesHeroBg.url}
         eyebrow="Branch Network"
         title="20 Branches."
         highlight="All Over Kanyakumari."

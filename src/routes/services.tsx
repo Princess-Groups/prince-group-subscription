@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FileText, Sparkles } from "lucide-react";
 
+import servicesHeroBg from "@/assets/page-themes/services-hero-bg.png.asset.json";
+
 import { AdminManagedNote, PageHero, PublicPage } from "@/components/site/PublicPage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -77,6 +79,7 @@ function ServicesPage() {
   return (
     <PublicPage>
       <PageHero
+        bgImage={servicesHeroBg.url}
         eyebrow="Services"
         title="Every service, one member discount"
         subtitle="Your plan discount is applied automatically to eligible services. Starter members save 10%, Business 25% and Premium a flat 50%."
