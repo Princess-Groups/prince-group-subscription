@@ -15,6 +15,13 @@
       "when": 1788671492243,
       "tag": "0001_platform_engine_functions",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789120189373,
+      "tag": "0002_directory_opportunities_upgrade",
+      "breakpoints": true
     }
   ]
 }
