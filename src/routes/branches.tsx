@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, Navigation, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
 
 import branchesHeroBg from "@/assets/page-themes/branches-section-background.png.asset.json";
 
@@ -49,32 +49,6 @@ function BranchesPage() {
               <Link to="/plans">Explore Plans</Link>
             </Button>
           </>
-        }
-        visual={
-          <div className="relative rounded-[2rem] p-8">
-            <div className="hero-orb -right-10 -top-10 size-56 bg-accent/25" />
-            <div className="relative flex items-center gap-2 text-accent">
-              <Navigation className="size-4" />
-              <span className="text-xs font-semibold uppercase tracking-[0.2em]">Coverage</span>
-            </div>
-            <div className="relative mt-6 grid grid-cols-2 gap-4">
-              {[
-                { value: "20", label: "Branches" },
-                { value: "Kanyakumari", label: "District" },
-                { value: "1,000+", label: "Daily enquiries" },
-                { value: "6L+", label: "Business contacts" },
-              ].map((s) => (
-                <div key={s.label} className="rounded-2xl border border-cream/12 bg-cream/5 px-4 py-5">
-                  <p className="font-display text-2xl font-bold text-accent">{s.value}</p>
-                  <p className="mt-1 text-[11px] uppercase tracking-wider text-cream/60">{s.label}</p>
-                </div>
-              ))}
-            </div>
-            <p className="relative mt-6 flex items-center gap-2 text-xs text-cream/60">
-              <MapPin className="size-3.5 text-accent" /> Coverage is administered centrally and
-              updated as new branches open.
-            </p>
-          </div>
         }
       />
 
