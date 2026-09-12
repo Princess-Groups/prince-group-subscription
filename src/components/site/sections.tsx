@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   BadgeCheck,
@@ -15,6 +16,7 @@ import {
   Star,
   TrendingUp,
   Users,
+  UserRound,
 } from "lucide-react";
 
 import bankExecutiveTeam from "@/assets/bank-executive-team.webp";
@@ -46,69 +48,69 @@ const HERO_STATS = [
   { to: 1000, suffix: "+", label: "Daily Enquiries Handled" },
 ];
 
-const HERO_STAT_GRAPHS = [
-  {
-    line: "M0 128 C34 110 72 111 106 96 C145 79 164 55 187 16 C203 -9 220 -3 236 27 C254 61 273 70 300 61",
-    area: "M0 128 C34 110 72 111 106 96 C145 79 164 55 187 16 C203 -9 220 -3 236 27 C254 61 273 70 300 61 L300 160 L0 160 Z",
-  },
-  {
-    line: "M0 130 C28 112 45 90 76 101 C112 113 145 94 165 54 C183 18 196 -8 216 9 C234 26 234 66 263 75 C278 80 291 75 300 67",
-    area: "M0 130 C28 112 45 90 76 101 C112 113 145 94 165 54 C183 18 196 -8 216 9 C234 26 234 66 263 75 C278 80 291 75 300 67 L300 160 L0 160 Z",
-  },
-  {
-    line: "M0 136 C38 112 74 111 111 93 C147 76 168 49 189 8 C200 -13 219 0 230 29 C242 61 263 73 300 59",
-    area: "M0 136 C38 112 74 111 111 93 C147 76 168 49 189 8 C200 -13 219 0 230 29 C242 61 263 73 300 59 L300 160 L0 160 Z",
-  },
-];
+const STAT_ENTRIES = [
+  [
+    { name: "Vignesh", detail: "Home Loan" },
+    { name: "Mahesh", detail: "Business Loan" },
+    { name: "Karthik", detail: "Mortgage Loan" },
+    { name: "Suresh", detail: "Personal Loan" },
+  ],
+  [
+    { name: "GR Furniture", detail: "Furniture & Interior" },
+    { name: "Kings Chicken", detail: "Restaurant" },
+    { name: "APN Artistic", detail: "Printing & Design" },
+    { name: "Sree Devi Textiles", detail: "Clothing & Fashion" },
+    { name: "Kings Street Restaurant", detail: "Food & Dining" },
+  ],
+  [
+    { name: "Rahul", detail: "Hi, I need a home loan...", meta: "10:24 AM" },
+    { name: "Priya", detail: "Can you share business loan details?", meta: "11:17 AM" },
+    { name: "Sundar", detail: "Looking for mortgage loan options.", meta: "01:03 PM" },
+    { name: "Meena", detail: "Need personal loan, please help.", meta: "03:42 PM" },
+  ],
+] as const;
 
 function LiveStatGraph({ index }: { index: number }) {
-  const graph = HERO_STAT_GRAPHS[index] ?? HERO_STAT_GRAPHS[0];
-  if (!graph) return null;
+  return (
+    <div className="stat-ecg" aria-hidden="true" style={{ animationDelay: `${index * -0.45}s` }}>
+      <svg viewBox="0 0 360 48" preserveAspectRatio="none" className="size-full overflow-visible">
+        <path className="stat-ecg-glow" d="M0 25 H82 L94 25 L104 8 L116 41 L128 18 L140 25 H220 L232 25 L242 8 L254 41 L266 18 L278 25 H360" />
+        <path className="stat-ecg-line" d="M0 25 H82 L94 25 L104 8 L116 41 L128 18 L140 25 H220 L232 25 L242 8 L254 41 L266 18 L278 25 H360" />
+      </svg>
+    </div>
+  );
+}
 
-  const gradientId = `stat-area-${index}`;
-  const glowId = `stat-glow-${index}`;
+function LiveStatEntry({ index }: { index: number }) {
+  const entries = STAT_ENTRIES[index] ?? STAT_ENTRIES[0];
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(
+      () => setActiveIndex((current) => (current + 1) % entries.length),
+      2600 + index * 280,
+    );
+    return () => window.clearInterval(timer);
+  }, [entries.length, index]);
+
+  const entry = entries[activeIndex];
+  const Icon = index === 1 ? Building2 : UserRound;
 
   return (
-    <div className="stat-graph" aria-hidden="true">
-      <svg viewBox="0 -18 300 178" preserveAspectRatio="none" className="size-full overflow-visible">
-        <defs>
-          <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.28" />
-            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
-          </linearGradient>
-          <filter id={glowId} x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        <g className="stat-grid-lines">
-          <path d="M0 40 H300 M0 80 H300 M0 120 H300" />
-          <path d="M50 0 V160 M100 0 V160 M150 0 V160 M200 0 V160 M250 0 V160" />
-        </g>
-        <path d={graph.area} fill={`url(#${gradientId})`} />
-        <path d={graph.line} className="stat-wave-glow" />
-        <path d={graph.line} className="stat-wave-line" />
-        <g className="stat-moving-dot" filter={`url(#${glowId})`}>
-          <circle r="9" className="stat-dot-halo" />
-          <circle r="4.5" className="stat-dot-core" />
-          <animateMotion
-            path={graph.line}
-            dur={`${5.4 + index * 0.5}s`}
-            begin={`${index * -1.25}s`}
-            repeatCount="indefinite"
-            calcMode="spline"
-            keyTimes="0;1"
-            keySplines="0.45 0 0.55 1"
-          />
-        </g>
-        <g className="stat-static-dot">
-          <circle cx="190" cy="8" r="9" className="stat-dot-halo" />
-          <circle cx="190" cy="8" r="4.5" className="stat-dot-core" />
-        </g>
-      </svg>
+    <div className="stat-live-window" aria-live="off">
+      <div key={`${index}-${activeIndex}`} className="stat-live-entry">
+        <span className="stat-entry-icon"><Icon className="size-5" /></span>
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-sm font-semibold text-cream">{entry.name}</span>
+          <span className="mt-0.5 block truncate text-xs text-cream/60">{entry.detail}</span>
+        </span>
+        {"meta" in entry ? <span className="shrink-0 text-[10px] text-cream/50">{entry.meta}</span> : null}
+      </div>
+      <div className="stat-entry-dots" aria-hidden="true">
+        {entries.map((item, itemIndex) => (
+          <span key={item.name} data-active={itemIndex === activeIndex} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -160,6 +162,7 @@ export function HeroSection() {
                 {s.label}
               </p>
               <LiveStatGraph index={index} />
+              <LiveStatEntry index={index} />
               <span className="stat-progress-track">
                 <span className="stat-progress-fill" />
               </span>
