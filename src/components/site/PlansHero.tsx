@@ -30,9 +30,10 @@ export function PlansHero() {
         <img
           src={plansHeroBg.url}
           alt=""
-          className="h-auto w-full max-w-5xl max-h-[360px] object-contain object-top"
+          className="h-auto w-full max-w-5xl max-h-[260px] object-contain object-top"
         />
       </div>
+
 
 
       <div className="relative mx-auto max-w-6xl text-center">
