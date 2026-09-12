@@ -86,6 +86,7 @@ function LiveStatEntry({ index }: { index: number }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(
       () => setActiveIndex((current) => (current + 1) % entries.length),
       2600 + index * 280,
@@ -94,6 +95,7 @@ function LiveStatEntry({ index }: { index: number }) {
   }, [entries.length, index]);
 
   const entry = entries[activeIndex];
+  if (!entry) return null;
   const Icon = index === 1 ? Building2 : UserRound;
 
   return (
