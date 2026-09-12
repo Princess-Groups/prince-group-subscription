@@ -35,15 +35,15 @@ export function PlansHero() {
 
 
 
-      <div className="relative mx-auto max-w-6xl text-center">
-        <span className="pill-badge mx-auto">
+      <div className="relative max-w-6xl text-left">
+        <span className="pill-badge">
           <Crown className="size-3.5" /> Premium Membership
         </span>
         <h1 className="mt-6 text-4xl font-bold leading-[1.06] sm:text-5xl lg:text-6xl">
           Choose Your
           <span className="block text-gradient-olive">Subscription Plan</span>
         </h1>
-        <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-cream/70 sm:text-base">
+        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-cream/70 sm:text-base">
           Daily pricing, member discounts, lead quotas and live slot availability — all managed by
           administrators and validated on the server at checkout.
         </p>
