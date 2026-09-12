@@ -132,11 +132,13 @@ export function HeroSection() {
             <Sparkles className="size-3.5" /> Limited Premium Membership
           </span>
           <h1 className="mt-6 font-hero text-[1.125rem] font-bold leading-[1.05] tracking-[-0.03em] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)] whitespace-nowrap sm:text-[1.375rem] md:text-[1.875rem] lg:text-[2.25rem]">
-            <span className="block">SUBSCRIPTION GET STARTED WITH ₹1.</span>
-            <span className="block text-gradient-olive">UNLOCK MORE. GO PREMIUM.</span>
+            <span className="block">
+              ALL IN ONE <span className="inline-block align-baseline text-[0.72em] font-normal tracking-tight">(₹ ONE)</span> POWERFUL SUBSCRIPTION
+            </span>
+            <span className="block text-gradient-olive">GO PREMIUM. UNLOCK MORE.</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/80 sm:text-lg">
-            Subscribe for just ₹1. Unlock loan candidate data for just ₹10. Go Premium for ₹100 — all in one powerful subscription.
+            Subscription get started with one rupee. Unlock loan candidate data for just ₹10. Go Premium for ₹100 — all in one powerful subscription.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
