@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Crown, IndianRupee, Sparkles } from "lucide-react";
 
-import plansHeroBg from "@/assets/page-themes/plans-hero-bg.png.asset.json";
+import plansHeroBg from "@/assets/page-themes/plans-section-background.png.asset.json";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
