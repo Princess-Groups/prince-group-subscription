@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, Navigation, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
 
 import branchesHeroBg from "@/assets/page-themes/branches-section-background.png.asset.json";
 
