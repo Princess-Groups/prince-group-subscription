@@ -25,14 +25,13 @@ export function PlansHero() {
 
   return (
     <section className="relative isolate overflow-hidden bg-gradient-olive px-4 pb-24 pt-16 text-cream sm:px-6 sm:pt-20">
-      {/* compact background image for the Choose Your Plan area */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-10 flex justify-center">
-        <img
-          src={plansHeroBg.url}
-          alt=""
-          className="h-auto w-full max-w-5xl max-h-[260px] object-contain object-top"
-        />
-      </div>
+      {/* full-section background image for the Choose Your Plan area */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-20 size-full bg-top bg-no-repeat [background-size:100%_auto]"
+        style={{ backgroundImage: `url(${plansHeroBg.url})` }}
+      />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/35 via-primary/55 to-primary/80" />
 
 
 
