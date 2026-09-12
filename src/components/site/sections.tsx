@@ -89,7 +89,7 @@ function LiveStatEntry({ index }: { index: number }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(
       () => setActiveIndex((current) => (current + 1) % entries.length),
-      2600 + index * 280,
+      2800,
     );
     return () => window.clearInterval(timer);
   }, [entries.length, index]);

@@ -450,9 +450,9 @@
 }
 
 @keyframes stat-entry-cycle {
-  0% { opacity: 0; transform: translate3d(0, 14px, -12px) scale(0.97); }
-  16%, 78% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-  100% { opacity: 0; transform: translate3d(0, -12px, 10px) scale(0.985); }
+  0% { opacity: 0.5; transform: translate3d(0, 14px, -12px) scale(0.97); }
+  14%, 84% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  100% { opacity: 0.5; transform: translate3d(0, -10px, 10px) scale(0.985); }
 }
 
 @keyframes stat-ecg-pulse {
@@ -550,7 +550,7 @@
   border: 1px solid oklch(0.834 0.169 121.8 / 0.18);
   background-color: oklch(1 0 0 / 0.07);
   padding: 0.75rem;
-  animation: stat-entry-cycle 2.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: stat-entry-cycle 2.8s cubic-bezier(0.22, 1, 0.36, 1) both;
   box-shadow: 0 8px 20px oklch(0.12 0.035 145 / 0.18);
 }
 
