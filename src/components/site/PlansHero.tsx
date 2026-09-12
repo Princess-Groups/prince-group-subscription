@@ -25,41 +25,15 @@ export function PlansHero() {
 
   return (
     <section className="relative isolate overflow-hidden bg-gradient-olive px-4 pb-24 pt-16 text-cream sm:px-6 sm:pt-20">
-      {/* immersive background image */}
-      <img
-        src={plansHeroBg.url}
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-center"
-      />
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/40 via-transparent to-primary/55" />
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-primary/10" />
-      {/* ambient background */}
-      <div className="plans-aurora pointer-events-none absolute inset-0 -z-10 opacity-60" />
-      <div className="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-40" />
-      <div className="hero-orb -left-24 top-0 size-[26rem] bg-accent/25" />
-      <div className="hero-orb -right-24 bottom-10 size-[24rem] bg-secondary/30" />
+      {/* compact background image for the Choose Your Plan area */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-10 flex justify-center">
+        <img
+          src={plansHeroBg.url}
+          alt=""
+          className="h-auto w-full max-w-5xl max-h-[360px] object-contain object-top"
+        />
+      </div>
 
-      {/* floating rupee coins */}
-      {[
-        "left-[6%] top-[18%]",
-        "left-[22%] top-[62%]",
-        "right-[9%] top-[24%]",
-        "right-[24%] top-[70%]",
-      ].map((pos, i) => (
-        <span
-          key={pos}
-          aria-hidden
-          className={cn(
-            "coin floaty pointer-events-none absolute hidden md:grid",
-            pos,
-            i % 2 ? "size-9" : "size-11",
-          )}
-          style={{ animationDelay: `${i * 1.3}s` }}
-        >
-          <IndianRupee className="size-1/2" />
-        </span>
-      ))}
 
       <div className="relative mx-auto max-w-6xl text-center">
         <span className="pill-badge mx-auto">
