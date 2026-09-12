@@ -15,7 +15,7 @@ import { toast } from "sonner";
 
 import { GlassCard, LockedContact, StatTile, StatusPill } from "@/components/site/GlassBits";
 import { AdminManagedNote, PageHero, PublicPage } from "@/components/site/PublicPage";
-import opportunitiesHeroBg from "@/assets/page-themes/opportunities-hero-bg.png.asset.json";
+import opportunitiesHeroBg from "@/assets/page-themes/opportunities-section-background.png.asset.json";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

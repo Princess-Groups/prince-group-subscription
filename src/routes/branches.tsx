@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Navigation, Phone } from "lucide-react";
 
-import branchesHeroBg from "@/assets/page-themes/branches-hero-bg.png.asset.json";
+import branchesHeroBg from "@/assets/page-themes/branches-section-background.png.asset.json";
 
 import { PageHero, PublicPage } from "@/components/site/PublicPage";
 import { BranchesSection, ContactCtaSection } from "@/components/site/sections";

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FileText, Sparkles } from "lucide-react";
 
-import servicesHeroBg from "@/assets/page-themes/services-hero-bg.png.asset.json";
+import servicesHeroBg from "@/assets/page-themes/services-section-background.png.asset.json";
 
 import { AdminManagedNote, PageHero, PublicPage } from "@/components/site/PublicPage";
 import { Skeleton } from "@/components/ui/skeleton";
