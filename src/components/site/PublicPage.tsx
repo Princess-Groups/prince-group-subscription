@@ -35,17 +35,12 @@ export function PageHero({
   return (
     <section className="relative overflow-hidden bg-gradient-olive px-4 py-18 text-cream sm:px-6 sm:py-24">
       {bgImage ? (
-        <>
-          <img
-            src={bgImage}
-            alt=""
-            aria-hidden
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
-          />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-primary/30" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/45 via-primary/15 to-transparent" />
-          <div className="pointer-events-none absolute inset-0 bg-primary/10" />
-        </>
+        <img
+          src={bgImage}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+        />
       ) : null}
       <div className="grid-lines pointer-events-none absolute inset-0 opacity-50" />
       <div className="hero-orb -right-20 -top-24 size-96 bg-accent/20" />

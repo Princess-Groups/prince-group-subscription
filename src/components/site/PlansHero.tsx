@@ -31,7 +31,7 @@ export function PlansHero() {
         className="pointer-events-none absolute inset-0 -z-20 size-full bg-top bg-no-repeat [background-size:100%_auto]"
         style={{ backgroundImage: `url(${plansHeroBg.url})` }}
       />
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-primary/35 via-primary/55 to-primary/80" />
+      
 
 
 
