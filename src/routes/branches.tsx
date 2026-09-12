@@ -51,7 +51,7 @@ function BranchesPage() {
           </>
         }
         visual={
-          <div className="glass-dark relative rounded-[2rem] p-8">
+          <div className="relative rounded-[2rem] p-8">
             <div className="hero-orb -right-10 -top-10 size-56 bg-accent/25" />
             <div className="relative flex items-center gap-2 text-accent">
               <Navigation className="size-4" />
