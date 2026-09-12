@@ -799,7 +799,7 @@ export function TrustSection() {
   return (
     <section className="bg-gradient-cream py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading eyebrow="Trust" title="Why Members" highlight="Choose PRINCE" />
+        <SectionHeading eyebrow="Trust" title="Why Choose" highlight="PRINCE GROUP" />
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {cards.map((c) => (
             <div key={c.title} className="card-lift rounded-3xl border border-primary/10 bg-card p-6 shadow-soft">

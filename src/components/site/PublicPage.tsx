@@ -25,7 +25,7 @@ export function PageHero({
   bgImage,
 }: {
   eyebrow?: string;
-  title: string;
+  title: ReactNode;
   highlight?: string;
   subtitle?: string;
   actions?: ReactNode;
