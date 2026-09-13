@@ -85,7 +85,7 @@ export function MemberCard({
             )}
           </div>
           <p className="mt-0.5 truncate text-xs font-semibold text-secondary">{member.designation}</p>
-          <p className="mt-1 inline-flex items-center gap-1.5 truncate text-xs text-muted-foreground">
+          <p className="mt-1 inline-flex items-center gap-1.5 truncate text-xs text-foreground/80">
             <Building2 className="size-3.5 shrink-0" /> {member.company_name || "Independent"}
           </p>
         </div>
@@ -101,7 +101,7 @@ export function MemberCard({
       </div>
 
       {member.about_company ? (
-        <p className="relative mt-3 line-clamp-3 text-xs leading-relaxed text-muted-foreground">
+        <p className="relative mt-3 line-clamp-3 text-xs leading-relaxed text-foreground/80">
           {member.about_company}
         </p>
       ) : null}
@@ -109,16 +109,16 @@ export function MemberCard({
       <div className="relative mt-3 grid gap-2 text-xs sm:grid-cols-2">
         <div className="rounded-2xl border border-secondary/25 bg-secondary/[0.08] p-2.5">
           <p className="text-[10px] font-bold uppercase tracking-wider text-secondary">What I Offer</p>
-          <p className="mt-0.5 line-clamp-2 text-muted-foreground">{member.what_we_offer || "—"}</p>
+          <p className="mt-0.5 line-clamp-2 text-foreground/80">{member.what_we_offer || "—"}</p>
         </div>
         <div className="rounded-2xl border border-primary/15 bg-primary/[0.05] p-2.5">
           <p className="text-[10px] font-bold uppercase tracking-wider text-primary/70">What I Need</p>
-          <p className="mt-0.5 line-clamp-2 text-muted-foreground">{member.what_we_need || "—"}</p>
+          <p className="mt-0.5 line-clamp-2 text-foreground/80">{member.what_we_need || "—"}</p>
         </div>
       </div>
 
       {member.products_services ? (
-        <p className="relative mt-3 line-clamp-1 text-[11px] text-muted-foreground">
+        <p className="relative mt-3 line-clamp-1 text-[11px] text-foreground/80">
           <span className="font-semibold text-primary">Products / Services:</span> {member.products_services}
         </p>
       ) : null}
@@ -126,7 +126,7 @@ export function MemberCard({
       <div className="relative mt-auto pt-4">
         {member.locked || !member.user_id ? (
           <div className="flex items-center justify-between gap-2 rounded-2xl border border-primary/15 bg-muted px-3 py-2.5">
-            <span className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground">
+            <span className="inline-flex items-center gap-2 text-xs font-semibold text-foreground/80">
               <Lock className="size-3.5" /> Subscriber-only profile
             </span>
             <Button asChild size="sm" variant="lime">
@@ -193,10 +193,10 @@ export function EnquiryCard({
         ) : null}
       </div>
       <h3 className="relative mt-3 text-base font-bold leading-snug text-primary">{enquiry.title}</h3>
-      <p className="relative mt-2 line-clamp-3 text-xs leading-relaxed text-muted-foreground">
+      <p className="relative mt-2 line-clamp-3 text-xs leading-relaxed text-foreground/80">
         {enquiry.description}
       </p>
-      <div className="relative mt-3 flex flex-wrap items-center gap-3 text-[11px] text-muted-foreground">
+      <div className="relative mt-3 flex flex-wrap items-center gap-3 text-[11px] text-foreground/80">
         <span className="inline-flex items-center gap-1.5">
           <Building2 className="size-3.5" /> {enquiry.author_name}
           {enquiry.author_company ? ` · ${enquiry.author_company}` : ""}
@@ -209,7 +209,7 @@ export function EnquiryCard({
       <div className="relative mt-auto pt-4">
         {enquiry.locked ? (
           <div className="flex items-center justify-between gap-2 rounded-2xl border border-primary/15 bg-muted px-3 py-2.5">
-            <span className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground">
+            <span className="inline-flex items-center gap-2 text-xs font-semibold text-foreground/80">
               <Lock className="size-3.5" /> Subscribers only
             </span>
             <Button asChild size="sm" variant="lime">
@@ -255,7 +255,7 @@ export function UpgradeGate({
             <Lock className="size-3" /> Members only
           </NetworkPill>
           <h3 className="mt-3 max-w-2xl text-lg font-bold text-primary sm:text-xl">{title}</h3>
-          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+          <p className="mt-2 max-w-2xl text-sm text-foreground/80">
             {note ??
               "Messaging, calling, enquiry posting and full member details unlock with an active subscription."}
           </p>

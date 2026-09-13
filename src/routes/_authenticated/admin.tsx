@@ -136,7 +136,7 @@ function AdminPage() {
       <AppShell title="Admin Control Centre" subtitle="Restricted area">
         <div className="rounded-3xl border border-primary/10 bg-card p-10 text-center shadow-soft">
           <h2 className="text-xl font-bold text-primary">Administrator access required</h2>
-          <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+          <p className="mx-auto mt-2 max-w-md text-sm text-foreground/80">
             Your account doesn't have administrator rights. If this platform has no administrator
             yet, the first signed-in user can claim the role once.
           </p>
@@ -160,7 +160,7 @@ function AdminPage() {
           { label: "Verified revenue", value: inr(Number(s["revenue"] ?? 0)) },
         ].map((c) => (
           <div key={c.label} className="rounded-3xl border border-primary/10 bg-card p-6 shadow-soft">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            <p className="text-xs font-semibold uppercase tracking-widest text-foreground/80">
               {c.label}
             </p>
             <p className="mt-2 font-display text-2xl font-bold text-primary">{c.value}</p>
@@ -188,7 +188,7 @@ function AdminPage() {
               <TableBody>
                 {(subs.data ?? []).map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell className="text-xs text-muted-foreground">
+                    <TableCell className="text-xs text-foreground/80">
                       {shortDate(row.created_at)}
                     </TableCell>
                     <TableCell>{row.plans?.name ?? "—"}</TableCell>
@@ -237,7 +237,7 @@ function AdminPage() {
               <TableBody>
                 {(logs.data ?? []).map((l) => (
                   <TableRow key={l.id}>
-                    <TableCell className="text-xs text-muted-foreground">
+                    <TableCell className="text-xs text-foreground/80">
                       {shortDate(l.created_at)}
                     </TableCell>
                     <TableCell className="font-mono text-xs">{l.action}</TableCell>

@@ -82,7 +82,11 @@ function DirectoryPage() {
   const navigate = useNavigate();
   const unlock = useUnlockBusinessContact(
     (id, phone) => setRevealed((r) => ({ ...r, [id]: phone })),
-    () => navigate({ to: "/payment" }),
+    () =>
+      navigate({
+        to: "/payment",
+        search: { item: "Business Contact Unlock", amount: 10 },
+      }),
   );
 
   const businesses = useMemo(() => data ?? [], [data]);
@@ -168,7 +172,7 @@ function DirectoryPage() {
         <div className="liquid-glass mt-8 rounded-3xl p-4 sm:p-5">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
             <div className="relative flex-1">
-              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-foreground/80" />
               <Input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
@@ -260,7 +264,7 @@ function DirectoryPage() {
           )}
         </div>
 
-        <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-foreground/80">
           {filtered.length} businesses
         </p>
 
@@ -273,7 +277,7 @@ function DirectoryPage() {
         ) : filtered.length === 0 ? (
           <div className="liquid-glass mt-4 rounded-3xl p-12 text-center">
             <h2 className="text-lg font-semibold text-primary">No businesses match your search</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-2 text-sm text-foreground/80">
               Try a different category, area or search term.
             </p>
           </div>
@@ -294,16 +298,16 @@ function DirectoryPage() {
                   </div>
                 </div>
 
-                <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
+                <p className="mt-3 flex items-center gap-1.5 text-sm text-foreground/80">
                   <MapPin className="size-3.5 text-secondary" />
                   {b.location ?? "Kanyakumari"} / {b.district ?? "Kanyakumari"}
                 </p>
-                <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
+                <p className="mt-1 flex items-center gap-1.5 text-xs text-foreground/80">
                   <Building2 className="size-3.5 text-secondary" />
                   {b.business_type ?? "Local Business"}
                 </p>
 
-                <p className="mt-3 line-clamp-2 text-sm text-muted-foreground">{b.description}</p>
+                <p className="mt-3 line-clamp-2 text-sm text-foreground/80">{b.description}</p>
 
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {(b.services ?? []).slice(0, 3).map((s) => (
@@ -313,7 +317,7 @@ function DirectoryPage() {
                   ))}
                 </div>
 
-                <div className="mt-3 flex flex-wrap items-center gap-3 text-[11px] text-muted-foreground">
+                <div className="mt-3 flex flex-wrap items-center gap-3 text-[11px] text-foreground/80">
                   <span className="inline-flex items-center gap-1">
                     <Globe className="size-3.5 text-secondary" />
                     {b.website ? "Website available" : "No website"}
@@ -329,7 +333,7 @@ function DirectoryPage() {
 
                 {revealed[b.id] ? (
                   <div className="mt-4 rounded-2xl border border-secondary/30 bg-secondary/10 px-3 py-2.5">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/80">
                       Contact Number
                     </p>
                     <a
@@ -341,7 +345,7 @@ function DirectoryPage() {
                   </div>
                 ) : (
                   <LockedContact>
-                    <p className="mt-1 text-[11px] text-muted-foreground">
+                    <p className="mt-1 text-[11px] text-foreground/80">
                       Use your subscription access to unlock this contact.
                     </p>
                   </LockedContact>
@@ -376,13 +380,13 @@ function DirectoryPage() {
           <h2 className="mt-3 text-2xl font-bold text-primary">
             One Subscription. Multiple Business Opportunities.
           </h2>
-          <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground">
+          <p className="mx-auto mt-2 max-w-2xl text-sm text-foreground/80">
             Explore Kanyakumari businesses, discover B2B opportunities and unlock valuable business
             connections through one powerful platform.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Button asChild variant="hero" className="rounded-full">
-              <Link to="/plans">View subscription plans</Link>
+              <Link to="/payment">View subscription plans</Link>
             </Button>
             <Button asChild variant="outline" className="rounded-full">
               <Link to="/opportunities">
@@ -392,7 +396,7 @@ function DirectoryPage() {
           </div>
         </div>
 
-        <div className="mt-6 flex items-start gap-2 rounded-2xl bg-muted px-4 py-3 text-xs text-muted-foreground">
+        <div className="mt-6 flex items-start gap-2 rounded-2xl bg-muted px-4 py-3 text-xs text-foreground/80">
           <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-secondary" />
           Only publicly available business information is listed. Contact numbers are served by the
           backend after subscription checks and every unlock is written to the access log.
@@ -451,7 +455,7 @@ function DirectoryPage() {
 
                 {revealed[active.id] ? (
                   <div className="reveal-soft rounded-2xl border border-secondary/30 bg-secondary/10 px-3 py-2.5">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/80">
                       Contact Number
                     </p>
                     <a href={`tel:${revealed[active.id]}`} className="font-semibold text-primary">
@@ -460,7 +464,7 @@ function DirectoryPage() {
                   </div>
                 ) : (
                   <LockedContact>
-                    <p className="mt-1 text-[11px] text-muted-foreground">
+                    <p className="mt-1 text-[11px] text-foreground/80">
                       Use your subscription access to unlock this contact.
                     </p>
                   </LockedContact>
@@ -482,7 +486,7 @@ function DirectoryPage() {
 
                 {related.length > 0 ? (
                   <div className="reveal-soft" style={{ animationDelay: "400ms" }}>
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/80">
                       Similar businesses
                     </p>
                     <div className="mt-2 space-y-2">
@@ -494,7 +498,7 @@ function DirectoryPage() {
                           className="liquid-glass w-full rounded-2xl px-3 py-2.5 text-left"
                         >
                           <p className="text-sm font-semibold text-primary">{r.business_name}</p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-foreground/80">
                             {r.business_type ?? r.category} · {r.location ?? "Kanyakumari"}
                           </p>
                         </button>
@@ -522,7 +526,7 @@ function DetailBlock({
 }) {
   return (
     <div className="reveal-soft" style={{ animationDelay: `${delay}ms` }}>
-      <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+      <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/80">
         {label}
       </p>
       <div className="mt-1 text-sm text-primary">{children}</div>

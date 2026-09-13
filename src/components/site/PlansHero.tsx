@@ -43,7 +43,7 @@ export function PlansHero() {
           Choose Your
           <span className="block text-gradient-olive">Subscription Plan</span>
         </h1>
-        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-cream/70 sm:text-base">
+        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-cream/90 sm:text-base">
           Daily pricing, member discounts, lead quotas and live slot availability — all managed by
           administrators and validated on the server at checkout.
         </p>
@@ -77,15 +77,15 @@ export function PlansHero() {
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent">
                       {plan.name}
                     </p>
-                    <p className="mt-1 text-xs text-cream/60">{plan.tagline}</p>
+                    <p className="mt-1 text-xs text-cream/90">{plan.tagline}</p>
 
                     <p className="mt-6 font-display text-5xl font-bold shimmer-gold">
                       {inr(plan.daily_display)}
                     </p>
-                    <p className="text-xs uppercase tracking-[0.18em] text-cream/55">per day</p>
+                    <p className="text-xs uppercase tracking-[0.18em] text-cream/95">per day</p>
 
-                    <p className="mt-4 text-sm text-cream/75">
-                      {inr(plan.price)} <span className="text-cream/50">/ {plan.billing_period}</span>
+                    <p className="mt-4 text-sm text-cream/95">
+                      {inr(plan.price)} <span className="text-cream/95">/ {plan.billing_period}</span>
                     </p>
 
                     <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-[11px] font-semibold">
@@ -93,7 +93,7 @@ export function PlansHero() {
                         {plan.discount_percentage}% service discount
                       </span>
                       {plan.slot_limit != null ? (
-                        <span className="rounded-full border border-cream/15 px-3 py-1 text-cream/70">
+                        <span className="rounded-full border border-cream/15 px-3 py-1 text-cream/90">
                           {remaining ?? plan.slot_limit} slots left
                         </span>
                       ) : null}

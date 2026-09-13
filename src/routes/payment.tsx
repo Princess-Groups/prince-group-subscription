@@ -42,7 +42,7 @@ export const Route = createFileRoute("/payment")({
 });
 
 const BANK = {
-  accountName: "Jeba Prince S",
+  accountName: "[I WILL ADD THIS]",
   accountNumber: "16400200004038",
   ifsc: "FDRL0001640",
   bank: "Federal Bank",
@@ -76,7 +76,7 @@ function PaymentPage() {
   const submit = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error("Please sign in to submit payment details.");
-      if (!name.trim() || !mobile.trim() || !email.trim() || !utr.trim()) {
+      if (!name.trim() || !mobile.trim() || !email.trim() || !utr.trim() || !file) {
         throw new Error("Please fill in all required fields.");
       }
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) {
@@ -84,15 +84,12 @@ function PaymentPage() {
       }
       if (amount <= 0) throw new Error("Please choose a plan or enter a valid amount.");
 
-      let screenshotPath: string | null = null;
-      if (file) {
-        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
-        screenshotPath = `${user.id}/${Date.now()}-${safeName}`;
-        const { error: upErr } = await supabase.storage
-          .from("payment-proofs")
-          .upload(screenshotPath, file, { contentType: file.type });
-        if (upErr) throw upErr;
-      }
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
+      const screenshotPath = `${user.id}/${Date.now()}-${safeName}`;
+      const { error: upErr } = await supabase.storage
+        .from("payment-proofs")
+        .upload(screenshotPath, file, { contentType: file.type });
+      if (upErr) throw upErr;
 
       const { error } = await supabase.from("payment_submissions").insert({
         user_id: user.id,
@@ -136,7 +133,7 @@ function PaymentPage() {
                 <BadgeCheck className="size-8" />
               </span>
               <h2 className="mt-6 text-2xl font-bold text-primary">Payment details submitted</h2>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-3 text-sm leading-relaxed text-foreground/80">
                 Payment details submitted successfully. Our team will verify your payment and
                 activate your plan/profile access.
               </p>
@@ -163,18 +160,18 @@ function PaymentPage() {
                       {inr(amount)}
                     </span>
                     {plan ? (
-                      <span className="pb-2 text-sm text-cream/70">
+                      <span className="pb-2 text-sm text-cream/90">
                         /{plan.billing_period === "monthly" ? "month" : plan.billing_period}
                       </span>
                     ) : null}
                   </p>
                   {plan ? (
-                    <p className="mt-2 text-sm text-cream/75">
+                    <p className="mt-2 text-sm text-cream/95">
                       {plan.discount_percentage}% member discount · {plan.lead_limit} lead
                       allocations
                     </p>
                   ) : null}
-                  <p className="mt-4 flex items-center gap-2 text-xs text-cream/60">
+                  <p className="mt-4 flex items-center gap-2 text-xs text-cream/90">
                     <ShieldCheck className="size-4 text-accent" />
                     Payments are activated only after manual verification — nothing is
                     auto-confirmed.
@@ -198,7 +195,7 @@ function PaymentPage() {
                   <h3 className="flex items-center justify-center gap-2 text-lg font-semibold text-primary">
                     <QrCode className="size-5 text-secondary" /> Scan &amp; Pay
                   </h3>
-                  <p className="mt-2 text-xs text-muted-foreground">
+                  <p className="mt-2 text-xs text-foreground/80">
                     Scan with any UPI app (GPay, PhonePe, Paytm, BHIM, FedMobile…)
                   </p>
                   <img
@@ -215,7 +212,7 @@ function PaymentPage() {
                 <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
                   <Building2 className="size-5 text-secondary" /> Submit payment confirmation
                 </h3>
-                <ol className="mt-4 list-decimal space-y-1 pl-5 text-xs leading-relaxed text-muted-foreground">
+                <ol className="mt-4 list-decimal space-y-1 pl-5 text-xs leading-relaxed text-foreground/80">
                   <li>Scan the QR code OR transfer the amount using the bank details shown.</li>
                   <li>Fill in your details and payment reference / UTR number below.</li>
                   <li>Upload your payment screenshot and press Submit Payment.</li>
@@ -223,7 +220,7 @@ function PaymentPage() {
 
                 {!user && !sessionLoading ? (
                   <div className="mt-8 rounded-2xl bg-muted p-6 text-center">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-foreground/80">
                       Please sign in to submit your payment details.
                     </p>
                     <Button asChild variant="hero" className="mt-4">
@@ -334,13 +331,14 @@ function PaymentPage() {
                       />
                     </Field>
 
-                    <Field label="Payment Screenshot / Receipt">
-                      <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-primary/25 bg-muted/40 px-4 py-6 text-sm text-muted-foreground transition-colors hover:border-secondary/50">
+                    <Field label="Payment Screenshot / Receipt" required>
+                      <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-primary/25 bg-muted/40 px-4 py-6 text-sm text-foreground/80 transition-colors hover:border-secondary/50">
                         <Upload className="size-4 text-secondary" />
                         {file ? file.name : "Click to upload payment screenshot"}
                         <input
                           type="file"
                           accept="image/*,.pdf"
+                          required
                           className="hidden"
                           onChange={(e) => setFile(e.target.files?.[0] ?? null)}
                         />
@@ -356,7 +354,7 @@ function PaymentPage() {
                     >
                       {submit.isPending ? "Submitting…" : `Submit Payment — ${inr(amount)}`}
                     </Button>
-                    <p className="text-center text-[11px] text-muted-foreground">
+                    <p className="text-center text-[11px] text-foreground/80">
                       Your plan/profile access is activated only after our team verifies the
                       payment.
                     </p>
@@ -374,7 +372,7 @@ function PaymentPage() {
 function BankRow({ label, value, copy }: { label: string; value: string; copy?: boolean }) {
   return (
     <div className="flex items-center justify-between gap-3 rounded-xl bg-muted/50 px-4 py-2.5">
-      <dt className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+      <dt className="text-xs font-semibold uppercase tracking-wider text-foreground/80">
         {label}
       </dt>
       <dd className="flex items-center gap-2 font-mono text-sm font-semibold text-primary">
@@ -408,7 +406,7 @@ function Field({
 }) {
   return (
     <div className="space-y-1.5">
-      <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+      <Label className="text-xs font-semibold uppercase tracking-wider text-foreground/80">
         {label} {required ? <span className="text-destructive">*</span> : null}
       </Label>
       {children}

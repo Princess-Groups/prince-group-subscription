@@ -49,13 +49,13 @@ export function PlanCard({
       >
         {plan.name}
       </p>
-      <p className={cn("mt-1 text-sm", highlight ? "text-cream/75" : "text-cream/65")}>
+      <p className={cn("mt-1 text-sm", highlight ? "text-cream/95" : "text-cream/90")}>
         {plan.tagline}
       </p>
 
       <div className="mt-6 flex items-end gap-2">
         <span className="font-display text-4xl font-bold">{inr(plan.daily_display)}</span>
-        <span className={cn("pb-1.5 text-sm", highlight ? "text-cream/70" : "text-cream/60")}>
+        <span className={cn("pb-1.5 text-sm", highlight ? "text-cream/90" : "text-cream/90")}>
           /day
         </span>
       </div>
@@ -73,7 +73,7 @@ export function PlanCard({
         {plan.code === "premium"
           ? `Flat ${plan.discount_percentage}% Discount on eligible services`
           : `${plan.discount_percentage}% discount on eligible services`}
-        <span className={cn("mt-1 block text-xs font-normal", highlight ? "text-cream/70" : "text-cream/60")}>
+        <span className={cn("mt-1 block text-xs font-normal", highlight ? "text-cream/90" : "text-cream/90")}>
           {plan.lead_limit} lead allocations · {plan.weekly_attempt_limit} claim attempt/week
         </span>
       </div>
@@ -81,7 +81,7 @@ export function PlanCard({
       {limited ? (
         <div className="mt-5">
           <div className="flex items-center justify-between text-xs font-semibold">
-            <span className={highlight ? "text-cream/80" : "text-cream/65"}>
+            <span className={highlight ? "text-cream/95" : "text-cream/90"}>
               {full ? (plan.code === "premium" ? "Premium Slots Full" : "Limit Reached") : `${remaining} / ${plan.slot_limit} Slots Available`}
             </span>
             <span className={highlight ? "text-accent" : "text-accent/85"}>{occupied} occupied</span>
@@ -94,7 +94,7 @@ export function PlanCard({
         {plan.benefits.map((b) => (
           <li key={b} className="flex gap-2">
             <Check className={cn("mt-0.5 size-4 shrink-0", highlight ? "text-accent" : "text-accent/85")} />
-            <span className={highlight ? "text-cream/90" : "text-cream/80"}>{b}</span>
+            <span className={highlight ? "text-cream/90" : "text-cream/95"}>{b}</span>
           </li>
         ))}
       </ul>
@@ -102,7 +102,7 @@ export function PlanCard({
       <div className="mt-7">
         {full ? (
           <div className="space-y-2">
-            <Button disabled variant="outline" className="w-full border-cream/25 text-cream/60">
+            <Button disabled variant="outline" className="w-full border-cream/25 text-cream/90">
               <Lock className="size-4" />
               {plan.code === "premium" ? "Premium Slots Full" : "Limit Reached"}
             </Button>
@@ -121,10 +121,12 @@ export function PlanCard({
           </Button>
         ) : (
           <Button asChild variant={highlight ? "lime" : "onOlive"} className="w-full">
-            <Link to="/plans">{plan.code === "starter" ? "Start for ₹1" : "Subscribe Now"}</Link>
+            <Link to="/payment" search={{ plan: plan.code }}>
+              {plan.code === "starter" ? "Start for ₹1" : "Subscribe Now"}
+            </Link>
           </Button>
         )}
-        <p className={cn("mt-3 text-center text-[11px]", highlight ? "text-cream/60" : "text-cream/55")}>
+        <p className={cn("mt-3 text-center text-[11px]", highlight ? "text-cream/90" : "text-cream/95")}>
           Recurring payment enabled · GST &amp; application fee calculated at checkout
         </p>
       </div>

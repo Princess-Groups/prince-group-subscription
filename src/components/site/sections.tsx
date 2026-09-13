@@ -104,9 +104,9 @@ function LiveStatEntry({ index }: { index: number }) {
         <span className="stat-entry-icon"><Icon className="size-5" /></span>
         <span className="min-w-0 flex-1">
           <span className="block truncate text-sm font-semibold text-cream">{entry.name}</span>
-          <span className="mt-0.5 block truncate text-xs text-cream/60">{entry.detail}</span>
+          <span className="mt-0.5 block truncate text-xs text-cream/90">{entry.detail}</span>
         </span>
-        {"meta" in entry ? <span className="shrink-0 text-[10px] text-cream/50">{entry.meta}</span> : null}
+        {"meta" in entry ? <span className="shrink-0 text-[10px] text-cream/95">{entry.meta}</span> : null}
       </div>
       <div className="stat-entry-dots" aria-hidden="true">
         {entries.map((item, itemIndex) => (
@@ -141,7 +141,7 @@ export function HeroSection() {
             </span>
             <span className="block text-gradient-olive">GO PREMIUM. UNLOCK MORE.</span>
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/80 sm:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/95 sm:text-lg">
             Subscription get started with one rupee. Unlock loan candidate data for just ₹10. Go Premium for ₹100 — all in one powerful subscription.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -149,7 +149,7 @@ export function HeroSection() {
               <a href="#bank-executive-plans">Explore Bank Executive Plans →</a>
             </Button>
             <Button asChild size="lg" variant="onOlive" className="w-full sm:w-auto">
-              <Link to="/plans">View Subscription Plans</Link>
+              <Link to="/payment">View Subscription Plans</Link>
             </Button>
           </div>
         </div>
@@ -220,7 +220,7 @@ export function SlotAvailabilitySection() {
         />
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {SLOT_PLANS.map((p) => (
+          {SLOT_PLANS.map((p, index) => (
             <div
               key={p.name}
               className={`relative overflow-hidden rounded-[2rem] border p-7 shadow-soft transition-shadow duration-500 ${
@@ -255,7 +255,7 @@ export function SlotAvailabilitySection() {
               </h3>
               <p
                 className={`relative mt-1 text-sm ${
-                  p.emphasis ? "text-cream/70" : "text-muted-foreground"
+                  p.emphasis ? "text-cream/90" : "text-foreground/80"
                 }`}
               >
                 {p.note}
@@ -283,7 +283,7 @@ export function SlotAvailabilitySection() {
                     </span>
                     <span
                       className={`mt-1 block text-[10px] font-semibold uppercase tracking-[0.14em] ${
-                        p.emphasis ? "text-cream/75" : "text-muted-foreground"
+                        p.emphasis ? "text-cream/95" : "text-foreground/80"
                       }`}
                     >
                       Slots available
@@ -304,7 +304,7 @@ export function SlotAvailabilitySection() {
                     {p.price}
                   </p>
                   <p
-                    className={`text-xs ${p.emphasis ? "text-cream/70" : "text-muted-foreground"}`}
+                    className={`text-xs ${p.emphasis ? "text-cream/90" : "text-foreground/80"}`}
                   >
                     {p.per}
                   </p>
@@ -316,7 +316,15 @@ export function SlotAvailabilitySection() {
                 variant={p.emphasis ? "lime" : "outline"}
                 className="relative mt-7 w-full"
               >
-                <Link to="/plans">Claim your slot</Link>
+                <Link
+                  to="/payment"
+                  search={{
+                    item: `${p.name} Subscription`,
+                    amount: [10, 100, 100][index],
+                  }}
+                >
+                  Claim your slot
+                </Link>
               </Button>
             </div>
           ))}
@@ -352,7 +360,7 @@ export function LoanCandidateDataSection() {
             Unlock and Explore
             <span className="block text-gradient-olive">Loan Candidate Data.</span>
           </h2>
-          <p className="mt-5 text-sm leading-relaxed text-cream/70 sm:text-base">
+          <p className="mt-5 text-sm leading-relaxed text-cream/90 sm:text-base">
             Prince Group provides access to original loan candidate profiles and business data for
             banking professionals. We are a data platform — we do not provide loans.
           </p>
@@ -371,7 +379,7 @@ export function LoanCandidateDataSection() {
                 </span>
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold text-cream">{c.name}</p>
-                  <p className="truncate text-xs text-cream/60">{c.location}</p>
+                  <p className="truncate text-xs text-cream/90">{c.location}</p>
                 </div>
               </div>
 
@@ -379,7 +387,7 @@ export function LoanCandidateDataSection() {
                 Profile: Loan Candidate
               </p>
 
-              <div className="mt-3 space-y-2 text-xs text-cream/70">
+              <div className="mt-3 space-y-2 text-xs text-cream/90">
                 <div className="flex justify-between">
                   <span>Contact</span>
                   <span className="select-none blur-[4px]">+91 98765 43210</span>
@@ -411,7 +419,7 @@ export function LoanCandidateDataSection() {
               EXPLORE ALL DATA <span aria-hidden>→</span>
             </Link>
           </Button>
-          <p className="text-xs text-cream/55">
+          <p className="text-xs text-cream/95">
             Profiles shown are sample previews. Full details unlock with an active subscription.
           </p>
         </div>
@@ -465,7 +473,7 @@ export function ServiceShowcaseSection() {
           You Can Get Exclusive Offers
           <span className="block text-gradient-olive">Across All Our Services</span>
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground">
+        <p className="mx-auto mt-4 max-w-2xl text-sm text-foreground/80">
           Member pricing is applied automatically from your active plan across every Prince Group
           service.
         </p>
@@ -561,7 +569,7 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
               <h2 className="text-3xl font-bold text-primary sm:text-4xl">Our Branches</h2>
               <span className="h-px w-12 bg-secondary/55 sm:w-20" aria-hidden />
             </div>
-            <p className="mt-3 text-sm text-muted-foreground sm:text-base">
+            <p className="mt-3 text-sm text-foreground/80 sm:text-base">
               Serving you across Kanyakumari District
             </p>
           </header>
@@ -588,14 +596,14 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
                 <div className="-mt-10 flex flex-1 flex-col bg-gradient-to-b from-transparent via-primary/95 to-olive-dark px-5 pb-5 pt-3">
                   <div className="relative min-h-[5.5rem]">
                     <h3 className="text-xl font-bold text-cream">{branch.name}</h3>
-                    <p className="mt-1 text-xs leading-relaxed text-cream/80">
+                    <p className="mt-1 text-xs leading-relaxed text-cream/95">
                       Documentation · Registration · Business services
                     </p>
                   </div>
                   <div className="mt-auto grid gap-3 rounded-xl border border-cream/10 bg-olive-dark/65 p-4">
                     <div className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-start gap-2.5">
                       <MapPin className="mt-0.5 size-4 text-accent" aria-hidden />
-                      <p className="text-xs leading-relaxed text-cream/80">{branch.address}</p>
+                      <p className="text-xs leading-relaxed text-cream/95">{branch.address}</p>
                     </div>
                     <a
                       href={`tel:${phone}`}
@@ -606,7 +614,7 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
                     </a>
                     <div className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-center gap-2.5">
                       <Clock3 className="size-4 text-accent" aria-hidden />
-                      <p className="text-xs text-cream/80">Mon – Sat · 9:00 AM – 7:00 PM</p>
+                      <p className="text-xs text-cream/95">Mon – Sat · 9:00 AM – 7:00 PM</p>
                     </div>
                   </div>
                 </div>
@@ -659,11 +667,11 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
               ].map((s) => (
                 <div key={s.label} className="glass-dark rounded-2xl px-4 py-5 text-center">
                   <p className="font-display text-2xl font-bold text-accent sm:text-3xl">{s.value}</p>
-                  <p className="mt-1 text-[11px] uppercase tracking-wider text-cream/65">{s.label}</p>
+                  <p className="mt-1 text-[11px] uppercase tracking-wider text-cream/90">{s.label}</p>
                 </div>
               ))}
             </div>
-            <p className="relative mt-6 text-sm text-cream/70">
+            <p className="relative mt-6 text-sm text-cream/90">
               Branch discovery, coverage and contact routing are administered centrally so members
               always reach the right local team.
             </p>
@@ -687,7 +695,7 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
                 {i === 0 ? <Star className="size-5" /> : <MapPin className="size-5" />}
               </span>
               <h3 className="mt-5 text-lg font-semibold text-primary">{town}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-sm text-foreground/80">
                 Documentation · Registration · Business services
               </p>
               <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-secondary">
@@ -697,7 +705,7 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
           ))}
         </div>
 
-        <div className="mt-3 rounded-2xl bg-olive-dark/60 px-4 py-3 text-cream/70">
+        <div className="mt-3 rounded-2xl bg-olive-dark/60 px-4 py-3 text-cream/90">
           <AdminManagedNote>
             Branch towns, addresses and contact routing are configurable from Admin Settings; the list
             above is the current published coverage across Kanyakumari District.
@@ -736,7 +744,7 @@ export function BankExecutiveSection() {
               A dedicated portal for
               <span className="block text-gradient-olive">bank &amp; finance executives</span>
             </h2>
-            <p className="mt-5 text-sm leading-relaxed text-cream/75">
+            <p className="mt-5 text-sm leading-relaxed text-cream/95">
               Bank Executives subscribe on the Business plan or the Premium plan only. The Starter
               plan is not offered inside the Bank Executive portal. Every account requires a unique
               user ID, password and administrator approval before access is granted.
@@ -769,14 +777,14 @@ export function BankExecutiveSection() {
                   </span>
                 </div>
                 <h3 className="mt-5 text-base font-semibold text-primary">{feature.title}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{feature.body}</p>
+                <p className="mt-2 text-xs leading-relaxed text-foreground/80">{feature.body}</p>
               </div>
             ))}
           </div>
         </div>
 
         <div className="relative border-t border-cream/10 px-7 py-4 sm:px-10 lg:px-12">
-          <p className="text-xs text-cream/60">
+          <p className="text-xs text-cream/90">
             <DemoBadge className="mr-2" />
             Executive dashboards currently show synthetic records. Administrators replace them with
             imported data before go-live.
@@ -808,7 +816,7 @@ export function TrustSection() {
                 <c.icon className="size-5" />
               </span>
               <h3 className="mt-5 text-lg font-semibold text-primary">{c.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{c.body}</p>
+              <p className="mt-2 text-sm text-foreground/80">{c.body}</p>
             </div>
           ))}
         </div>
@@ -829,7 +837,7 @@ export function ContactCtaSection() {
         <h2 className="relative text-3xl font-bold sm:text-4xl">
           Need More <span className="text-gradient-olive">Access?</span>
         </h2>
-        <p className="relative mx-auto mt-4 max-w-2xl text-sm text-cream/70 sm:text-base">
+        <p className="relative mx-auto mt-4 max-w-2xl text-sm text-cream/90 sm:text-base">
           Our premium plans are limited. Contact our team for additional availability and business
           access.
         </p>

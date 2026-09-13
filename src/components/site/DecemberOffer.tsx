@@ -49,14 +49,14 @@ export function DecemberOffer({ offer }: { offer: OfferRow }) {
             </h2>
             <p className="mt-4 max-w-xl text-base font-semibold text-accent">{offer.title}</p>
             {offer.description ? (
-              <p className="mt-3 max-w-xl text-sm leading-relaxed text-cream/70">
+              <p className="mt-3 max-w-xl text-sm leading-relaxed text-cream/90">
                 {offer.description}
               </p>
             ) : null}
 
             <div className="mt-7 flex flex-wrap items-center gap-3 text-xs font-semibold">
               {offer.start_date || offer.end_date ? (
-                <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-cream/75">
+                <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-cream/95">
                   <Timer className="size-3.5 text-accent" />
                   {offer.start_date ? shortDate(offer.start_date) : "Now"}
                   {offer.end_date ? ` — ${shortDate(offer.end_date)}` : ""}
@@ -71,7 +71,7 @@ export function DecemberOffer({ offer }: { offer: OfferRow }) {
                 className={`rounded-full px-4 py-2 ${
                   offer.active
                     ? "bg-gradient-lime text-primary"
-                    : "border border-cream/20 text-cream/60"
+                    : "border border-cream/20 text-cream/90"
                 }`}
               >
                 {offer.active ? "Live now" : "Scheduled"}
@@ -80,7 +80,12 @@ export function DecemberOffer({ offer }: { offer: OfferRow }) {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
-                <Link to="/plans">Claim December Offer →</Link>
+                <Link
+                  to="/payment"
+                  search={offer.applicable_plan ? { plan: offer.applicable_plan } : {}}
+                >
+                  Claim December Offer →
+                </Link>
               </Button>
               <Button asChild size="lg" variant="onOlive" className="w-full sm:w-auto">
                 <Link to="/contact">Ask About This Offer</Link>
@@ -91,17 +96,17 @@ export function DecemberOffer({ offer }: { offer: OfferRow }) {
           <div className="relative">
             <div className="glass-dark hover-glow relative overflow-hidden rounded-[2rem] border border-[oklch(0.86_0.13_95/0.35)] p-8 text-center">
               <div className="hero-orb -right-12 -top-12 size-40 bg-accent/30" />
-              <p className="relative text-[11px] font-bold uppercase tracking-[0.25em] text-cream/60">
+              <p className="relative text-[11px] font-bold uppercase tracking-[0.25em] text-cream/90">
                 Save up to
               </p>
               <p className="relative mt-3 font-display text-7xl font-extrabold shimmer-gold">
                 {offer.discount ?? 0}%
               </p>
-              <p className="relative mt-2 text-sm text-cream/70">
+              <p className="relative mt-2 text-sm text-cream/90">
                 Applied automatically at checkout during the campaign window.
               </p>
               <div className="relative mt-6 h-px w-full bg-gradient-lime opacity-40" />
-              <p className="relative mt-5 text-xs text-cream/55">
+              <p className="relative mt-5 text-xs text-cream/95">
                 Discount value, dates and eligible plan are configured by administrators.
               </p>
             </div>

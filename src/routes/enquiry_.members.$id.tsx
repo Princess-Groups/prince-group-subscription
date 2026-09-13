@@ -95,7 +95,7 @@ function MemberProfilePage() {
         ) : blockedView ? (
           <UpgradeGate />
         ) : !data || data.error ? (
-          <p className="text-sm text-muted-foreground">This member profile is not available.</p>
+          <p className="text-sm text-foreground/80">This member profile is not available.</p>
         ) : (
           <>
             <div className="liquid-glass relative overflow-hidden rounded-3xl p-6 sm:p-8">
@@ -111,7 +111,7 @@ function MemberProfilePage() {
                 <div className="min-w-0 flex-1">
                   <h1 className="text-2xl font-bold text-primary sm:text-3xl">{data.full_name}</h1>
                   <p className="mt-1 text-sm font-semibold text-secondary">{data.designation}</p>
-                  <p className="mt-1 inline-flex items-center gap-2 text-sm text-muted-foreground">
+                  <p className="mt-1 inline-flex items-center gap-2 text-sm text-foreground/80">
                     <Building2 className="size-4" /> {data.company_name || "Independent"}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -161,7 +161,7 @@ function MemberProfilePage() {
                 <Panel title="What We Need">{data.what_we_need || "—"}</Panel>
                 <div className="liquid-glass rounded-3xl p-5">
                   <h2 className="text-sm font-bold uppercase tracking-wider text-primary">Contact availability</h2>
-                  <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                  <ul className="mt-3 space-y-2 text-sm text-foreground/80">
                     <li className="inline-flex items-center gap-2">
                       <MessageSquare className="size-4 text-secondary" /> Preferred: {data.preferred_contact}
                     </li>
@@ -230,7 +230,7 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
   return (
     <div className="liquid-glass rounded-3xl p-5">
       <h2 className="text-sm font-bold uppercase tracking-wider text-primary">{title}</h2>
-      <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">{children}</p>
+      <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-foreground/80">{children}</p>
     </div>
   );
 }

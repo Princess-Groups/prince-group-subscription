@@ -86,11 +86,11 @@ function DashboardPage() {
       ) : !data?.has_subscription ? (
         <div className="rounded-3xl border border-primary/10 bg-card p-10 text-center shadow-soft">
           <h2 className="text-2xl font-bold text-primary">No subscription yet</h2>
-          <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+          <p className="mx-auto mt-2 max-w-md text-sm text-foreground/80">
             Choose a plan to unlock member discounts, lead allocation and business data.
           </p>
           <Button asChild variant="hero" className="mt-6">
-            <Link to="/plans">View plans</Link>
+            <Link to="/payment">View plans</Link>
           </Button>
         </div>
       ) : (
@@ -131,7 +131,7 @@ function DashboardPage() {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <h2 className="text-lg font-semibold text-primary">Lead quota usage</h2>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-foreground/80">
                     {plan?.leads_per_attempt} lead(s) per weekly claim attempt.
                   </p>
                 </div>
@@ -159,7 +159,7 @@ function DashboardPage() {
             <div className="relative overflow-hidden rounded-[1.75rem] bg-gradient-olive p-7 text-cream shadow-lift">
               <div className="grid-lines pointer-events-none absolute inset-0 opacity-40" />
               <h2 className="text-lg font-semibold">Advance access</h2>
-              <p className="mt-2 text-sm text-cream/75">
+              <p className="mt-2 text-sm text-cream/95">
                 Reserve an upcoming period in advance. Reservations stay pending until the payment
                 is verified.
               </p>
@@ -194,11 +194,11 @@ function Stat({
       <span className="grid size-10 place-items-center rounded-2xl bg-muted text-secondary">
         <Icon className="size-4" />
       </span>
-      <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+      <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-foreground/80">
         {label}
       </p>
       <p className="mt-1 font-display text-xl font-bold capitalize text-primary">{value}</p>
-      {hint ? <p className="mt-1 text-xs text-muted-foreground">{hint}</p> : null}
+      {hint ? <p className="mt-1 text-xs text-foreground/80">{hint}</p> : null}
     </div>
   );
 }

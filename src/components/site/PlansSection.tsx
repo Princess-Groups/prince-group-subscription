@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 
 import { PlanCard } from "@/components/site/PlanCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useSession } from "@/hooks/useAuth";
 import { settingString, usePlans, useSettings, useSlots } from "@/hooks/usePlatform";
 
 export function PlansSection({
@@ -20,7 +19,6 @@ export function PlansSection({
   const { data: plans, isLoading } = usePlans();
   const { data: slots } = useSlots();
   const { data: settings } = useSettings();
-  const { user, loading: sessionLoading } = useSession();
   const navigate = useNavigate();
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -85,7 +83,7 @@ export function PlansSection({
       <div className="max-w-2xl">
         <span className="pill-badge">Membership</span>
         <h2 className="mt-4 text-3xl font-bold sm:text-4xl">{title}</h2>
-        <p className="mt-4 text-sm text-cream/70 sm:text-base">{subtitle}</p>
+        <p className="mt-4 text-sm text-cream/90 sm:text-base">{subtitle}</p>
       </div>
 
 
@@ -113,12 +111,7 @@ export function PlansSection({
                     return slot ? { slot } : {};
                   })()}
                   supportPhone={phone}
-                  busy={sessionLoading}
                   onSubscribe={(code) => {
-                    if (!user) {
-                      navigate({ to: "/auth" });
-                      return;
-                    }
                     navigate({ to: "/payment", search: { plan: code } });
                   }}
                 />
@@ -126,7 +119,7 @@ export function PlansSection({
             ))}
       </div>
 
-      <p className="mt-6 text-xs text-cream/55">
+      <p className="mt-6 text-xs text-cream/95">
         <span className="font-semibold text-accent">Admin-managed:</span> Slot counters update live
         from active and pending subscriptions. Payments are only marked successful after
         verification through the payment gateway — nothing is auto-confirmed.

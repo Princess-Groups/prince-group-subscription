@@ -31,7 +31,7 @@ export function SiteFooter() {
             </span>
           </div>
 
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-cream/70">
+          <p className="mt-5 max-w-md text-sm leading-relaxed text-cream/90">
             Premium access, opportunities, benefits and loan candidate data. A subscription platform for
             loan candidate data, business contacts, service discounts and managed lead access —
             availability, pricing and data controlled by the platform administrator.
@@ -45,7 +45,7 @@ export function SiteFooter() {
             </a>
             <Link
               to="/branches"
-              className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-sm font-semibold text-cream/80 transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
+              className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-sm font-semibold text-cream/95 transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
             >
               <MapPin className="size-4" /> 20 Branches All Over Kanyakumari
             </Link>
@@ -54,7 +54,7 @@ export function SiteFooter() {
 
         <div>
           <h4 className="text-sm font-semibold text-accent">Platform</h4>
-          <ul className="mt-4 space-y-2 text-sm text-cream/70">
+          <ul className="mt-4 space-y-2 text-sm text-cream/90">
             <li><Link to="/plans" className="hover:text-accent">Subscription Plans</Link></li>
             <li><Link to="/loan-services" className="hover:text-accent">Loan Candidate Data</Link></li>
             <li><Link to="/services" className="hover:text-accent">Member Services</Link></li>
@@ -69,7 +69,7 @@ export function SiteFooter() {
 
         <div>
           <h4 className="text-sm font-semibold text-accent">Legal</h4>
-          <ul className="mt-4 space-y-2 text-sm text-cream/70">
+          <ul className="mt-4 space-y-2 text-sm text-cream/90">
             <li><Link to="/terms" className="hover:text-accent">Terms &amp; Conditions</Link></li>
             <li><Link to="/privacy" className="hover:text-accent">Privacy Policy</Link></li>
             <li><Link to="/refund" className="hover:text-accent">Refund &amp; Cancellation</Link></li>
@@ -78,7 +78,7 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="relative border-t border-cream/10 px-4 py-6 text-center text-xs text-cream/50">
+      <div className="relative border-t border-cream/10 px-4 py-6 text-center text-xs text-cream/95">
         © {new Date().getFullYear()} PRINCE. Subscription access is limited and admin-controlled.
         Prince Group provides data access and services — we do not provide loans.
       </div>

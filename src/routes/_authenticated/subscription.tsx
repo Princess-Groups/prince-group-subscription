@@ -122,7 +122,7 @@ function SubscriptionPage() {
         <div className="rounded-3xl border border-primary/10 bg-card p-10 text-center shadow-soft">
           <h2 className="text-xl font-bold text-primary">No subscription found</h2>
           <Button asChild variant="hero" className="mt-5">
-            <Link to="/plans">Choose a plan</Link>
+            <Link to="/payment">Choose a plan</Link>
           </Button>
         </div>
       ) : (
@@ -148,7 +148,7 @@ function SubscriptionPage() {
             </dl>
 
             {sub.status !== "active" ? (
-              <div className="mt-6 flex items-start gap-2 rounded-2xl bg-muted px-4 py-3 text-xs text-muted-foreground">
+              <div className="mt-6 flex items-start gap-2 rounded-2xl bg-muted px-4 py-3 text-xs text-foreground/80">
                 <AlertTriangle className="mt-0.5 size-3.5 shrink-0 text-secondary" />
                 This subscription stays pending until the payment gateway confirms a verified
                 payment through the webhook. Nothing is marked paid automatically.
@@ -157,7 +157,7 @@ function SubscriptionPage() {
 
             <div className="mt-7 flex flex-wrap gap-3">
               <Button asChild variant="hero">
-                <Link to="/plans">Change plan</Link>
+                <Link to="/payment">Change plan</Link>
               </Button>
               <Button
                 variant="outline"
@@ -171,7 +171,7 @@ function SubscriptionPage() {
 
           <div className="rounded-3xl bg-gradient-olive p-7 text-primary-foreground shadow-lift">
             <h2 className="text-lg font-semibold">Advance access</h2>
-            <p className="mt-2 text-sm text-primary-foreground/75">
+            <p className="mt-2 text-sm text-primary-foreground/95">
               Reserve upcoming months in advance. Current reservation:{" "}
               <span className="font-semibold text-accent">{sub.advance_period ?? "none"}</span>
             </p>
@@ -202,7 +202,7 @@ function SubscriptionPage() {
             ))}
           </div>
         ) : (paymentsQuery.data ?? []).length === 0 ? (
-          <p className="p-8 text-center text-sm text-muted-foreground">No payments recorded yet.</p>
+          <p className="p-8 text-center text-sm text-foreground/80">No payments recorded yet.</p>
         ) : (
           <div className="overflow-x-auto">
             <Table>
@@ -220,7 +220,7 @@ function SubscriptionPage() {
               <TableBody>
                 {(paymentsQuery.data ?? []).map((p) => (
                   <TableRow key={p.id}>
-                    <TableCell className="text-xs text-muted-foreground">
+                    <TableCell className="text-xs text-foreground/80">
                       {shortDate(p.created_at)}
                     </TableCell>
                     <TableCell>{inr(p.base_amount)}</TableCell>
@@ -252,7 +252,7 @@ function SubscriptionPage() {
 function Item({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+      <dt className="text-xs font-semibold uppercase tracking-widest text-foreground/80">
         {label}
       </dt>
       <dd className="mt-1 text-sm font-semibold text-primary">{value}</dd>

@@ -118,7 +118,7 @@ function NetworkAdminPage() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map(([label, key]) => (
             <div key={key} className="liquid-glass rounded-3xl p-4">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">{label}</p>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-foreground/80">{label}</p>
               <p className="mt-1 text-2xl font-bold text-primary">{Number(s[key] ?? 0)}</p>
             </div>
           ))}
@@ -127,7 +127,7 @@ function NetworkAdminPage() {
 
       {topCategories.length ? (
         <div className="liquid-glass mt-4 rounded-3xl p-4">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-foreground/80">
             Most active business categories
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
@@ -168,7 +168,7 @@ function NetworkAdminPage() {
               >
                 <div className="min-w-0">
                   <p className="truncate text-sm font-bold text-primary">{m.full_name || "Unnamed member"}</p>
-                  <p className="truncate text-xs text-muted-foreground">
+                  <p className="truncate text-xs text-foreground/80">
                     {m.company_name} · {m.category || "No category"} · {m.location}
                   </p>
                 </div>
@@ -209,7 +209,7 @@ function NetworkAdminPage() {
             <div key={e.id} className="liquid-glass flex flex-wrap items-center justify-between gap-3 rounded-2xl px-4 py-3">
               <div className="min-w-0">
                 <p className="truncate text-sm font-bold text-primary">{e.title}</p>
-                <p className="truncate text-xs text-muted-foreground">
+                <p className="truncate text-xs text-foreground/80">
                   {e.enquiry_type} · {e.category || "No category"} · {shortDate(e.created_at)}
                 </p>
               </div>
@@ -257,7 +257,7 @@ function NetworkAdminPage() {
 
         <TabsContent value="reports" className="mt-4 space-y-2">
           {(reports.data ?? []).length === 0 ? (
-            <p className="text-sm text-muted-foreground">No reports submitted.</p>
+            <p className="text-sm text-foreground/80">No reports submitted.</p>
           ) : (
             (reports.data ?? []).map((r) => (
               <div key={r.id} className="liquid-glass flex flex-wrap items-center justify-between gap-3 rounded-2xl px-4 py-3">
@@ -265,7 +265,7 @@ function NetworkAdminPage() {
                   <p className="truncate text-sm font-bold text-primary">
                     {r.target_type} · {r.reason}
                   </p>
-                  <p className="truncate text-xs text-muted-foreground">
+                  <p className="truncate text-xs text-foreground/80">
                     {r.details || "No extra detail"} · {shortDate(r.created_at)}
                   </p>
                 </div>

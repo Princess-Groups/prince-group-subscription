@@ -67,9 +67,9 @@ function OffersPage() {
                   </div>
                   <h3 className="mt-4 text-lg font-semibold text-primary">{o.title}</h3>
                   {o.description ? (
-                    <p className="mt-2 text-sm text-muted-foreground">{o.description}</p>
+                    <p className="mt-2 text-sm text-foreground/80">{o.description}</p>
                   ) : null}
-                  <p className="mt-4 text-xs text-muted-foreground">
+                  <p className="mt-4 text-xs text-foreground/80">
                     {o.start_date ? `From ${shortDate(o.start_date)}` : "No start date"}
                     {o.end_date ? ` · until ${shortDate(o.end_date)}` : ""}
                   </p>
