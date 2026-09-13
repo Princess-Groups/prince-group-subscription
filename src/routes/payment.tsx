@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { BadgeCheck, Building2, Copy, Landmark, QrCode, ShieldCheck, Upload } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -53,7 +53,6 @@ function PaymentPage() {
   const { plan: planParam, item: itemParam, amount: amountParam } = Route.useSearch();
   const { user, loading: sessionLoading } = useSession();
   const { data: plans } = usePlans();
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [selectedPlan, setSelectedPlan] = useState(planParam ?? "");
@@ -416,6 +415,3 @@ function Field({
     </div>
   );
 }
-
-// Keep navigate referenced for future CTA wiring within this page.
-void useNavigate;

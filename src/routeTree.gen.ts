@@ -20,6 +20,7 @@ import { Route as LoanServicesRouteImport } from './routes/loan-services'
 import { Route as OffersRouteImport } from './routes/offers'
 import { Route as OfficeRouteImport } from './routes/office'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
+import { Route as PaymentRouteImport } from './routes/payment'
 import { Route as PlansRouteImport } from './routes/plans'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RefundRouteImport } from './routes/refund'
@@ -84,6 +85,11 @@ const OpportunitiesRoute = OpportunitiesRouteImport.update({
   path: '/opportunities',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PaymentRoute = PaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlansRoute = PlansRouteImport.update({
   id: '/plans',
   path: '/plans',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/offers': typeof OffersRoute
   '/office': typeof OfficeRoute
   '/opportunities': typeof OpportunitiesRoute
+  '/payment': typeof PaymentRoute
   '/plans': typeof PlansRoute
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/offers': typeof OffersRoute
   '/office': typeof OfficeRoute
   '/opportunities': typeof OpportunitiesRoute
+  '/payment': typeof PaymentRoute
   '/plans': typeof PlansRoute
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
@@ -186,6 +194,7 @@ export interface FileRoutesById {
   '/offers': typeof OffersRoute
   '/office': typeof OfficeRoute
   '/opportunities': typeof OpportunitiesRoute
+  '/payment': typeof PaymentRoute
   '/plans': typeof PlansRoute
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
@@ -209,6 +218,7 @@ export interface FileRouteTypes {
     | '/offers'
     | '/office'
     | '/opportunities'
+    | '/payment'
     | '/plans'
     | '/privacy'
     | '/refund'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/offers'
     | '/office'
     | '/opportunities'
+    | '/payment'
     | '/plans'
     | '/privacy'
     | '/refund'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/offers'
     | '/office'
     | '/opportunities'
+    | '/payment'
     | '/plans'
     | '/privacy'
     | '/refund'
@@ -275,6 +287,7 @@ export interface RootRouteChildren {
   OffersRoute: typeof OffersRoute
   OfficeRoute: typeof OfficeRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
+  PaymentRoute: typeof PaymentRoute
   PlansRoute: typeof PlansRoute
   PrivacyRoute: typeof PrivacyRoute
   RefundRoute: typeof RefundRoute
@@ -359,6 +372,13 @@ declare module '@tanstack/react-router' {
       path: '/opportunities'
       fullPath: '/opportunities'
       preLoaderRoute: typeof OpportunitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment': {
+      id: '/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof PaymentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/plans': {
@@ -456,6 +476,7 @@ const rootRouteChildren: RootRouteChildren = {
   OffersRoute: OffersRoute,
   OfficeRoute: OfficeRoute,
   OpportunitiesRoute: OpportunitiesRoute,
+  PaymentRoute: PaymentRoute,
   PlansRoute: PlansRoute,
   PrivacyRoute: PrivacyRoute,
   RefundRoute: RefundRoute,
