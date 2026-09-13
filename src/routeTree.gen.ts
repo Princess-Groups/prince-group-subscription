@@ -30,6 +30,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
+import { Route as AuthenticatedNetworkAdminRouteImport } from './routes/_authenticated/network-admin'
 import { Route as AuthenticatedSubscriptionRouteImport } from './routes/_authenticated/subscription'
 import { Route as EnquiryMessagesRouteImport } from './routes/enquiry_.messages'
 import { Route as EnquiryProfileRouteImport } from './routes/enquiry_.profile'
@@ -139,6 +140,12 @@ const AuthenticatedLeadsRoute = AuthenticatedLeadsRouteImport.update({
   path: '/leads',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedNetworkAdminRoute =
+  AuthenticatedNetworkAdminRouteImport.update({
+    id: '/network-admin',
+    path: '/network-admin',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSubscriptionRoute =
   AuthenticatedSubscriptionRouteImport.update({
     id: '/subscription',
@@ -182,6 +189,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/leads': typeof AuthenticatedLeadsRoute
+  '/network-admin': typeof AuthenticatedNetworkAdminRoute
   '/subscription': typeof AuthenticatedSubscriptionRoute
   '/enquiry/messages': typeof EnquiryMessagesRoute
   '/enquiry/profile': typeof EnquiryProfileRoute
@@ -208,6 +216,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/leads': typeof AuthenticatedLeadsRoute
+  '/network-admin': typeof AuthenticatedNetworkAdminRoute
   '/subscription': typeof AuthenticatedSubscriptionRoute
   '/enquiry/messages': typeof EnquiryMessagesRoute
   '/enquiry/profile': typeof EnquiryProfileRoute
@@ -236,6 +245,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/leads': typeof AuthenticatedLeadsRoute
+  '/_authenticated/network-admin': typeof AuthenticatedNetworkAdminRoute
   '/_authenticated/subscription': typeof AuthenticatedSubscriptionRoute
   '/enquiry_/messages': typeof EnquiryMessagesRoute
   '/enquiry_/profile': typeof EnquiryProfileRoute
@@ -264,6 +274,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/dashboard'
     | '/leads'
+    | '/network-admin'
     | '/subscription'
     | '/enquiry/messages'
     | '/enquiry/profile'
@@ -290,6 +301,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/dashboard'
     | '/leads'
+    | '/network-admin'
     | '/subscription'
     | '/enquiry/messages'
     | '/enquiry/profile'
@@ -317,6 +329,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/leads'
+    | '/_authenticated/network-admin'
     | '/_authenticated/subscription'
     | '/enquiry_/messages'
     | '/enquiry_/profile'
@@ -496,6 +509,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLeadsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/network-admin': {
+      id: '/_authenticated/network-admin'
+      path: '/network-admin'
+      fullPath: '/network-admin'
+      preLoaderRoute: typeof AuthenticatedNetworkAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/subscription': {
       id: '/_authenticated/subscription'
       path: '/subscription'
@@ -531,6 +551,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedLeadsRoute: typeof AuthenticatedLeadsRoute
+  AuthenticatedNetworkAdminRoute: typeof AuthenticatedNetworkAdminRoute
   AuthenticatedSubscriptionRoute: typeof AuthenticatedSubscriptionRoute
 }
 
@@ -538,6 +559,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedLeadsRoute: AuthenticatedLeadsRoute,
+  AuthenticatedNetworkAdminRoute: AuthenticatedNetworkAdminRoute,
   AuthenticatedSubscriptionRoute: AuthenticatedSubscriptionRoute,
 }
 
