@@ -16,6 +16,7 @@ import { Route as BankExecutiveRouteImport } from './routes/bank-executive'
 import { Route as BranchesRouteImport } from './routes/branches'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContactsRouteImport } from './routes/contacts'
+import { Route as EnquiryRouteImport } from './routes/enquiry'
 import { Route as LoanServicesRouteImport } from './routes/loan-services'
 import { Route as OffersRouteImport } from './routes/offers'
 import { Route as OfficeRouteImport } from './routes/office'
@@ -29,7 +30,11 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
+import { Route as AuthenticatedNetworkAdminRouteImport } from './routes/_authenticated/network-admin'
 import { Route as AuthenticatedSubscriptionRouteImport } from './routes/_authenticated/subscription'
+import { Route as EnquiryMessagesRouteImport } from './routes/enquiry_.messages'
+import { Route as EnquiryProfileRouteImport } from './routes/enquiry_.profile'
+import { Route as EnquiryMembersIdRouteImport } from './routes/enquiry_.members.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -63,6 +68,11 @@ const ContactRoute = ContactRouteImport.update({
 const ContactsRoute = ContactsRouteImport.update({
   id: '/contacts',
   path: '/contacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnquiryRoute = EnquiryRouteImport.update({
+  id: '/enquiry',
+  path: '/enquiry',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoanServicesRoute = LoanServicesRouteImport.update({
@@ -130,12 +140,33 @@ const AuthenticatedLeadsRoute = AuthenticatedLeadsRouteImport.update({
   path: '/leads',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedNetworkAdminRoute =
+  AuthenticatedNetworkAdminRouteImport.update({
+    id: '/network-admin',
+    path: '/network-admin',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSubscriptionRoute =
   AuthenticatedSubscriptionRouteImport.update({
     id: '/subscription',
     path: '/subscription',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const EnquiryMessagesRoute = EnquiryMessagesRouteImport.update({
+  id: '/enquiry_/messages',
+  path: '/enquiry/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnquiryProfileRoute = EnquiryProfileRouteImport.update({
+  id: '/enquiry_/profile',
+  path: '/enquiry/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnquiryMembersIdRoute = EnquiryMembersIdRouteImport.update({
+  id: '/enquiry_/members/$id',
+  path: '/enquiry/members/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -144,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
+  '/enquiry': typeof EnquiryRoute
   '/loan-services': typeof LoanServicesRoute
   '/offers': typeof OffersRoute
   '/office': typeof OfficeRoute
@@ -157,7 +189,11 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/leads': typeof AuthenticatedLeadsRoute
+  '/network-admin': typeof AuthenticatedNetworkAdminRoute
   '/subscription': typeof AuthenticatedSubscriptionRoute
+  '/enquiry/messages': typeof EnquiryMessagesRoute
+  '/enquiry/profile': typeof EnquiryProfileRoute
+  '/enquiry/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -166,6 +202,7 @@ export interface FileRoutesByTo {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
+  '/enquiry': typeof EnquiryRoute
   '/loan-services': typeof LoanServicesRoute
   '/offers': typeof OffersRoute
   '/office': typeof OfficeRoute
@@ -179,7 +216,11 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/leads': typeof AuthenticatedLeadsRoute
+  '/network-admin': typeof AuthenticatedNetworkAdminRoute
   '/subscription': typeof AuthenticatedSubscriptionRoute
+  '/enquiry/messages': typeof EnquiryMessagesRoute
+  '/enquiry/profile': typeof EnquiryProfileRoute
+  '/enquiry/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -190,6 +231,7 @@ export interface FileRoutesById {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
+  '/enquiry': typeof EnquiryRoute
   '/loan-services': typeof LoanServicesRoute
   '/offers': typeof OffersRoute
   '/office': typeof OfficeRoute
@@ -203,7 +245,11 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/leads': typeof AuthenticatedLeadsRoute
+  '/_authenticated/network-admin': typeof AuthenticatedNetworkAdminRoute
   '/_authenticated/subscription': typeof AuthenticatedSubscriptionRoute
+  '/enquiry_/messages': typeof EnquiryMessagesRoute
+  '/enquiry_/profile': typeof EnquiryProfileRoute
+  '/enquiry_/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -214,6 +260,7 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/contacts'
+    | '/enquiry'
     | '/loan-services'
     | '/offers'
     | '/office'
@@ -227,7 +274,11 @@ export interface FileRouteTypes {
     | '/admin'
     | '/dashboard'
     | '/leads'
+    | '/network-admin'
     | '/subscription'
+    | '/enquiry/messages'
+    | '/enquiry/profile'
+    | '/enquiry/members/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -236,6 +287,7 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/contacts'
+    | '/enquiry'
     | '/loan-services'
     | '/offers'
     | '/office'
@@ -249,7 +301,11 @@ export interface FileRouteTypes {
     | '/admin'
     | '/dashboard'
     | '/leads'
+    | '/network-admin'
     | '/subscription'
+    | '/enquiry/messages'
+    | '/enquiry/profile'
+    | '/enquiry/members/$id'
   id:
     | '__root__'
     | '/'
@@ -259,6 +315,7 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/contacts'
+    | '/enquiry'
     | '/loan-services'
     | '/offers'
     | '/office'
@@ -272,7 +329,11 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/leads'
+    | '/_authenticated/network-admin'
     | '/_authenticated/subscription'
+    | '/enquiry_/messages'
+    | '/enquiry_/profile'
+    | '/enquiry_/members/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -283,6 +344,7 @@ export interface RootRouteChildren {
   BranchesRoute: typeof BranchesRoute
   ContactRoute: typeof ContactRoute
   ContactsRoute: typeof ContactsRoute
+  EnquiryRoute: typeof EnquiryRoute
   LoanServicesRoute: typeof LoanServicesRoute
   OffersRoute: typeof OffersRoute
   OfficeRoute: typeof OfficeRoute
@@ -293,6 +355,9 @@ export interface RootRouteChildren {
   RefundRoute: typeof RefundRoute
   ServicesRoute: typeof ServicesRoute
   TermsRoute: typeof TermsRoute
+  EnquiryMessagesRoute: typeof EnquiryMessagesRoute
+  EnquiryProfileRoute: typeof EnquiryProfileRoute
+  EnquiryMembersIdRoute: typeof EnquiryMembersIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -344,6 +409,13 @@ declare module '@tanstack/react-router' {
       path: '/contacts'
       fullPath: '/contacts'
       preLoaderRoute: typeof ContactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enquiry': {
+      id: '/enquiry'
+      path: '/enquiry'
+      fullPath: '/enquiry'
+      preLoaderRoute: typeof EnquiryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/loan-services': {
@@ -437,12 +509,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLeadsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/network-admin': {
+      id: '/_authenticated/network-admin'
+      path: '/network-admin'
+      fullPath: '/network-admin'
+      preLoaderRoute: typeof AuthenticatedNetworkAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/subscription': {
       id: '/_authenticated/subscription'
       path: '/subscription'
       fullPath: '/subscription'
       preLoaderRoute: typeof AuthenticatedSubscriptionRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/enquiry_/messages': {
+      id: '/enquiry_/messages'
+      path: '/enquiry/messages'
+      fullPath: '/enquiry/messages'
+      preLoaderRoute: typeof EnquiryMessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enquiry_/profile': {
+      id: '/enquiry_/profile'
+      path: '/enquiry/profile'
+      fullPath: '/enquiry/profile'
+      preLoaderRoute: typeof EnquiryProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enquiry_/members/$id': {
+      id: '/enquiry_/members/$id'
+      path: '/enquiry/members/$id'
+      fullPath: '/enquiry/members/$id'
+      preLoaderRoute: typeof EnquiryMembersIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -451,6 +551,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedLeadsRoute: typeof AuthenticatedLeadsRoute
+  AuthenticatedNetworkAdminRoute: typeof AuthenticatedNetworkAdminRoute
   AuthenticatedSubscriptionRoute: typeof AuthenticatedSubscriptionRoute
 }
 
@@ -458,6 +559,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedLeadsRoute: AuthenticatedLeadsRoute,
+  AuthenticatedNetworkAdminRoute: AuthenticatedNetworkAdminRoute,
   AuthenticatedSubscriptionRoute: AuthenticatedSubscriptionRoute,
 }
 
@@ -472,6 +574,7 @@ const rootRouteChildren: RootRouteChildren = {
   BranchesRoute: BranchesRoute,
   ContactRoute: ContactRoute,
   ContactsRoute: ContactsRoute,
+  EnquiryRoute: EnquiryRoute,
   LoanServicesRoute: LoanServicesRoute,
   OffersRoute: OffersRoute,
   OfficeRoute: OfficeRoute,
@@ -482,6 +585,9 @@ const rootRouteChildren: RootRouteChildren = {
   RefundRoute: RefundRoute,
   ServicesRoute: ServicesRoute,
   TermsRoute: TermsRoute,
+  EnquiryMessagesRoute: EnquiryMessagesRoute,
+  EnquiryProfileRoute: EnquiryProfileRoute,
+  EnquiryMembersIdRoute: EnquiryMembersIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

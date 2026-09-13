@@ -104,6 +104,44 @@ export type Database = {
         }
         Relationships: []
       }
+      connection_requests: {
+        Row: {
+          created_at: string
+          enquiry_id: string | null
+          from_user: string
+          id: string
+          note: string
+          status: string
+          to_user: string
+        }
+        Insert: {
+          created_at?: string
+          enquiry_id?: string | null
+          from_user: string
+          id?: string
+          note?: string
+          status?: string
+          to_user: string
+        }
+        Update: {
+          created_at?: string
+          enquiry_id?: string | null
+          from_user?: string
+          id?: string
+          note?: string
+          status?: string
+          to_user?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "connection_requests_enquiry_id_fkey"
+            columns: ["enquiry_id"]
+            isOneToOne: false
+            referencedRelation: "member_enquiries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_access_logs: {
         Row: {
           accessed_at: string
@@ -144,6 +182,62 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      conversation_participants: {
+        Row: {
+          conversation_id: string
+          joined_at: string
+          last_read_at: string
+          user_id: string
+        }
+        Insert: {
+          conversation_id: string
+          joined_at?: string
+          last_read_at?: string
+          user_id: string
+        }
+        Update: {
+          conversation_id?: string
+          joined_at?: string
+          last_read_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversation_participants_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conversations: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          is_group: boolean
+          last_message_at: string
+          title: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          is_group?: boolean
+          last_message_at?: string
+          title?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          is_group?: boolean
+          last_message_at?: string
+          title?: string | null
+        }
+        Relationships: []
       }
       lead_allocations: {
         Row: {
@@ -258,6 +352,292 @@ export type Database = {
           status?: Database["public"]["Enums"]["lead_status"]
         }
         Relationships: []
+      }
+      member_blocks: {
+        Row: {
+          blocked_id: string
+          blocker_id: string
+          created_at: string
+        }
+        Insert: {
+          blocked_id: string
+          blocker_id: string
+          created_at?: string
+        }
+        Update: {
+          blocked_id?: string
+          blocker_id?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
+      member_calls: {
+        Row: {
+          callee_id: string
+          caller_id: string
+          conversation_id: string | null
+          ended_at: string | null
+          id: string
+          started_at: string
+          status: string
+        }
+        Insert: {
+          callee_id: string
+          caller_id: string
+          conversation_id?: string | null
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          status?: string
+        }
+        Update: {
+          callee_id?: string
+          caller_id?: string
+          conversation_id?: string | null
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_calls_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      member_categories: {
+        Row: {
+          active: boolean
+          icon: string
+          id: string
+          name: string
+          sort_order: number
+        }
+        Insert: {
+          active?: boolean
+          icon?: string
+          id?: string
+          name: string
+          sort_order?: number
+        }
+        Update: {
+          active?: boolean
+          icon?: string
+          id?: string
+          name?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      member_enquiries: {
+        Row: {
+          category: string
+          contact_preference: string
+          created_at: string
+          description: string
+          enquiry_type: string
+          featured: boolean
+          hidden: boolean
+          id: string
+          location: string
+          search_doc: unknown
+          status: Database["public"]["Enums"]["enquiry_status"]
+          title: string
+          user_id: string
+          what_i_need: string
+          what_i_offer: string
+        }
+        Insert: {
+          category?: string
+          contact_preference?: string
+          created_at?: string
+          description?: string
+          enquiry_type?: string
+          featured?: boolean
+          hidden?: boolean
+          id?: string
+          location?: string
+          search_doc?: unknown
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          title: string
+          user_id: string
+          what_i_need?: string
+          what_i_offer?: string
+        }
+        Update: {
+          category?: string
+          contact_preference?: string
+          created_at?: string
+          description?: string
+          enquiry_type?: string
+          featured?: boolean
+          hidden?: boolean
+          id?: string
+          location?: string
+          search_doc?: unknown
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          title?: string
+          user_id?: string
+          what_i_need?: string
+          what_i_offer?: string
+        }
+        Relationships: []
+      }
+      member_profiles: {
+        Row: {
+          about_company: string
+          about_me: string
+          business_email: string | null
+          business_phone: string | null
+          category: string
+          communication_blocked: boolean
+          company_logo_url: string | null
+          company_name: string
+          created_at: string
+          designation: string
+          featured: boolean
+          full_name: string
+          location: string
+          photo_url: string | null
+          preferred_contact: string
+          products_services: string
+          search_doc: unknown
+          show_email: boolean
+          show_phone: boolean
+          status: Database["public"]["Enums"]["member_status"]
+          updated_at: string
+          user_id: string
+          website: string | null
+          what_we_need: string
+          what_we_offer: string
+        }
+        Insert: {
+          about_company?: string
+          about_me?: string
+          business_email?: string | null
+          business_phone?: string | null
+          category?: string
+          communication_blocked?: boolean
+          company_logo_url?: string | null
+          company_name?: string
+          created_at?: string
+          designation?: string
+          featured?: boolean
+          full_name?: string
+          location?: string
+          photo_url?: string | null
+          preferred_contact?: string
+          products_services?: string
+          search_doc?: unknown
+          show_email?: boolean
+          show_phone?: boolean
+          status?: Database["public"]["Enums"]["member_status"]
+          updated_at?: string
+          user_id: string
+          website?: string | null
+          what_we_need?: string
+          what_we_offer?: string
+        }
+        Update: {
+          about_company?: string
+          about_me?: string
+          business_email?: string | null
+          business_phone?: string | null
+          category?: string
+          communication_blocked?: boolean
+          company_logo_url?: string | null
+          company_name?: string
+          created_at?: string
+          designation?: string
+          featured?: boolean
+          full_name?: string
+          location?: string
+          photo_url?: string | null
+          preferred_contact?: string
+          products_services?: string
+          search_doc?: unknown
+          show_email?: boolean
+          show_phone?: boolean
+          status?: Database["public"]["Enums"]["member_status"]
+          updated_at?: string
+          user_id?: string
+          website?: string | null
+          what_we_need?: string
+          what_we_offer?: string
+        }
+        Relationships: []
+      }
+      member_reports: {
+        Row: {
+          created_at: string
+          details: string
+          id: string
+          reason: string
+          reporter_id: string
+          status: string
+          target_id: string
+          target_type: string
+        }
+        Insert: {
+          created_at?: string
+          details?: string
+          id?: string
+          reason: string
+          reporter_id: string
+          status?: string
+          target_id: string
+          target_type: string
+        }
+        Update: {
+          created_at?: string
+          details?: string
+          id?: string
+          reason?: string
+          reporter_id?: string
+          status?: string
+          target_id?: string
+          target_type?: string
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          attachment_path: string | null
+          body: string
+          conversation_id: string
+          created_at: string
+          id: string
+          sender_id: string
+        }
+        Insert: {
+          attachment_path?: string | null
+          body?: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          sender_id: string
+        }
+        Update: {
+          attachment_path?: string | null
+          body?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       notifications: {
         Row: {
@@ -720,6 +1100,14 @@ export type Database = {
         }
         Returns: Json
       }
+      admin_set_member_status: {
+        Args: {
+          _blocked?: boolean
+          _status: Database["public"]["Enums"]["member_status"]
+          _user_id: string
+        }
+        Returns: Json
+      }
       admin_set_subscription_status: {
         Args: {
           _status: Database["public"]["Enums"]["sub_status"]
@@ -738,6 +1126,16 @@ export type Database = {
       cancel_my_subscription: { Args: never; Returns: Json }
       claim_leads: { Args: never; Returns: Json }
       claim_super_admin: { Args: never; Returns: Json }
+      conversation_messages: {
+        Args: { _conversation_id: string; _limit?: number }
+        Returns: Json
+      }
+      create_group_conversation: {
+        Args: { _members: string[]; _title: string }
+        Returns: Json
+      }
+      get_member_profile: { Args: { _user_id: string }; Returns: Json }
+      has_active_subscription: { Args: { _user_id: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -746,7 +1144,14 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_conversation_member: {
+        Args: { _conversation_id: string; _user_id: string }
+        Returns: boolean
+      }
+      my_conversations: { Args: never; Returns: Json }
       my_dashboard: { Args: never; Returns: Json }
+      my_network_access: { Args: never; Returns: Json }
+      network_admin_stats: { Args: never; Returns: Json }
       plan_slot_counts: {
         Args: never
         Returns: {
@@ -763,7 +1168,39 @@ export type Database = {
       reserve_advance_period: { Args: { _period: string }; Returns: Json }
       reveal_business_contact: { Args: { _business_id: string }; Returns: Json }
       reveal_lead_contact: { Args: { _lead_id: string }; Returns: Json }
+      search_enquiries: {
+        Args: {
+          _category?: string
+          _limit?: number
+          _offset?: number
+          _q?: string
+          _type?: string
+        }
+        Returns: Json
+      }
+      search_members: {
+        Args: {
+          _category?: string
+          _limit?: number
+          _location?: string
+          _offset?: number
+          _q?: string
+        }
+        Returns: Json
+      }
+      send_message: {
+        Args: {
+          _attachment_path?: string
+          _body: string
+          _conversation_id: string
+        }
+        Returns: Json
+      }
       setting_num: { Args: { _default: number; _key: string }; Returns: number }
+      start_direct_conversation: {
+        Args: { _other_user: string }
+        Returns: Json
+      }
       start_subscription: { Args: { _plan_code: string }; Returns: Json }
     }
     Enums: {
@@ -774,7 +1211,9 @@ export type Database = {
         | "customer"
         | "bank_executive"
         | "premium_bank_executive"
+      enquiry_status: "active" | "connected" | "closed"
       lead_status: "new" | "assigned" | "contacted" | "converted" | "closed"
+      member_status: "pending" | "approved" | "suspended"
       pay_status: "created" | "pending" | "success" | "failed" | "refunded"
       sub_status:
         | "pending"
@@ -918,7 +1357,9 @@ export const Constants = {
         "bank_executive",
         "premium_bank_executive",
       ],
+      enquiry_status: ["active", "connected", "closed"],
       lead_status: ["new", "assigned", "contacted", "converted", "closed"],
+      member_status: ["pending", "approved", "suspended"],
       pay_status: ["created", "pending", "success", "failed", "refunded"],
       sub_status: [
         "pending",
