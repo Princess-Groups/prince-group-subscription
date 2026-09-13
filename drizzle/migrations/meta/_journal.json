@@ -43,6 +43,13 @@
       "when": 1789285222495,
       "tag": "0005_enquiry_connect_network",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1789285334118,
+      "tag": "0006_member_media_storage_policies",
+      "breakpoints": true
     }
   ]
 }
