@@ -617,7 +617,7 @@ function NewEnquiryDialog({
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
-  userId?: string;
+  userId: string | undefined;
   categories: string[];
 }) {
   const queryClient = useQueryClient();
@@ -639,7 +639,10 @@ function NewEnquiryDialog({
 
   async function submit() {
     if (!userId) return;
-    if (!form.title.trim()) return toast.error("Add an enquiry title.");
+    if (!form.title.trim()) {
+      toast.error("Add an enquiry title.");
+      return;
+    }
     setSaving(true);
     const { error } = await supabase.from("member_enquiries").insert({ ...form, user_id: userId });
     setSaving(false);
@@ -687,7 +690,7 @@ function NewEnquiryDialog({
             </div>
             <div>
               <Label>Category</Label>
-              <Select value={form.category || undefined} onValueChange={(v) => set("category", v)}>
+              <Select {...(form.category ? { value: form.category } : {})} onValueChange={(v) => set("category", v)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>

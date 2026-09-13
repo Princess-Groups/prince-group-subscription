@@ -90,7 +90,10 @@ function MessagesPage() {
       const path = `${auth.user?.id}/chat/${Date.now()}-${safe}`;
       const { error } = await supabase.storage.from("member-media").upload(path, file);
       setUploading(false);
-      if (error) return toast.error("Could not upload that file.");
+      if (error) {
+        toast.error("Could not upload that file.");
+        return;
+      }
       attachmentPath = path;
       if (fileRef.current) fileRef.current.value = "";
     }
@@ -111,7 +114,10 @@ function MessagesPage() {
 
   async function openAttachment(path: string) {
     const { data, error } = await supabase.storage.from("member-media").createSignedUrl(path, 300);
-    if (error || !data) return toast.error("Attachment unavailable.");
+    if (error || !data) {
+      toast.error("Attachment unavailable.");
+      return;
+    }
     window.open(data.signedUrl, "_blank", "noopener");
   }
 

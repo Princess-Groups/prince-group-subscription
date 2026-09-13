@@ -105,14 +105,23 @@ function ProfileSetupPage() {
     const safe = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 60);
     const path = `${user.id}/profile/${Date.now()}-${safe}`;
     const { error } = await supabase.storage.from("member-media").upload(path, file, { upsert: true });
-    if (error) return toast.error("Could not upload that image.");
+    if (error) {
+      toast.error("Could not upload that image.");
+      return;
+    }
     const { data } = await supabase.storage.from("member-media").createSignedUrl(path, 60 * 60 * 24 * 365);
     if (data?.signedUrl) set(key, data.signedUrl);
   }
 
   async function save() {
-    if (!user) return void navigate({ to: "/auth" });
-    if (!form.full_name.trim()) return toast.error("Add your full name.");
+    if (!user) {
+      navigate({ to: "/auth" });
+      return;
+    }
+    if (!form.full_name.trim()) {
+      toast.error("Add your full name.");
+      return;
+    }
     setSaving(true);
     const { error } = await supabase.from("member_profiles").upsert(
       {
@@ -125,7 +134,10 @@ function ProfileSetupPage() {
       { onConflict: "user_id" },
     );
     setSaving(false);
-    if (error) return toast.error("Could not save your profile.");
+    if (error) {
+      toast.error("Could not save your profile.");
+      return;
+    }
     toast.success("Business profile saved.");
     void queryClient.invalidateQueries({ queryKey: ["my-member-profile"] });
     void queryClient.invalidateQueries({ queryKey: ["network-access"] });
@@ -161,7 +173,7 @@ function ProfileSetupPage() {
               <Field label="Company name" value={form.company_name} onChange={(v) => set("company_name", v)} />
               <div>
                 <Label>Business category</Label>
-                <Select value={form.category || undefined} onValueChange={(v) => set("category", v)}>
+                <Select {...(form.category ? { value: form.category } : {})} onValueChange={(v) => set("category", v)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>

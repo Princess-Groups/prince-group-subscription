@@ -39,7 +39,7 @@ export function CallPanel({
   useEffect(() => {
     if (!open) return;
     setState("calling");
-    void logCall.mutateAsync({ calleeId, conversationId, status: "calling" }).catch(() => undefined);
+    void logCall.mutateAsync({ calleeId, conversationId: conversationId ?? null, status: "calling" }).catch(() => undefined);
     const t1 = setTimeout(() => setState("connecting"), 1200);
     const t2 = setTimeout(() => setState("unavailable"), 3200);
     return () => {

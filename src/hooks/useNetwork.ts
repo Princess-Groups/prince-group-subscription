@@ -252,7 +252,7 @@ export function useSendMessage() {
       const { data, error } = await supabase.rpc("send_message", {
         _conversation_id: input.conversationId,
         _body: input.body,
-        _attachment_path: input.attachmentPath ?? null,
+        _attachment_path: input.attachmentPath ?? undefined,
       });
       if (error) throw error;
       const res = data as unknown as { error?: string };
