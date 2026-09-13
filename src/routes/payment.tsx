@@ -42,7 +42,7 @@ export const Route = createFileRoute("/payment")({
 });
 
 const BANK = {
-  accountName: "Jeba Prince S",
+  accountName: "[I WILL ADD THIS]",
   accountNumber: "16400200004038",
   ifsc: "FDRL0001640",
   bank: "Federal Bank",
