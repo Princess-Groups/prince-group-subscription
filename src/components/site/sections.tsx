@@ -687,18 +687,16 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
           {list.map((town, i) => (
             <div
               key={town}
-              className={`card-lift group rounded-3xl border p-6 shadow-soft ${
-                i === 0 ? "border-secondary/40 bg-card ring-1 ring-secondary/20" : "border-primary/10 bg-card"
-              }`}
+              className={`glass-branch group rounded-3xl p-6 ${i === 0 ? "ring-1 ring-accent/25" : ""}`}
             >
               <span className="grid size-11 place-items-center rounded-2xl bg-gradient-olive text-accent transition-transform group-hover:scale-105">
                 {i === 0 ? <Star className="size-5" /> : <MapPin className="size-5" />}
               </span>
-              <h3 className="mt-5 text-lg font-semibold text-primary">{town}</h3>
-              <p className="mt-1 text-sm text-foreground/80">
+              <h3 className="mt-5 text-lg font-semibold text-cream">{town}</h3>
+              <p className="mt-1 text-sm text-cream/90">
                 Documentation · Registration · Business services
               </p>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-secondary">
+              <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-accent">
                 Branch open
               </p>
             </div>
