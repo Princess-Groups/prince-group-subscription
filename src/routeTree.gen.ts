@@ -16,6 +16,7 @@ import { Route as BankExecutiveRouteImport } from './routes/bank-executive'
 import { Route as BranchesRouteImport } from './routes/branches'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContactsRouteImport } from './routes/contacts'
+import { Route as EnquiryRouteImport } from './routes/enquiry'
 import { Route as LoanServicesRouteImport } from './routes/loan-services'
 import { Route as OffersRouteImport } from './routes/offers'
 import { Route as OfficeRouteImport } from './routes/office'
@@ -30,6 +31,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
 import { Route as AuthenticatedSubscriptionRouteImport } from './routes/_authenticated/subscription'
+import { Route as EnquiryMembersIdRouteImport } from './routes/enquiry_.members.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -63,6 +65,11 @@ const ContactRoute = ContactRouteImport.update({
 const ContactsRoute = ContactsRouteImport.update({
   id: '/contacts',
   path: '/contacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnquiryRoute = EnquiryRouteImport.update({
+  id: '/enquiry',
+  path: '/enquiry',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoanServicesRoute = LoanServicesRouteImport.update({
@@ -136,6 +143,11 @@ const AuthenticatedSubscriptionRoute =
     path: '/subscription',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const EnquiryMembersIdRoute = EnquiryMembersIdRouteImport.update({
+  id: '/enquiry_/members/$id',
+  path: '/enquiry/members/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -144,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
+  '/enquiry': typeof EnquiryRoute
   '/loan-services': typeof LoanServicesRoute
   '/offers': typeof OffersRoute
   '/office': typeof OfficeRoute
@@ -158,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/leads': typeof AuthenticatedLeadsRoute
   '/subscription': typeof AuthenticatedSubscriptionRoute
+  '/enquiry/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -166,6 +180,7 @@ export interface FileRoutesByTo {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
+  '/enquiry': typeof EnquiryRoute
   '/loan-services': typeof LoanServicesRoute
   '/offers': typeof OffersRoute
   '/office': typeof OfficeRoute
@@ -180,6 +195,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/leads': typeof AuthenticatedLeadsRoute
   '/subscription': typeof AuthenticatedSubscriptionRoute
+  '/enquiry/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -190,6 +206,7 @@ export interface FileRoutesById {
   '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
+  '/enquiry': typeof EnquiryRoute
   '/loan-services': typeof LoanServicesRoute
   '/offers': typeof OffersRoute
   '/office': typeof OfficeRoute
@@ -204,6 +221,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/leads': typeof AuthenticatedLeadsRoute
   '/_authenticated/subscription': typeof AuthenticatedSubscriptionRoute
+  '/enquiry_/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -214,6 +232,7 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/contacts'
+    | '/enquiry'
     | '/loan-services'
     | '/offers'
     | '/office'
@@ -228,6 +247,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/leads'
     | '/subscription'
+    | '/enquiry/members/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -236,6 +256,7 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/contacts'
+    | '/enquiry'
     | '/loan-services'
     | '/offers'
     | '/office'
@@ -250,6 +271,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/leads'
     | '/subscription'
+    | '/enquiry/members/$id'
   id:
     | '__root__'
     | '/'
@@ -259,6 +281,7 @@ export interface FileRouteTypes {
     | '/branches'
     | '/contact'
     | '/contacts'
+    | '/enquiry'
     | '/loan-services'
     | '/offers'
     | '/office'
@@ -273,6 +296,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/leads'
     | '/_authenticated/subscription'
+    | '/enquiry_/members/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -283,6 +307,7 @@ export interface RootRouteChildren {
   BranchesRoute: typeof BranchesRoute
   ContactRoute: typeof ContactRoute
   ContactsRoute: typeof ContactsRoute
+  EnquiryRoute: typeof EnquiryRoute
   LoanServicesRoute: typeof LoanServicesRoute
   OffersRoute: typeof OffersRoute
   OfficeRoute: typeof OfficeRoute
@@ -293,6 +318,7 @@ export interface RootRouteChildren {
   RefundRoute: typeof RefundRoute
   ServicesRoute: typeof ServicesRoute
   TermsRoute: typeof TermsRoute
+  EnquiryMembersIdRoute: typeof EnquiryMembersIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -344,6 +370,13 @@ declare module '@tanstack/react-router' {
       path: '/contacts'
       fullPath: '/contacts'
       preLoaderRoute: typeof ContactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enquiry': {
+      id: '/enquiry'
+      path: '/enquiry'
+      fullPath: '/enquiry'
+      preLoaderRoute: typeof EnquiryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/loan-services': {
@@ -444,6 +477,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSubscriptionRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/enquiry_/members/$id': {
+      id: '/enquiry_/members/$id'
+      path: '/enquiry/members/$id'
+      fullPath: '/enquiry/members/$id'
+      preLoaderRoute: typeof EnquiryMembersIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -472,6 +512,7 @@ const rootRouteChildren: RootRouteChildren = {
   BranchesRoute: BranchesRoute,
   ContactRoute: ContactRoute,
   ContactsRoute: ContactsRoute,
+  EnquiryRoute: EnquiryRoute,
   LoanServicesRoute: LoanServicesRoute,
   OffersRoute: OffersRoute,
   OfficeRoute: OfficeRoute,
@@ -482,6 +523,7 @@ const rootRouteChildren: RootRouteChildren = {
   RefundRoute: RefundRoute,
   ServicesRoute: ServicesRoute,
   TermsRoute: TermsRoute,
+  EnquiryMembersIdRoute: EnquiryMembersIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
