@@ -76,7 +76,7 @@ function PaymentPage() {
   const submit = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error("Please sign in to submit payment details.");
-      if (!name.trim() || !mobile.trim() || !email.trim() || !utr.trim()) {
+      if (!name.trim() || !mobile.trim() || !email.trim() || !utr.trim() || !file) {
         throw new Error("Please fill in all required fields.");
       }
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) {
@@ -84,15 +84,12 @@ function PaymentPage() {
       }
       if (amount <= 0) throw new Error("Please choose a plan or enter a valid amount.");
 
-      let screenshotPath: string | null = null;
-      if (file) {
-        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
-        screenshotPath = `${user.id}/${Date.now()}-${safeName}`;
-        const { error: upErr } = await supabase.storage
-          .from("payment-proofs")
-          .upload(screenshotPath, file, { contentType: file.type });
-        if (upErr) throw upErr;
-      }
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
+      const screenshotPath = `${user.id}/${Date.now()}-${safeName}`;
+      const { error: upErr } = await supabase.storage
+        .from("payment-proofs")
+        .upload(screenshotPath, file, { contentType: file.type });
+      if (upErr) throw upErr;
 
       const { error } = await supabase.from("payment_submissions").insert({
         user_id: user.id,
@@ -334,13 +331,14 @@ function PaymentPage() {
                       />
                     </Field>
 
-                    <Field label="Payment Screenshot / Receipt">
+                    <Field label="Payment Screenshot / Receipt" required>
                       <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-primary/25 bg-muted/40 px-4 py-6 text-sm text-foreground/80 transition-colors hover:border-secondary/50">
                         <Upload className="size-4 text-secondary" />
                         {file ? file.name : "Click to upload payment screenshot"}
                         <input
                           type="file"
                           accept="image/*,.pdf"
+                          required
                           className="hidden"
                           onChange={(e) => setFile(e.target.files?.[0] ?? null)}
                         />

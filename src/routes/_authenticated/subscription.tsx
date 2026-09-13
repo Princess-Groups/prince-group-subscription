@@ -122,7 +122,7 @@ function SubscriptionPage() {
         <div className="rounded-3xl border border-primary/10 bg-card p-10 text-center shadow-soft">
           <h2 className="text-xl font-bold text-primary">No subscription found</h2>
           <Button asChild variant="hero" className="mt-5">
-            <Link to="/plans">Choose a plan</Link>
+            <Link to="/payment">Choose a plan</Link>
           </Button>
         </div>
       ) : (
@@ -157,7 +157,7 @@ function SubscriptionPage() {
 
             <div className="mt-7 flex flex-wrap gap-3">
               <Button asChild variant="hero">
-                <Link to="/plans">Change plan</Link>
+                <Link to="/payment">Change plan</Link>
               </Button>
               <Button
                 variant="outline"

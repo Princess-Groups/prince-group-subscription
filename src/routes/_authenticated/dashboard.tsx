@@ -90,7 +90,7 @@ function DashboardPage() {
             Choose a plan to unlock member discounts, lead allocation and business data.
           </p>
           <Button asChild variant="hero" className="mt-6">
-            <Link to="/plans">View plans</Link>
+            <Link to="/payment">View plans</Link>
           </Button>
         </div>
       ) : (

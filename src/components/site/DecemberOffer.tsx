@@ -80,7 +80,12 @@ export function DecemberOffer({ offer }: { offer: OfferRow }) {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
-                <Link to="/plans">Claim December Offer →</Link>
+                <Link
+                  to="/payment"
+                  search={offer.applicable_plan ? { plan: offer.applicable_plan } : {}}
+                >
+                  Claim December Offer →
+                </Link>
               </Button>
               <Button asChild size="lg" variant="onOlive" className="w-full sm:w-auto">
                 <Link to="/contact">Ask About This Offer</Link>

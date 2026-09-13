@@ -85,7 +85,11 @@ function OpportunitiesPage() {
   const [revealed, setRevealed] = useState<Record<string, string>>({});
 
   const navigate = useNavigate();
-  const goToPayment = () => navigate({ to: "/payment" });
+  const goToPayment = () =>
+    navigate({
+      to: "/payment",
+      search: { item: "Candidate / Business Contact Unlock", amount: 10 },
+    });
   const unlockBusiness = useUnlockBusinessContact(
     (id, phone) => setRevealed((r) => ({ ...r, [`b:${id}`]: phone })),
     goToPayment,
@@ -157,7 +161,10 @@ function OpportunitiesPage() {
   function unlockFor(o: Opportunity) {
     if (o.lead_id) return unlockLead.mutate(o.lead_id);
     if (o.business_id) return unlockBusiness.mutate(o.business_id);
-    toast.info("This opportunity is handled by our team — subscribe and contact support to claim it.");
+    navigate({
+      to: "/payment",
+      search: { item: `${o.title} Opportunity Unlock`, amount: 10 },
+    });
   }
 
   function revealedFor(o: Opportunity) {
@@ -403,7 +410,7 @@ function OpportunitiesPage() {
           </div>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Button asChild variant="hero" className="rounded-full">
-              <Link to="/plans">Choose a plan</Link>
+              <Link to="/payment">Choose a plan</Link>
             </Button>
             <Button asChild variant="outline" className="rounded-full">
               <Link to="/contacts">
@@ -488,7 +495,7 @@ function OpportunitiesPage() {
                     <Unlock className="size-4" /> Unlock
                   </Button>
                   <Button asChild variant="outline" className="rounded-full">
-                    <Link to="/plans">View plans</Link>
+                    <Link to="/payment">View plans</Link>
                   </Button>
                 </div>
               </div>

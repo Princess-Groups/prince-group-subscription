@@ -110,7 +110,7 @@ export function PlanPromoPopup() {
         </ul>
 
         <Button asChild variant="lime" size="sm" className="relative mt-5 w-full">
-          <Link to="/plans" onClick={() => setOpen(false)}>
+          <Link to="/payment" search={{ plan: plan.code }} onClick={() => setOpen(false)}>
             View Plan →
           </Link>
         </Button>

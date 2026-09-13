@@ -149,7 +149,7 @@ export function HeroSection() {
               <a href="#bank-executive-plans">Explore Bank Executive Plans →</a>
             </Button>
             <Button asChild size="lg" variant="onOlive" className="w-full sm:w-auto">
-              <Link to="/plans">View Subscription Plans</Link>
+              <Link to="/payment">View Subscription Plans</Link>
             </Button>
           </div>
         </div>
@@ -220,7 +220,7 @@ export function SlotAvailabilitySection() {
         />
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {SLOT_PLANS.map((p) => (
+          {SLOT_PLANS.map((p, index) => (
             <div
               key={p.name}
               className={`relative overflow-hidden rounded-[2rem] border p-7 shadow-soft transition-shadow duration-500 ${
@@ -316,7 +316,15 @@ export function SlotAvailabilitySection() {
                 variant={p.emphasis ? "lime" : "outline"}
                 className="relative mt-7 w-full"
               >
-                <Link to="/plans">Claim your slot</Link>
+                <Link
+                  to="/payment"
+                  search={{
+                    item: `${p.name} Subscription`,
+                    amount: [10, 100, 100][index],
+                  }}
+                >
+                  Claim your slot
+                </Link>
               </Button>
             </div>
           ))}

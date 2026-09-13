@@ -121,7 +121,9 @@ export function PlanCard({
           </Button>
         ) : (
           <Button asChild variant={highlight ? "lime" : "onOlive"} className="w-full">
-            <Link to="/plans">{plan.code === "starter" ? "Start for ₹1" : "Subscribe Now"}</Link>
+            <Link to="/payment" search={{ plan: plan.code }}>
+              {plan.code === "starter" ? "Start for ₹1" : "Subscribe Now"}
+            </Link>
           </Button>
         )}
         <p className={cn("mt-3 text-center text-[11px]", highlight ? "text-cream/90" : "text-cream/95")}>

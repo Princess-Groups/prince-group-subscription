@@ -82,7 +82,11 @@ function DirectoryPage() {
   const navigate = useNavigate();
   const unlock = useUnlockBusinessContact(
     (id, phone) => setRevealed((r) => ({ ...r, [id]: phone })),
-    () => navigate({ to: "/payment" }),
+    () =>
+      navigate({
+        to: "/payment",
+        search: { item: "Business Contact Unlock", amount: 10 },
+      }),
   );
 
   const businesses = useMemo(() => data ?? [], [data]);
@@ -382,7 +386,7 @@ function DirectoryPage() {
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Button asChild variant="hero" className="rounded-full">
-              <Link to="/plans">View subscription plans</Link>
+              <Link to="/payment">View subscription plans</Link>
             </Button>
             <Button asChild variant="outline" className="rounded-full">
               <Link to="/opportunities">

@@ -115,10 +115,6 @@ export function PlansSection({
                   supportPhone={phone}
                   busy={sessionLoading}
                   onSubscribe={(code) => {
-                    if (!user) {
-                      navigate({ to: "/auth" });
-                      return;
-                    }
                     navigate({ to: "/payment", search: { plan: code } });
                   }}
                 />
