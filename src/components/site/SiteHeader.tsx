@@ -17,6 +17,7 @@ const NAV = [
   { to: "/branches", label: "Branches" },
   { to: "/opportunities", label: "Opportunities" },
   { to: "/contacts", label: "Directory" },
+  { to: "/enquiry", label: "Enquiry" },
   { to: "/offers", label: "Offers" },
   { to: "/office", label: "Office" },
   { to: "/contact", label: "Contact" },
