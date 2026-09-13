@@ -113,14 +113,13 @@ export function PlansSection({
                     return slot ? { slot } : {};
                   })()}
                   supportPhone={phone}
-                  busy={busy === plan.code}
+                  busy={sessionLoading}
                   onSubscribe={(code) => {
                     if (!user) {
                       navigate({ to: "/auth" });
                       return;
                     }
-                    setBusy(code);
-                    subscribe.mutate(code);
+                    navigate({ to: "/payment", search: { plan: code } });
                   }}
                 />
               </div>
