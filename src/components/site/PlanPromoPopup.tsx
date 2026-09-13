@@ -68,7 +68,7 @@ export function PlanPromoPopup() {
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Close promotion"
-          className="absolute right-3 top-3 grid size-7 place-items-center rounded-full border border-cream/15 text-cream/70 transition-colors hover:bg-cream/10 hover:text-accent"
+          className="absolute right-3 top-3 grid size-7 place-items-center rounded-full border border-cream/15 text-cream/90 transition-colors hover:bg-cream/10 hover:text-accent"
         >
           <X className="size-3.5" />
         </button>
@@ -78,29 +78,29 @@ export function PlanPromoPopup() {
         </span>
 
         <h3 className="relative mt-4 text-lg font-bold">{plan.name} Plan</h3>
-        <p className="relative mt-1 text-xs text-cream/65">{plan.tagline}</p>
+        <p className="relative mt-1 text-xs text-cream/90">{plan.tagline}</p>
 
         <div className="relative mt-4 flex items-end gap-2">
           <span className="font-display text-3xl font-bold text-accent">
             {inr(plan.daily_display)}
           </span>
-          <span className="pb-1 text-xs text-cream/60">
+          <span className="pb-1 text-xs text-cream/90">
             / day · {inr(plan.price)} {plan.billing_period}
           </span>
         </div>
 
-        <p className="relative mt-3 text-xs text-cream/70">
+        <p className="relative mt-3 text-xs text-cream/90">
           {plan.code === "premium"
             ? `Flat ${plan.discount_percentage}% Discount on eligible services`
             : `${plan.discount_percentage}% member discount on eligible services`}
           {plan.slot_limit != null ? ` · only ${plan.slot_limit} slots` : ""}.
         </p>
 
-        <p className="relative mt-2 text-xs text-cream/70">
+        <p className="relative mt-2 text-xs text-cream/90">
           {plan.lead_limit} lead allocations · {plan.weekly_attempt_limit} claim attempt/week
         </p>
 
-        <ul className="relative mt-4 space-y-2 text-xs text-cream/80">
+        <ul className="relative mt-4 space-y-2 text-xs text-cream/95">
           {plan.benefits.map((benefit) => (
             <li key={benefit} className="flex gap-2">
               <Check className="mt-0.5 size-3.5 shrink-0 text-accent" />

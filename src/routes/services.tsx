@@ -49,7 +49,7 @@ function ServiceGlassCard({ service }: { service: ServiceRow }) {
       </span>
       <h3 className="relative mt-5 text-base font-semibold text-primary">{service.name}</h3>
       {service.description ? (
-        <p className="relative mt-2 text-sm leading-relaxed text-muted-foreground">
+        <p className="relative mt-2 text-sm leading-relaxed text-foreground/80">
           {service.description}
         </p>
       ) : null}
@@ -59,7 +59,7 @@ function ServiceGlassCard({ service }: { service: ServiceRow }) {
             From {inr(service.original_price)}
           </span>
         ) : (
-          <span className="text-sm text-muted-foreground">Pricing on request</span>
+          <span className="text-sm text-foreground/80">Pricing on request</span>
         )}
         <Badge variant="secondary">Member discount applies</Badge>
       </div>
@@ -99,7 +99,7 @@ function ServicesPage() {
               <Sparkles className="size-3.5" /> Most requested
             </span>
             <h2 className="mt-4 text-3xl font-bold text-primary sm:text-4xl">{cat}</h2>
-            <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+            <p className="mt-3 max-w-2xl text-sm text-foreground/80">
               Certificates, registrations and legal paperwork handled end to end by our branch teams
               across Kanyakumari district.
             </p>
@@ -145,7 +145,7 @@ function ServicesPage() {
                       >
                         <h3 className="text-base font-semibold text-primary">{s.name}</h3>
                         {s.description ? (
-                          <p className="mt-2 text-sm text-muted-foreground">{s.description}</p>
+                          <p className="mt-2 text-sm text-foreground/80">{s.description}</p>
                         ) : null}
                         <div className="mt-5 flex flex-wrap items-center gap-2">
                           {s.original_price ? (
@@ -153,7 +153,7 @@ function ServicesPage() {
                               From {inr(s.original_price)}
                             </span>
                           ) : (
-                            <span className="text-sm text-muted-foreground">
+                            <span className="text-sm text-foreground/80">
                               Pricing on request
                             </span>
                           )}

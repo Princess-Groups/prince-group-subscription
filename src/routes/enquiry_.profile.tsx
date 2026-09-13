@@ -154,7 +154,7 @@ function ProfileSetupPage() {
         </Button>
 
         <h1 className="text-2xl font-bold text-primary sm:text-3xl">Create Your Business Profile</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="mt-2 text-sm text-foreground/80">
           Your profile is visible to other active Prince Group subscribers. Private details stay hidden unless you
           choose to show them.
         </p>

@@ -91,7 +91,7 @@ function LeadsPage() {
         ) : (data ?? []).length === 0 ? (
           <div className="p-12 text-center">
             <h2 className="text-lg font-semibold text-primary">No leads allocated yet</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-2 text-sm text-foreground/80">
               Use your weekly claim attempt from the dashboard to receive leads.
             </p>
           </div>
@@ -129,7 +129,7 @@ function LeadsPage() {
                           {lead.status.replaceAll("_", " ")}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-xs text-muted-foreground">
+                      <TableCell className="text-xs text-foreground/80">
                         {shortDate(row.allocated_at)}
                       </TableCell>
                       <TableCell className="text-right">
@@ -160,7 +160,7 @@ function LeadsPage() {
         )}
       </div>
 
-      <div className="mt-6 flex items-start gap-2 rounded-2xl bg-muted px-4 py-3 text-xs text-muted-foreground">
+      <div className="mt-6 flex items-start gap-2 rounded-2xl bg-muted px-4 py-3 text-xs text-foreground/80">
         <Lock className="mt-0.5 size-3.5 shrink-0 text-secondary" />
         Contact numbers are served by the backend only for leads allocated to you, and every reveal
         is written to the contact access log.

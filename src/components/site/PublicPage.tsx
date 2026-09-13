@@ -54,7 +54,7 @@ export function PageHero({
             {highlight ? <span className="mt-1 block text-gradient-olive">{highlight}</span> : null}
           </h1>
           {subtitle ? (
-            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-cream/70 sm:text-base">
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-cream/90 sm:text-base">
               {subtitle}
             </p>
           ) : null}
@@ -99,7 +99,7 @@ export function SectionHeading({
         {title} {highlight ? <span className="text-gradient-olive">{highlight}</span> : null}
       </h2>
       {subtitle ? (
-        <p className={`mt-4 text-sm sm:text-base ${dark ? "text-cream/70" : "text-muted-foreground"}`}>
+        <p className={`mt-4 text-sm sm:text-base ${dark ? "text-cream/90" : "text-foreground/80"}`}>
           {subtitle}
         </p>
       ) : null}
@@ -119,7 +119,7 @@ export function DemoBadge({ className = "" }: { className?: string }) {
 
 export function AdminManagedNote({ children }: { children: ReactNode }) {
   return (
-    <p className="mt-3 text-xs text-muted-foreground">
+    <p className="mt-3 text-xs text-foreground/80">
       <span className="font-semibold text-secondary">Admin-managed:</span> {children}
     </p>
   );

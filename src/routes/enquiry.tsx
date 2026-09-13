@@ -232,7 +232,7 @@ function EnquiryPage() {
             <div className="liquid-glass mt-6 rounded-3xl p-4 sm:p-5">
               <div className="grid gap-3 md:grid-cols-[1.4fr_1fr_1fr_auto]">
                 <div className="relative">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                  <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-foreground/80" />
                   <Input
                     value={q}
                     onChange={(e) => {
@@ -303,7 +303,7 @@ function EnquiryPage() {
                 ))}
               </div>
             ) : rows.length === 0 ? (
-              <p className="mt-8 text-sm text-muted-foreground">
+              <p className="mt-8 text-sm text-foreground/80">
                 No member profiles match this search yet.
               </p>
             ) : (
@@ -338,7 +338,7 @@ function EnquiryPage() {
                 <Button variant="outline" disabled={page === 0} onClick={() => setPage((p) => Math.max(p - 1, 0))}>
                   Previous
                 </Button>
-                <span className="text-xs font-semibold text-muted-foreground">
+                <span className="text-xs font-semibold text-foreground/80">
                   Page {page + 1} · {total} members
                 </span>
                 <Button
@@ -362,7 +362,7 @@ function EnquiryPage() {
             />
             <div className="liquid-glass mt-6 grid gap-3 rounded-3xl p-4 sm:p-5 md:grid-cols-[1.6fr_1fr]">
               <div className="relative">
-                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-foreground/80" />
                 <Input
                   value={eq}
                   onChange={(e) => {
@@ -401,7 +401,7 @@ function EnquiryPage() {
                 ))}
               </div>
             ) : feedRows.length === 0 ? (
-              <p className="mt-8 text-sm text-muted-foreground">No enquiries posted yet.</p>
+              <p className="mt-8 text-sm text-foreground/80">No enquiries posted yet.</p>
             ) : (
               <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {feedRows.map((e, i) => (
@@ -423,7 +423,7 @@ function EnquiryPage() {
                 <Button variant="outline" disabled={epage === 0} onClick={() => setEpage((p) => Math.max(p - 1, 0))}>
                   Previous
                 </Button>
-                <span className="text-xs font-semibold text-muted-foreground">Page {epage + 1}</span>
+                <span className="text-xs font-semibold text-foreground/80">Page {epage + 1}</span>
                 <Button
                   variant="outline"
                   disabled={(epage + 1) * 12 >= (feed.data?.total ?? 0)}
@@ -457,14 +457,14 @@ function EnquiryPage() {
             </div>
 
             {!user ? (
-              <p className="mt-6 text-sm text-muted-foreground">
+              <p className="mt-6 text-sm text-foreground/80">
                 <Link to="/auth" className="font-semibold text-primary underline">
                   Sign in
                 </Link>{" "}
                 to manage your enquiries.
               </p>
             ) : (myEnquiries.data ?? []).length === 0 ? (
-              <p className="mt-6 text-sm text-muted-foreground">You have not posted any enquiries yet.</p>
+              <p className="mt-6 text-sm text-foreground/80">You have not posted any enquiries yet.</p>
             ) : (
               <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {(myEnquiries.data ?? []).map((e, i) => (
@@ -478,8 +478,8 @@ function EnquiryPage() {
                       <NetworkPill>{e.status}</NetworkPill>
                     </div>
                     <h3 className="mt-3 text-base font-bold text-primary">{e.title}</h3>
-                    <p className="mt-2 line-clamp-3 text-xs text-muted-foreground">{e.description}</p>
-                    <p className="mt-3 text-[11px] text-muted-foreground">Created {shortDate(e.created_at)}</p>
+                    <p className="mt-2 line-clamp-3 text-xs text-foreground/80">{e.description}</p>
+                    <p className="mt-3 text-[11px] text-foreground/80">Created {shortDate(e.created_at)}</p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       {(["active", "connected", "closed"] as const).map((s) => (
                         <Button
@@ -532,7 +532,7 @@ function EnquiryPage() {
               onChange={(e) => setGroupTitle(e.target.value)}
               placeholder="e.g. Distribution partners – Kanyakumari"
             />
-            <p className="text-xs text-muted-foreground">{selected.length} members selected.</p>
+            <p className="text-xs text-foreground/80">{selected.length} members selected.</p>
           </div>
           <DialogFooter>
             <Button
@@ -568,20 +568,20 @@ function EnquiryPage() {
                 {detail.category ? <NetworkPill>{detail.category}</NetworkPill> : null}
                 <NetworkPill>{detail.location}</NetworkPill>
               </div>
-              <p className="text-muted-foreground">{detail.description}</p>
+              <p className="text-foreground/80">{detail.description}</p>
               {detail.what_i_need ? (
                 <p>
                   <span className="font-semibold text-primary">What they need:</span>{" "}
-                  <span className="text-muted-foreground">{detail.what_i_need}</span>
+                  <span className="text-foreground/80">{detail.what_i_need}</span>
                 </p>
               ) : null}
               {detail.what_i_offer ? (
                 <p>
                   <span className="font-semibold text-primary">What they offer:</span>{" "}
-                  <span className="text-muted-foreground">{detail.what_i_offer}</span>
+                  <span className="text-foreground/80">{detail.what_i_offer}</span>
                 </p>
               ) : null}
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-foreground/80">
                 Posted by {detail.author_name} · {shortDate(detail.created_at)}
               </p>
               <div className="flex flex-wrap gap-2 pt-2">

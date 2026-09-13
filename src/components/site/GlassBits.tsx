@@ -30,7 +30,7 @@ const toneMap: Record<string, string> = {
   hot: "border-accent/50 bg-accent/20 text-primary",
   available: "border-primary/20 bg-primary/10 text-primary",
   premium: "border-accent/60 bg-accent/25 text-primary",
-  locked: "border-primary/15 bg-muted text-muted-foreground",
+  locked: "border-primary/15 bg-muted text-foreground/80",
   recent: "border-secondary/30 bg-secondary/10 text-primary",
 };
 
@@ -51,7 +51,7 @@ export function StatusPill({ label }: { label: string }) {
 export function LockedContact({ children }: { children?: ReactNode }) {
   return (
     <div className="mt-4 rounded-2xl border border-primary/10 bg-primary/[0.04] px-3 py-2.5">
-      <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+      <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/80">
         Contact Number
       </p>
       <p className="mt-0.5 font-mono text-sm font-semibold tracking-[0.2em] text-primary">
@@ -77,7 +77,7 @@ export function StatTile({
       style={{ animationDelay: `${index * 60}ms` }}
     >
       <p className="font-display text-2xl font-bold text-primary sm:text-3xl">{value}</p>
-      <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+      <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-foreground/80">
         {label}
       </p>
     </div>

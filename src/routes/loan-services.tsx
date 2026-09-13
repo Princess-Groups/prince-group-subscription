@@ -74,7 +74,7 @@ const SAMPLE: Row[] = [
 
 const STATUS_TONE: Record<Row["status"], string> = {
   Verified: "bg-accent/20 text-accent border-accent/30",
-  New: "bg-cream/10 text-cream/80 border-cream/20",
+  New: "bg-cream/10 text-cream/95 border-cream/20",
   "Follow-up": "bg-secondary/25 text-cream border-secondary/40",
 };
 
@@ -120,7 +120,7 @@ function LoanDataPage() {
               Loan Candidate Data.
               <span className="block text-gradient-olive">Built for Banking Professionals.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/70">
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/90">
               PRINCE supplies structured loan candidate and lead data from Kanyakumari district to
               bank managers and bank executives. We are a data platform — we do not issue loans or
               process loan applications for customers.
@@ -144,10 +144,10 @@ function LoanDataPage() {
                 <Landmark className="size-4 text-accent" />
               </div>
               <p className="mt-4 font-display text-5xl font-bold text-accent">6,00,000+</p>
-              <p className="text-sm text-cream/65">Kanyakumari district candidate records</p>
+              <p className="text-sm text-cream/90">Kanyakumari district candidate records</p>
               <div className="mt-6 space-y-3">
                 {CATEGORIES.slice(0, 4).map((c, i) => (
-                  <div key={c.name} className="flex items-center gap-3 text-xs text-cream/75">
+                  <div key={c.name} className="flex items-center gap-3 text-xs text-cream/95">
                     <c.icon className="size-4 shrink-0 text-accent" />
                     <span className="w-28 shrink-0">{c.name}</span>
                     <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-cream/12">
@@ -159,7 +159,7 @@ function LoanDataPage() {
                   </div>
                 ))}
               </div>
-              <div className="mt-6 flex items-center gap-2 rounded-2xl border border-accent/25 bg-accent/10 px-4 py-3 text-xs text-cream/80">
+              <div className="mt-6 flex items-center gap-2 rounded-2xl border border-accent/25 bg-accent/10 px-4 py-3 text-xs text-cream/95">
                 <ShieldCheck className="size-4 shrink-0 text-accent" />
                 Contact numbers stay masked until a data agreement is active.
               </div>
@@ -178,7 +178,7 @@ function LoanDataPage() {
             <h2 className="mt-3 text-3xl font-bold text-primary sm:text-4xl">
               Kanyakumari district candidate data packs
             </h2>
-            <p className="mt-3 text-sm text-muted-foreground">
+            <p className="mt-3 text-sm text-foreground/80">
               Every pack is sourced from Kanyakumari district, category-tagged and refreshed by our
               data team. Choose the coverage that matches your branch target.
             </p>
@@ -195,7 +195,7 @@ function LoanDataPage() {
                 </span>
                 <p className="mt-5 font-display text-3xl font-bold text-primary">{v.value}</p>
                 <p className="text-sm font-medium text-secondary">{v.label}</p>
-                <p className="mt-3 text-xs uppercase tracking-wider text-muted-foreground">
+                <p className="mt-3 text-xs uppercase tracking-wider text-foreground/80">
                   {v.note}
                 </p>
               </div>
@@ -220,14 +220,14 @@ function LoanDataPage() {
             Search the candidate data
             <span className="block text-gradient-olive">before you request access</span>
           </h2>
-          <p className="mt-4 max-w-2xl text-sm text-cream/70">
+          <p className="mt-4 max-w-2xl text-sm text-cream/90">
             The records below are sample entries for demonstration only. Contact numbers are masked
             and no real personal information is shown.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <div className="relative w-full max-w-sm">
-              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-cream/50" />
+              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-cream/95" />
               <Input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
@@ -243,7 +243,7 @@ function LoanDataPage() {
                   className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
                     type === t
                       ? "border-accent/40 bg-accent/20 text-accent"
-                      : "border-cream/15 text-cream/70 hover:bg-cream/10"
+                      : "border-cream/15 text-cream/90 hover:bg-cream/10"
                   }`}
                 >
                   {t}
@@ -256,7 +256,7 @@ function LoanDataPage() {
             <div className="overflow-x-auto">
               <table className="w-full min-w-[640px] text-left text-sm">
                 <thead>
-                  <tr className="border-b border-cream/10 text-[11px] uppercase tracking-wider text-cream/55">
+                  <tr className="border-b border-cream/10 text-[11px] uppercase tracking-wider text-cream/95">
                     <th className="px-6 py-4 font-semibold">Candidate Name</th>
                     <th className="px-6 py-4 font-semibold">Contact Number</th>
                     <th className="px-6 py-4 font-semibold">Required Loan Type</th>
@@ -267,8 +267,8 @@ function LoanDataPage() {
                   {rows.map((r) => (
                     <tr key={r.name} className="border-b border-cream/5 last:border-0">
                       <td className="px-6 py-4 font-medium text-cream">{r.name}</td>
-                      <td className="px-6 py-4 font-mono text-xs text-cream/60">+91 XXXXX XXXXX</td>
-                      <td className="px-6 py-4 text-cream/75">{r.type}</td>
+                      <td className="px-6 py-4 font-mono text-xs text-cream/90">+91 XXXXX XXXXX</td>
+                      <td className="px-6 py-4 text-cream/95">{r.type}</td>
                       <td className="px-6 py-4">
                         <span
                           className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-semibold ${STATUS_TONE[r.status]}`}
@@ -280,7 +280,7 @@ function LoanDataPage() {
                   ))}
                   {rows.length === 0 ? (
                     <tr>
-                      <td colSpan={4} className="px-6 py-10 text-center text-cream/60">
+                      <td colSpan={4} className="px-6 py-10 text-center text-cream/90">
                         No sample records match this filter.
                       </td>
                     </tr>
@@ -297,7 +297,7 @@ function LoanDataPage() {
                   <c.icon className="size-5" />
                 </span>
                 <h3 className="mt-4 text-base font-semibold text-cream">{c.name}</h3>
-                <p className="mt-1.5 text-xs text-cream/65">
+                <p className="mt-1.5 text-xs text-cream/90">
                   Category-tagged candidate records with requirement and status fields.
                 </p>
               </div>
@@ -306,7 +306,7 @@ function LoanDataPage() {
 
           <div className="mt-12 rounded-[2rem] border border-accent/25 bg-accent/10 p-8 text-center">
             <h3 className="text-2xl font-bold text-cream">Need data for your branch targets?</h3>
-            <p className="mx-auto mt-2 max-w-2xl text-sm text-cream/70">
+            <p className="mx-auto mt-2 max-w-2xl text-sm text-cream/90">
               Share your loan category and volume requirement for Kanyakumari district. Our team will confirm current
               availability and data terms.
             </p>
@@ -318,7 +318,7 @@ function LoanDataPage() {
                 <Link to="/bank-executive">Bank Executive Login</Link>
               </Button>
             </div>
-            <p className="mt-6 flex items-center justify-center gap-2 text-xs text-cream/55">
+            <p className="mt-6 flex items-center justify-center gap-2 text-xs text-cream/95">
               <BadgeCheck className="size-3.5 text-accent" /> PRINCE is a candidate-data and
               lead-data provider for banking professionals, not a direct loan provider.
             </p>

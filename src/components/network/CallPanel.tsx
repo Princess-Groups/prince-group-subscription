@@ -64,7 +64,7 @@ export function CallPanel({
           </span>
           <p className="text-sm font-semibold text-primary">{LABEL[state]}</p>
           {state === "unavailable" ? (
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-foreground/80">
               Private numbers stay hidden. Browser voice calling activates as soon as the calling service is
               connected — meanwhile, send a message and the member will be notified.
             </p>

@@ -100,7 +100,7 @@ export function SiteHeader() {
           <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent sm:text-[11px]">
             <MapPin className="size-3.5 shrink-0" /> {BRANCH_TAGLINE}
           </span>
-          <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-cream/85 sm:text-[11px]">
+          <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-cream/95 sm:text-[11px]">
             <Sparkles className="size-3.5 shrink-0 text-accent" /> {BRAND_STATEMENT}
           </span>
         </div>
@@ -156,7 +156,7 @@ export function SiteHeader() {
                           key={item.to}
                           to={item.to}
                           onClick={() => setOpen(false)}
-                          className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/85 transition-colors hover:bg-cream/10 hover:text-accent"
+                          className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/95 transition-colors hover:bg-cream/10 hover:text-accent"
                         >
                           {item.label}
                         </Link>
@@ -164,14 +164,14 @@ export function SiteHeader() {
                       <Link
                         to="/bank-executive"
                         onClick={() => setOpen(false)}
-                        className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/85 transition-colors hover:bg-cream/10 hover:text-accent"
+                        className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/95 transition-colors hover:bg-cream/10 hover:text-accent"
                       >
                         Bank Executive Portal
                       </Link>
                       <Link
                         to="/auth"
                         onClick={() => setOpen(false)}
-                        className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/85 transition-colors hover:bg-cream/10 hover:text-accent"
+                        className="rounded-2xl px-4 py-3 text-sm font-semibold text-cream/95 transition-colors hover:bg-cream/10 hover:text-accent"
                       >
                         Login / Register
                       </Link>

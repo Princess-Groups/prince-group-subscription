@@ -191,7 +191,7 @@ function OpportunitiesPage() {
         <div className="liquid-glass mt-8 rounded-3xl p-4 sm:p-5">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
             <div className="relative flex-1">
-              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-foreground/80" />
               <Input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
@@ -265,7 +265,7 @@ function OpportunitiesPage() {
           ))}
         </div>
 
-        <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-foreground/80">
           {filtered.length} opportunities
         </p>
 
@@ -278,7 +278,7 @@ function OpportunitiesPage() {
         ) : filtered.length === 0 ? (
           <div className="liquid-glass mt-4 rounded-3xl p-12 text-center">
             <h2 className="text-lg font-semibold text-primary">No opportunities match your filters</h2>
-            <p className="mt-2 text-sm text-muted-foreground">Try another category or search term.</p>
+            <p className="mt-2 text-sm text-foreground/80">Try another category or search term.</p>
           </div>
         ) : (
           <div className="mt-4 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -299,12 +299,12 @@ function OpportunitiesPage() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-secondary">
                     {o.category} · {o.opportunity_type}
                   </p>
-                  <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
+                  <p className="mt-2 flex items-center gap-1.5 text-sm text-foreground/80">
                     <MapPin className="size-3.5 text-secondary" /> {o.location}
                   </p>
-                  <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{o.description}</p>
+                  <p className="mt-2 line-clamp-2 text-sm text-foreground/80">{o.description}</p>
 
-                  <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground">
+                  <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-foreground/80">
                     <Badge variant="secondary" className="rounded-full text-[10px]">
                       Added {shortDate(o.created_at)}
                     </Badge>
@@ -322,7 +322,7 @@ function OpportunitiesPage() {
 
                   {phone ? (
                     <div className="mt-4 rounded-2xl border border-secondary/30 bg-secondary/10 px-3 py-2.5">
-                      <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/80">
                         Contact
                       </p>
                       <a href={`tel:${phone}`} className="font-semibold text-primary">
@@ -331,7 +331,7 @@ function OpportunitiesPage() {
                     </div>
                   ) : (
                     <LockedContact>
-                      <p className="mt-1 text-[11px] text-muted-foreground">
+                      <p className="mt-1 text-[11px] text-foreground/80">
                         Use your subscription access to unlock this{" "}
                         {o.lead_id ? "candidate" : "contact"}.
                       </p>
@@ -379,7 +379,7 @@ function OpportunitiesPage() {
           <h2 className="mt-3 text-2xl font-bold text-primary">
             One Subscription. Multiple Business Opportunities.
           </h2>
-          <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground">
+          <p className="mx-auto mt-2 max-w-2xl text-sm text-foreground/80">
             Explore Kanyakumari businesses, discover B2B opportunities, access eligible loan candidate
             data and unlock valuable business connections through one powerful platform.
           </p>
@@ -395,7 +395,7 @@ function OpportunitiesPage() {
                 style={{ animationDelay: `${i * 70}ms` }}
               >
                 <p className="font-display text-2xl font-bold text-primary">{c.p}</p>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-foreground/80">
                   {c.t}
                 </p>
               </div>
@@ -413,7 +413,7 @@ function OpportunitiesPage() {
           </div>
         </div>
 
-        <div className="mt-6 flex items-start gap-2 rounded-2xl bg-muted px-4 py-3 text-xs text-muted-foreground">
+        <div className="mt-6 flex items-start gap-2 rounded-2xl bg-muted px-4 py-3 text-xs text-foreground/80">
           <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-secondary" />
           Candidate names and contact numbers stay locked. Unlocks run through the existing
           subscription and allocation checks, and every reveal is written to the access log.
@@ -462,7 +462,7 @@ function OpportunitiesPage() {
 
                 {revealedFor(active) ? (
                   <div className="reveal-soft rounded-2xl border border-secondary/30 bg-secondary/10 px-3 py-2.5">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/80">
                       Contact
                     </p>
                     <a href={`tel:${revealedFor(active)}`} className="font-semibold text-primary">
@@ -471,7 +471,7 @@ function OpportunitiesPage() {
                   </div>
                 ) : (
                   <LockedContact>
-                    <p className="mt-1 text-[11px] text-muted-foreground">
+                    <p className="mt-1 text-[11px] text-foreground/80">
                       Use your subscription access to unlock this{" "}
                       {active.lead_id ? "candidate" : "contact"}.
                     </p>
@@ -511,7 +511,7 @@ function DetailBlock({
 }) {
   return (
     <div className="reveal-soft" style={{ animationDelay: `${delay}ms` }}>
-      <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+      <p className="text-[11px] font-semibold uppercase tracking-wider text-foreground/80">
         {label}
       </p>
       <div className="mt-1 text-sm text-primary">{children}</div>

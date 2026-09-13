@@ -81,7 +81,7 @@ function OfficePage() {
               Visit the PRINCE
               <span className="block text-gradient-olive">Corporate Office.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/70">
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/90">
               One address for membership support, bank executive data access and partnership
               conversations — backed by our branch network across Kanyakumari District.
             </p>
@@ -132,7 +132,7 @@ function OfficePage() {
                     {c.body}
                   </a>
                 ) : (
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.body}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-foreground/80">{c.body}</p>
                 )}
               </div>
             ))}
@@ -148,7 +148,7 @@ function OfficePage() {
                   <d.icon className="size-5" />
                 </span>
                 <h3 className="mt-5 text-base font-semibold text-primary">{d.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{d.body}</p>
+                <p className="mt-2 text-sm text-foreground/80">{d.body}</p>
               </div>
             ))}
           </div>
@@ -158,7 +158,7 @@ function OfficePage() {
             <div className="relative grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
               <div>
                 <h3 className="text-2xl font-bold sm:text-3xl">Planning a visit?</h3>
-                <p className="mt-3 max-w-xl text-sm text-cream/70">
+                <p className="mt-3 max-w-xl text-sm text-cream/90">
                   Call ahead and we will keep the right desk free for you — membership, candidate
                   data or partnerships.
                 </p>

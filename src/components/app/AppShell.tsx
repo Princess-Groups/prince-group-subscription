@@ -59,8 +59,8 @@ export function AppShell({
           className={cn(
             "flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-medium transition-colors",
             pathname === item.to
-              ? "bg-accent/15 text-accent shadow-soft"
-              : "text-cream/70 hover:bg-cream/5 hover:text-cream",
+              ? "bg-accent/15 text-cream shadow-soft"
+              : "text-cream/90 hover:bg-cream/5 hover:text-cream",
           )}
         >
           <item.icon className="size-4" />
@@ -74,8 +74,8 @@ export function AppShell({
           className={cn(
             "flex items-center gap-3 rounded-2xl px-4 py-2.5 text-sm font-medium transition-colors",
             pathname === "/admin"
-              ? "bg-accent/15 text-accent shadow-soft"
-              : "text-cream/70 hover:bg-cream/5 hover:text-cream",
+              ? "bg-accent/15 text-cream shadow-soft"
+              : "text-cream/90 hover:bg-cream/5 hover:text-cream",
           )}
         >
           <ShieldCheck className="size-4" />
@@ -104,7 +104,7 @@ export function AppShell({
       </Link>
       <div className="relative mt-8 flex-1">{nav}</div>
       <div className="relative space-y-3">
-        <p className="truncate text-xs text-cream/50">{user?.email}</p>
+        <p className="truncate text-xs text-cream/95">{user?.email}</p>
         <Button variant="onOlive" size="sm" className="w-full" onClick={signOut}>
           <LogOut className="size-4" /> Sign out
         </Button>
@@ -132,7 +132,7 @@ export function AppShell({
           <div className="min-w-0">
             <h1 className="truncate text-lg font-bold text-primary sm:text-xl">{title}</h1>
             {subtitle ? (
-              <p className="truncate text-xs text-muted-foreground sm:text-sm">{subtitle}</p>
+              <p className="truncate text-xs text-foreground/80 sm:text-sm">{subtitle}</p>
             ) : null}
           </div>
           <DemoBadge className="ml-auto hidden sm:inline-flex" />

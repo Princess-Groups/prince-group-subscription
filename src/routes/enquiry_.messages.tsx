@@ -140,7 +140,7 @@ function MessagesPage() {
         </div>
 
         <h1 className="mt-4 text-2xl font-bold text-primary sm:text-3xl">Member Messages</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-1 text-sm text-foreground/80">
           Secure conversations between active Prince Group subscribers.
         </p>
 
@@ -153,7 +153,7 @@ function MessagesPage() {
             {/* conversation list */}
             <aside className="liquid-glass rounded-3xl p-4">
               <div className="relative">
-                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-foreground/80" />
                 <Input
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
@@ -165,7 +165,7 @@ function MessagesPage() {
                 {conversations.isLoading ? (
                   <Skeleton className="h-20 rounded-2xl" />
                 ) : filtered.length === 0 ? (
-                  <p className="px-1 py-6 text-xs text-muted-foreground">
+                  <p className="px-1 py-6 text-xs text-foreground/80">
                     No conversations yet. Open a member profile and tap Message.
                   </p>
                 ) : (
@@ -184,7 +184,7 @@ function MessagesPage() {
                         <span className="truncate text-sm font-semibold text-primary">{conv.title}</span>
                         {conv.unread > 0 ? <NetworkPill tone="lime">{conv.unread}</NetworkPill> : null}
                       </div>
-                      <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                      <p className="mt-0.5 truncate text-xs text-foreground/80">
                         {conv.is_group ? `Group · ${conv.participants} members · ` : ""}
                         {conv.last_message ?? "No messages yet"}
                       </p>
@@ -197,13 +197,13 @@ function MessagesPage() {
             {/* thread */}
             <div className="liquid-glass flex min-h-[60vh] flex-col rounded-3xl p-4 sm:p-5">
               {!activeId ? (
-                <p className="m-auto text-sm text-muted-foreground">Select a conversation to start.</p>
+                <p className="m-auto text-sm text-foreground/80">Select a conversation to start.</p>
               ) : (
                 <>
                   <div className="flex items-center justify-between gap-3 border-b border-primary/10 pb-3">
                     <div className="min-w-0">
                       <h2 className="truncate text-base font-bold text-primary">{current?.title}</h2>
-                      <p className="text-[11px] text-muted-foreground">
+                      <p className="text-[11px] text-foreground/80">
                         {current?.is_group ? `${current.participants} members` : "Direct conversation"}
                       </p>
                     </div>

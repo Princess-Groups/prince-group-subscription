@@ -17,7 +17,7 @@ export function LegalPage({
           {sections.map((s) => (
             <section key={s.heading}>
               <h2 className="text-xl font-semibold text-primary">{s.heading}</h2>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+              <p className="mt-3 text-sm leading-relaxed text-foreground/80">{s.body}</p>
             </section>
           ))}
         </div>

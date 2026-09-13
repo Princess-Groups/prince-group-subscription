@@ -95,7 +95,7 @@ function AuthPage() {
             <h2 className="max-w-md text-4xl font-bold leading-tight">
               Premium access to discounts, leads and business data.
             </h2>
-            <ul className="mt-8 space-y-3 text-sm text-primary-foreground/75">
+            <ul className="mt-8 space-y-3 text-sm text-primary-foreground/95">
               <li>• Member pricing of 10% to 50% on eligible services</li>
               <li>• Lead allocation with permanent duplicate prevention</li>
               <li>• Live premium slot availability</li>
@@ -107,7 +107,7 @@ function AuthPage() {
         <div className="flex items-center justify-center px-4 py-16 sm:px-8">
           <div className="w-full max-w-md">
             <h1 className="text-3xl font-bold text-primary">Welcome to PRINCE</h1>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-2 text-sm text-foreground/80">
               Sign in to manage your subscription, leads and business access.
             </p>
 
@@ -140,14 +140,14 @@ function AuthPage() {
               </TabsContent>
             </Tabs>
 
-            <div className="my-6 flex items-center gap-3 text-xs uppercase tracking-widest text-muted-foreground">
+            <div className="my-6 flex items-center gap-3 text-xs uppercase tracking-widest text-foreground/80">
               <span className="h-px flex-1 bg-border" /> or <span className="h-px flex-1 bg-border" />
             </div>
             <Button variant="outline" className="w-full" onClick={google}>
               Continue with Google
             </Button>
 
-            <p className="mt-6 text-xs text-muted-foreground">
+            <p className="mt-6 text-xs text-foreground/80">
               Bank executives must be approved by an administrator before portal access is granted.
             </p>
           </div>

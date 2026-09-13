@@ -45,7 +45,7 @@ function BankExecutivePage() {
                 <c.icon className="size-5" />
               </span>
               <h3 className="mt-5 text-base font-semibold text-primary">{c.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{c.body}</p>
+              <p className="mt-2 text-sm text-foreground/80">{c.body}</p>
             </div>
           ))}
         </div>
