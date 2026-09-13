@@ -1,21 +1,10 @@
 import { useNavigate } from "@tanstack/react-router";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 
 import { PlanCard } from "@/components/site/PlanCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "@/hooks/useAuth";
 import { settingString, usePlans, useSettings, useSlots } from "@/hooks/usePlatform";
-import { supabase } from "@/integrations/supabase/client";
-
-const ERRORS: Record<string, string> = {
-  not_authenticated: "Please sign in to subscribe.",
-  plan_not_found: "That plan is no longer available.",
-  slots_full: "All slots for this plan are currently occupied.",
-  subscription_already_exists: "You already have a subscription in progress.",
-  plan_not_available_for_bank_executive: "This plan is not available for Bank Executive accounts.",
-};
 
 export function PlansSection({
   title = "Choose Your Subscription",
@@ -31,36 +20,14 @@ export function PlansSection({
   const { data: plans, isLoading } = usePlans();
   const { data: slots } = useSlots();
   const { data: settings } = useSettings();
-  const { user } = useSession();
+  const { user, loading: sessionLoading } = useSession();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const [busy, setBusy] = useState<string | null>(null);
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   const phone = settingString(settings, "support_phone", "9559155535");
-
-  const subscribe = useMutation({
-    mutationFn: async (planCode: string) => {
-      const { data, error } = await supabase.rpc("start_subscription", { _plan_code: planCode });
-      if (error) throw error;
-      return data as Record<string, unknown>;
-    },
-    onSuccess: (data) => {
-      const err = data?.["error"] as string | undefined;
-      if (err) {
-        toast.error(ERRORS[err] ?? err);
-        return;
-      }
-      queryClient.invalidateQueries();
-      toast.success("Subscription created — awaiting payment verification.");
-      navigate({ to: "/subscription" });
-    },
-    onError: (e: Error) => toast.error(e.message),
-    onSettled: () => setBusy(null),
-  });
 
   const list = (plans ?? []).filter((p) => (filter ? filter(p.code) : true));
 
