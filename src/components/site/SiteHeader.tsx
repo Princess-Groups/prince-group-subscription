@@ -74,7 +74,7 @@ function GlassNav({ onNavigate }: { onNavigate?: () => void }) {
           className="whitespace-nowrap rounded-full px-3 py-1.5 text-[12.5px] font-semibold text-primary/75 transition-all duration-300 hover:bg-white/70 hover:text-primary hover:shadow-[inset_0_1px_0_oklch(1_0_0/0.7),0_6px_16px_-8px_oklch(0.28_0.06_148/0.5)]"
           activeProps={{
             className:
-              "bg-primary text-cream shadow-[0_8px_20px_-8px_oklch(0.28_0.06_148/0.7),inset_0_1px_0_oklch(1_0_0/0.25)] hover:bg-primary hover:text-cream",
+              "bg-primary !text-cream shadow-[0_8px_20px_-8px_oklch(0.28_0.06_148/0.7),inset_0_1px_0_oklch(1_0_0/0.25)] hover:bg-primary hover:!text-cream",
           }}
           activeOptions={{ exact: item.to === "/" }}
         >
