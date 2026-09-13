@@ -394,12 +394,13 @@ export function LoanCandidateDataSection() {
                 </div>
               </div>
 
-              <button
-                type="button"
+              <Link
+                to="/payment"
+                search={{ item: "Loan Candidate Profile Unlock", amount: 10 }}
                 className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full border border-accent/40 px-4 py-2 text-xs font-semibold text-accent transition-all group-hover:-translate-y-0.5 group-hover:bg-accent group-hover:text-accent-foreground"
               >
                 <Lock className="size-3.5" /> Unlock Profile
-              </button>
+              </Link>
             </div>
           ))}
         </div>

@@ -46,7 +46,7 @@ function BranchesPage() {
               </a>
             </Button>
             <Button asChild size="lg" variant="onOlive" className="w-full sm:w-auto">
-              <Link to="/plans">Explore Plans</Link>
+              <Link to="/payment">Explore Plans</Link>
             </Button>
           </>
         }
