@@ -88,6 +88,7 @@ function unlockMessage(code: string) {
 
 export function useUnlockBusinessContact(
   onUnlocked: (id: string, phone: string) => void,
+  onNeedPayment?: () => void,
 ) {
   return useMutation({
     mutationFn: async (id: string) => {
@@ -101,6 +102,7 @@ export function useUnlockBusinessContact(
       const err = res["error"];
       if (typeof err === "string") {
         toast.error(unlockMessage(err));
+        if (err === "not_authenticated" || err === "no_active_subscription") onNeedPayment?.();
         return;
       }
       onUnlocked(id, String(res["phone"] ?? ""));
@@ -112,6 +114,7 @@ export function useUnlockBusinessContact(
 
 export function useUnlockLeadContact(
   onUnlocked: (id: string, phone: string) => void,
+  onNeedPayment?: () => void,
 ) {
   return useMutation({
     mutationFn: async (leadId: string) => {
@@ -125,6 +128,7 @@ export function useUnlockLeadContact(
       const err = res["error"];
       if (typeof err === "string") {
         toast.error(unlockMessage(err));
+        if (err === "not_authenticated" || err === "no_active_subscription") onNeedPayment?.();
         return;
       }
       onUnlocked(leadId, String(res["phone"] ?? ""));
