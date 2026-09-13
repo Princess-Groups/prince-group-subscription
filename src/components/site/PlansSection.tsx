@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 
 import { PlanCard } from "@/components/site/PlanCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useSession } from "@/hooks/useAuth";
 import { settingString, usePlans, useSettings, useSlots } from "@/hooks/usePlatform";
 
 export function PlansSection({
@@ -20,7 +19,6 @@ export function PlansSection({
   const { data: plans, isLoading } = usePlans();
   const { data: slots } = useSlots();
   const { data: settings } = useSettings();
-  const { user, loading: sessionLoading } = useSession();
   const navigate = useNavigate();
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -113,7 +111,6 @@ export function PlansSection({
                     return slot ? { slot } : {};
                   })()}
                   supportPhone={phone}
-                  busy={sessionLoading}
                   onSubscribe={(code) => {
                     navigate({ to: "/payment", search: { plan: code } });
                   }}
