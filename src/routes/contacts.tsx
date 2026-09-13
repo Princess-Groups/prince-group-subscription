@@ -29,6 +29,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { Skeleton } from "@/components/ui/skeleton";
 import { useBusinesses, useUnlockBusinessContact, type Business } from "@/hooks/useDirectory";
 import { phoneDisplay, shortDate } from "@/lib/format";
+import directoryHomeBg from "@/assets/directory-home-bg.png.asset.json";
 
 const title = "Kanyakumari Business Directory | PRINCE GROUP";
 const description =
