@@ -86,7 +86,7 @@ function NetworkAdminPage() {
       const { error } = await supabase.rpc("admin_set_member_status", {
         _user_id: input.userId,
         _status: input.status,
-        _blocked: input.blocked ?? undefined,
+        ...(typeof input.blocked === "boolean" ? { _blocked: input.blocked } : {}),
       });
       if (error) throw error;
     },
