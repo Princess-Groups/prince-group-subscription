@@ -31,6 +31,8 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
 import { Route as AuthenticatedSubscriptionRouteImport } from './routes/_authenticated/subscription'
+import { Route as EnquiryMessagesRouteImport } from './routes/enquiry_.messages'
+import { Route as EnquiryProfileRouteImport } from './routes/enquiry_.profile'
 import { Route as EnquiryMembersIdRouteImport } from './routes/enquiry_.members.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -143,6 +145,16 @@ const AuthenticatedSubscriptionRoute =
     path: '/subscription',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const EnquiryMessagesRoute = EnquiryMessagesRouteImport.update({
+  id: '/enquiry_/messages',
+  path: '/enquiry/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnquiryProfileRoute = EnquiryProfileRouteImport.update({
+  id: '/enquiry_/profile',
+  path: '/enquiry/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EnquiryMembersIdRoute = EnquiryMembersIdRouteImport.update({
   id: '/enquiry_/members/$id',
   path: '/enquiry/members/$id',
@@ -171,6 +183,8 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/leads': typeof AuthenticatedLeadsRoute
   '/subscription': typeof AuthenticatedSubscriptionRoute
+  '/enquiry/messages': typeof EnquiryMessagesRoute
+  '/enquiry/profile': typeof EnquiryProfileRoute
   '/enquiry/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRoutesByTo {
@@ -195,6 +209,8 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/leads': typeof AuthenticatedLeadsRoute
   '/subscription': typeof AuthenticatedSubscriptionRoute
+  '/enquiry/messages': typeof EnquiryMessagesRoute
+  '/enquiry/profile': typeof EnquiryProfileRoute
   '/enquiry/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRoutesById {
@@ -221,6 +237,8 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/leads': typeof AuthenticatedLeadsRoute
   '/_authenticated/subscription': typeof AuthenticatedSubscriptionRoute
+  '/enquiry_/messages': typeof EnquiryMessagesRoute
+  '/enquiry_/profile': typeof EnquiryProfileRoute
   '/enquiry_/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRouteTypes {
@@ -247,6 +265,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/leads'
     | '/subscription'
+    | '/enquiry/messages'
+    | '/enquiry/profile'
     | '/enquiry/members/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -271,6 +291,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/leads'
     | '/subscription'
+    | '/enquiry/messages'
+    | '/enquiry/profile'
     | '/enquiry/members/$id'
   id:
     | '__root__'
@@ -296,6 +318,8 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/leads'
     | '/_authenticated/subscription'
+    | '/enquiry_/messages'
+    | '/enquiry_/profile'
     | '/enquiry_/members/$id'
   fileRoutesById: FileRoutesById
 }
@@ -318,6 +342,8 @@ export interface RootRouteChildren {
   RefundRoute: typeof RefundRoute
   ServicesRoute: typeof ServicesRoute
   TermsRoute: typeof TermsRoute
+  EnquiryMessagesRoute: typeof EnquiryMessagesRoute
+  EnquiryProfileRoute: typeof EnquiryProfileRoute
   EnquiryMembersIdRoute: typeof EnquiryMembersIdRoute
 }
 
@@ -477,6 +503,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSubscriptionRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/enquiry_/messages': {
+      id: '/enquiry_/messages'
+      path: '/enquiry/messages'
+      fullPath: '/enquiry/messages'
+      preLoaderRoute: typeof EnquiryMessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enquiry_/profile': {
+      id: '/enquiry_/profile'
+      path: '/enquiry/profile'
+      fullPath: '/enquiry/profile'
+      preLoaderRoute: typeof EnquiryProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/enquiry_/members/$id': {
       id: '/enquiry_/members/$id'
       path: '/enquiry/members/$id'
@@ -523,6 +563,8 @@ const rootRouteChildren: RootRouteChildren = {
   RefundRoute: RefundRoute,
   ServicesRoute: ServicesRoute,
   TermsRoute: TermsRoute,
+  EnquiryMessagesRoute: EnquiryMessagesRoute,
+  EnquiryProfileRoute: EnquiryProfileRoute,
   EnquiryMembersIdRoute: EnquiryMembersIdRoute,
 }
 export const routeTree = rootRouteImport
