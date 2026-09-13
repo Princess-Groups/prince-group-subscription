@@ -23,6 +23,7 @@ export function PageHero({
   actions,
   visual,
   bgImage,
+  bgImageCss,
 }: {
   eyebrow?: string;
   title: ReactNode;
@@ -31,15 +32,25 @@ export function PageHero({
   actions?: ReactNode;
   visual?: ReactNode;
   bgImage?: string;
+  bgImageCss?: string;
 }) {
   return (
-    <section className="relative overflow-hidden bg-gradient-olive px-4 py-18 text-cream sm:px-6 sm:py-24">
+    <section
+      className="relative overflow-hidden bg-cover bg-center bg-no-repeat bg-gradient-olive px-4 py-18 text-cream sm:px-6 sm:py-24"
+      style={bgImageCss ? { backgroundImage: `url(${bgImageCss})` } : undefined}
+    >
       {bgImage ? (
         <img
           src={bgImage}
           alt=""
           aria-hidden
           className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+        />
+      ) : null}
+      {bgImageCss ? (
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/55 to-primary/25"
+          aria-hidden
         />
       ) : null}
       <div className="grid-lines pointer-events-none absolute inset-0 opacity-50" />
