@@ -47,6 +47,12 @@ export function PageHero({
           className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
         />
       ) : null}
+      {bgImageCss ? (
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/55 to-primary/25"
+          aria-hidden
+        />
+      ) : null}
       <div className="grid-lines pointer-events-none absolute inset-0 opacity-50" />
       <div className="hero-orb -right-20 -top-24 size-96 bg-accent/20" />
       <div className="hero-orb -left-32 -bottom-10 size-80 bg-secondary/25" />
