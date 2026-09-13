@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
   Bookmark,
   BookmarkCheck,
@@ -84,11 +84,15 @@ function OpportunitiesPage() {
   const [saved, setSaved] = useState<Record<string, boolean>>({});
   const [revealed, setRevealed] = useState<Record<string, string>>({});
 
-  const unlockBusiness = useUnlockBusinessContact((id, phone) =>
-    setRevealed((r) => ({ ...r, [`b:${id}`]: phone })),
+  const navigate = useNavigate();
+  const goToPayment = () => navigate({ to: "/payment" });
+  const unlockBusiness = useUnlockBusinessContact(
+    (id, phone) => setRevealed((r) => ({ ...r, [`b:${id}`]: phone })),
+    goToPayment,
   );
-  const unlockLead = useUnlockLeadContact((id, phone) =>
-    setRevealed((r) => ({ ...r, [`l:${id}`]: phone })),
+  const unlockLead = useUnlockLeadContact(
+    (id, phone) => setRevealed((r) => ({ ...r, [`l:${id}`]: phone })),
+    goToPayment,
   );
 
   const rows = useMemo(() => data ?? [], [data]);

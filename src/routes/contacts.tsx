@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowRight,
   Building2,
@@ -79,8 +79,10 @@ function DirectoryPage() {
   const [active, setActive] = useState<Business | null>(null);
   const [revealed, setRevealed] = useState<Record<string, string>>({});
 
-  const unlock = useUnlockBusinessContact((id, phone) =>
-    setRevealed((r) => ({ ...r, [id]: phone })),
+  const navigate = useNavigate();
+  const unlock = useUnlockBusinessContact(
+    (id, phone) => setRevealed((r) => ({ ...r, [id]: phone })),
+    () => navigate({ to: "/payment" }),
   );
 
   const businesses = useMemo(() => data ?? [], [data]);
