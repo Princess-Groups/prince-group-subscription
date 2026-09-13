@@ -13,6 +13,19 @@ CREATE TABLE public.payment_submissions (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  'payment-proofs',
+  'payment-proofs',
+  false,
+  10485760,
+  ARRAY['image/jpeg', 'image/png', 'image/webp', 'application/pdf']
+)
+ON CONFLICT (id) DO UPDATE SET
+  public = EXCLUDED.public,
+  file_size_limit = EXCLUDED.file_size_limit,
+  allowed_mime_types = EXCLUDED.allowed_mime_types;
+
 GRANT SELECT, INSERT ON public.payment_submissions TO authenticated;
 GRANT ALL ON public.payment_submissions TO service_role;
 
