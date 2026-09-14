@@ -38,7 +38,7 @@ export function PageHero({
 }) {
   return (
     <section
-      className={`relative overflow-hidden bg-no-repeat bg-gradient-olive px-4 py-18 text-cream sm:px-6 sm:py-24 ${cleanBackground ? "bg-primary bg-top [background-size:100%_auto]" : "bg-cover bg-center"}`}
+      className={`relative overflow-hidden bg-no-repeat bg-gradient-olive bg-top [background-size:100%_auto] px-4 py-18 text-cream sm:px-6 sm:py-24 ${cleanBackground ? "bg-primary" : ""}`}
       style={bgImageCss ? { backgroundImage: `url(${bgImageCss})` } : undefined}
     >
       {bgImage ? (
@@ -46,7 +46,7 @@ export function PageHero({
           src={bgImage}
           alt=""
           aria-hidden
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+          className="pointer-events-none absolute inset-x-0 top-0 h-auto w-full object-top"
         />
       ) : null}
       {bgImageCss && !cleanBackground ? (

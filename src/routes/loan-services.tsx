@@ -131,7 +131,7 @@ function LoanDataPage() {
         <img
           src={heroLoans.url}
           alt="Green financial visual with loan document, house, car and gold coins"
-          className="absolute inset-0 -z-20 size-full object-cover"
+          className="absolute inset-x-0 top-0 -z-20 h-auto w-full object-top"
         />
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,oklch(0.17_0.05_148/0.95)_0%,oklch(0.19_0.055_147/0.88)_45%,oklch(0.2_0.05_146/0.45)_100%)]" />
         <div className="grid-lines pointer-events-none absolute inset-0 opacity-50" />
