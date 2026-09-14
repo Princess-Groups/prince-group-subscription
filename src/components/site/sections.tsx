@@ -132,16 +132,16 @@ export function HeroSection() {
 
       <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
         <div className="reveal max-w-2xl">
-          <span className="pill-badge">
+          <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 bg-primary px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-cream">
             <Sparkles className="size-3.5" /> Limited Premium Membership
           </span>
-          <h1 className="mt-6 font-hero text-[1.125rem] font-bold leading-[1.05] tracking-[-0.03em] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)] whitespace-normal sm:whitespace-nowrap sm:text-[1.375rem] md:text-[1.875rem] lg:text-[2.25rem]">
+          <h1 className="mt-6 font-brand text-[1.25rem] font-bold leading-[1.05] tracking-[-0.02em] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)] whitespace-normal sm:whitespace-nowrap sm:text-[1.5rem] md:text-[2rem] lg:text-[2.625rem]">
             <span className="block">
               ALL IN ONE <span className="text-[0.72em] font-normal tracking-tight">(₹ ONE)</span> POWERFUL SUBSCRIPTION
             </span>
-            <span className="block text-gradient-olive">GO PREMIUM. UNLOCK MORE.</span>
+            <span className="block text-gradient-olive">GO PREMIUM UNLOCK MORE</span>
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/95 sm:text-lg">
+          <p className="mt-6 max-w-xl font-brand text-base font-semibold leading-relaxed text-primary drop-shadow-[0_1px_0_oklch(0.969_0.016_95.2/0.9)] sm:text-lg">
             Subscription get started with one rupee. Unlock loan candidate data for just ₹10. Go Premium for ₹100 — all in one powerful subscription.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
