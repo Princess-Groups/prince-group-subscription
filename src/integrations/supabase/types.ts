@@ -872,6 +872,39 @@ export type Database = {
           },
         ]
       }
+      phone_otps: {
+        Row: {
+          attempts: number
+          code_hash: string
+          consumed_at: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          phone: string
+          user_id: string
+        }
+        Insert: {
+          attempts?: number
+          code_hash: string
+          consumed_at?: string | null
+          created_at?: string
+          expires_at: string
+          id?: string
+          phone: string
+          user_id: string
+        }
+        Update: {
+          attempts?: number
+          code_hash?: string
+          consumed_at?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          phone?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       plans: {
         Row: {
           active: boolean
@@ -938,8 +971,10 @@ export type Database = {
           email: string
           employee_code: string | null
           id: string
+          location: string | null
           name: string
           phone: string | null
+          phone_verified: boolean
           status: Database["public"]["Enums"]["account_status"]
         }
         Insert: {
@@ -947,8 +982,10 @@ export type Database = {
           email?: string
           employee_code?: string | null
           id: string
+          location?: string | null
           name?: string
           phone?: string | null
+          phone_verified?: boolean
           status?: Database["public"]["Enums"]["account_status"]
         }
         Update: {
@@ -956,8 +993,10 @@ export type Database = {
           email?: string
           employee_code?: string | null
           id?: string
+          location?: string | null
           name?: string
           phone?: string | null
+          phone_verified?: boolean
           status?: Database["public"]["Enums"]["account_status"]
         }
         Relationships: []
@@ -1148,6 +1187,7 @@ export type Database = {
         Args: { _conversation_id: string; _user_id: string }
         Returns: boolean
       }
+      is_phone_verified: { Args: { _user_id: string }; Returns: boolean }
       my_conversations: { Args: never; Returns: Json }
       my_dashboard: { Args: never; Returns: Json }
       my_network_access: { Args: never; Returns: Json }

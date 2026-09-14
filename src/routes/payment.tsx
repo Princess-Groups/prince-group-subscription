@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BadgeCheck, Building2, Copy, Landmark, QrCode, ShieldCheck, Upload } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { BadgeCheck, Building2, QrCode, ShieldCheck, SmartphoneNfc, Upload } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -10,14 +11,15 @@ import { PageHero, PublicPage } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSession } from "@/hooks/useAuth";
+import { useProfile, useSession } from "@/hooks/useAuth";
 import { usePlans } from "@/hooks/usePlatform";
 import { supabase } from "@/integrations/supabase/client";
 import { inr } from "@/lib/format";
+import { sendPhoneOtp, verifyPhoneOtp } from "@/lib/otp.functions";
 
 const title = "Payment & Unlock | PRINCE GROUP";
 const description =
-  "Pay for your PRINCE GROUP subscription or unlock package via UPI or bank transfer and submit your payment details for verification.";
+  "Pay for your PRINCE GROUP subscription or unlock package, verify your mobile number and submit your payment details for verification.";
 
 const searchSchema = z.object({
   plan: z.string().optional(),
@@ -41,17 +43,10 @@ export const Route = createFileRoute("/payment")({
   component: PaymentPage,
 });
 
-const BANK = {
-  accountName: "[I WILL ADD THIS]",
-  accountNumber: "16400200004038",
-  ifsc: "FDRL0001640",
-  bank: "Federal Bank",
-  upiId: "jeba551@federal",
-};
-
 function PaymentPage() {
   const { plan: planParam, item: itemParam, amount: amountParam } = Route.useSearch();
   const { user, loading: sessionLoading } = useSession();
+  const { data: profile } = useProfile(user?.id);
   const { data: plans } = usePlans();
   const queryClient = useQueryClient();
 
@@ -61,9 +56,22 @@ function PaymentPage() {
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
+  const [location, setLocation] = useState("");
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
   const [utr, setUtr] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [submitted, setSubmitted] = useState(false);
+
+  const verified = profile?.phone_verified === true;
+
+  useEffect(() => {
+    if (!profile) return;
+    setName((v) => v || (profile.name ?? ""));
+    setEmail((v) => v || (profile.email ?? ""));
+    setMobile((v) => v || (profile.phone ?? ""));
+    setLocation((v) => v || (profile.location ?? ""));
+  }, [profile]);
 
   const plan = useMemo(
     () => (plans ?? []).find((p) => p.code === selectedPlan) ?? null,
@@ -73,9 +81,45 @@ function PaymentPage() {
   const itemLabel = plan ? `${plan.name} Subscription` : customItem || "Custom Payment";
   const amount = plan ? plan.price : Number(customAmount) || 0;
 
+  const sendOtpFn = useServerFn(sendPhoneOtp);
+  const verifyOtpFn = useServerFn(verifyPhoneOtp);
+
+  const sendOtp = useMutation({
+    mutationFn: async () => {
+      if (!name.trim() || !mobile.trim() || !email.trim() || !location.trim()) {
+        throw new Error("Please fill in your name, mobile number, location and email.");
+      }
+      await sendOtpFn({ data: { phone: mobile.trim() } });
+    },
+    onSuccess: () => {
+      setOtpSent(true);
+      toast.success("Verification code sent to your mobile number.");
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  const verifyOtp = useMutation({
+    mutationFn: async () => {
+      await verifyOtpFn({
+        data: {
+          code: otp,
+          name: name.trim(),
+          email: email.trim(),
+          location: location.trim(),
+        },
+      });
+    },
+    onSuccess: () => {
+      toast.success("Mobile number verified.");
+      queryClient.invalidateQueries();
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
   const submit = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error("Please sign in to submit payment details.");
+      if (!verified) throw new Error("Please verify your mobile number first.");
       if (!name.trim() || !mobile.trim() || !email.trim() || !utr.trim() || !file) {
         throw new Error("Please fill in all required fields.");
       }
@@ -121,8 +165,8 @@ function PaymentPage() {
       <PageHero
         eyebrow="Secure Payment"
         title="Complete Your Payment"
-        highlight="Unlock Your Access."
-        subtitle="Pay using the QR code or bank transfer below, then submit your payment details. Our team verifies every payment manually before activating your plan or profile access."
+        highlight="Verify & Activate."
+        subtitle="Scan the QR code to pay, then sign in and verify your mobile number with an OTP. Our team verifies every payment manually before activating your plan or profile access."
       />
 
       <section className="bg-gradient-cream py-16 sm:py-20">
@@ -148,7 +192,7 @@ function PaymentPage() {
             </div>
           ) : (
             <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr]">
-              {/* Left: summary + bank + QR */}
+              {/* Left: summary + payment option */}
               <div className="space-y-6">
                 <div className="rounded-3xl bg-gradient-olive p-7 text-cream shadow-lift">
                   <p className="text-xs font-bold uppercase tracking-[0.22em] text-accent">
@@ -178,63 +222,57 @@ function PaymentPage() {
                   </p>
                 </div>
 
-                <div className="rounded-3xl border border-primary/10 bg-card p-7 shadow-soft">
-                  <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
-                    <Landmark className="size-5 text-secondary" /> Bank transfer details
-                  </h3>
-                  <dl className="mt-5 space-y-3 text-sm">
-                    <BankRow label="Account Name" value={BANK.accountName} />
-                    <BankRow label="Account Number" value={BANK.accountNumber} copy />
-                    <BankRow label="IFSC Code" value={BANK.ifsc} copy />
-                    <BankRow label="Bank" value={BANK.bank} />
-                    <BankRow label="UPI ID" value={BANK.upiId} copy />
-                  </dl>
-                </div>
-
                 <div className="rounded-3xl border border-primary/10 bg-card p-7 text-center shadow-soft">
                   <h3 className="flex items-center justify-center gap-2 text-lg font-semibold text-primary">
-                    <QrCode className="size-5 text-secondary" /> Scan &amp; Pay
+                    <QrCode className="size-5 text-secondary" /> Select Payment Option
                   </h3>
                   <p className="mt-2 text-xs text-foreground/80">
-                    Scan with any UPI app (GPay, PhonePe, Paytm, BHIM, FedMobile…)
+                    Scan this QR code with any UPI app (GPay, PhonePe, Paytm, BHIM…) and pay{" "}
+                    {inr(amount)}.
                   </p>
                   <img
                     src={paymentQr.url}
                     alt="Prince Group UPI QR code — scan to pay with any UPI app"
                     className="mx-auto mt-5 w-full max-w-xs rounded-2xl border border-primary/10"
                   />
-                  <p className="mt-4 text-sm font-semibold text-primary">UPI ID: {BANK.upiId}</p>
                 </div>
               </div>
 
-              {/* Right: confirmation form */}
+              {/* Right: sign in → OTP → confirmation */}
               <div className="rounded-3xl border border-primary/10 bg-card p-7 shadow-soft sm:p-8">
                 <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
-                  <Building2 className="size-5 text-secondary" /> Submit payment confirmation
+                  <Building2 className="size-5 text-secondary" /> Complete &amp; activate
                 </h3>
                 <ol className="mt-4 list-decimal space-y-1 pl-5 text-xs leading-relaxed text-foreground/80">
-                  <li>Scan the QR code OR transfer the amount using the bank details shown.</li>
-                  <li>Fill in your details and payment reference / UTR number below.</li>
-                  <li>Upload your payment screenshot and press Submit Payment.</li>
+                  <li>Scan the QR code and complete your payment.</li>
+                  <li>Sign in and verify your mobile number with the OTP we send you.</li>
+                  <li>Submit your payment reference and screenshot to activate access.</li>
                 </ol>
 
                 {!user && !sessionLoading ? (
                   <div className="mt-8 rounded-2xl bg-muted p-6 text-center">
                     <p className="text-sm text-foreground/80">
-                      Please sign in to submit your payment details.
+                      Please sign in or create your account to continue.
                     </p>
                     <Button asChild variant="hero" className="mt-4">
                       <Link to="/auth">Sign in to continue</Link>
                     </Button>
                   </div>
-                ) : (
+                ) : user && !verified ? (
                   <form
                     className="mt-7 space-y-5"
                     onSubmit={(e) => {
                       e.preventDefault();
-                      submit.mutate();
+                      if (otpSent) verifyOtp.mutate();
+                      else sendOtp.mutate();
                     }}
                   >
+                    <div className="flex items-center gap-2 rounded-2xl bg-muted/60 px-4 py-3 text-xs text-foreground/80">
+                      <SmartphoneNfc className="size-4 text-secondary" />
+                      Mobile OTP verification is required before your subscription functions are
+                      activated.
+                    </div>
+
                     <div className="grid gap-5 sm:grid-cols-2">
                       <Field label="Name" required>
                         <Input
@@ -245,7 +283,7 @@ function PaymentPage() {
                           placeholder="Your full name"
                         />
                       </Field>
-                      <Field label="Mobile Number" required>
+                      <Field label="Contact Number" required>
                         <Input
                           value={mobile}
                           onChange={(e) => setMobile(e.target.value)}
@@ -257,16 +295,80 @@ function PaymentPage() {
                       </Field>
                     </div>
 
-                    <Field label="Email" required>
-                      <Input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        maxLength={255}
-                        required
-                        placeholder="you@example.com"
-                      />
-                    </Field>
+                    <div className="grid gap-5 sm:grid-cols-2">
+                      <Field label="Location" required>
+                        <Input
+                          value={location}
+                          onChange={(e) => setLocation(e.target.value)}
+                          maxLength={120}
+                          required
+                          placeholder="City / District"
+                        />
+                      </Field>
+                      <Field label="Email ID" required>
+                        <Input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          maxLength={255}
+                          required
+                          placeholder="you@example.com"
+                        />
+                      </Field>
+                    </div>
+
+                    {otpSent ? (
+                      <Field label="Enter OTP" required>
+                        <Input
+                          value={otp}
+                          onChange={(e) => setOtp(e.target.value)}
+                          maxLength={6}
+                          required
+                          inputMode="numeric"
+                          placeholder="6-digit code"
+                        />
+                      </Field>
+                    ) : null}
+
+                    <Button
+                      type="submit"
+                      variant="hero"
+                      size="lg"
+                      className="w-full"
+                      disabled={sendOtp.isPending || verifyOtp.isPending}
+                    >
+                      {otpSent
+                        ? verifyOtp.isPending
+                          ? "Verifying…"
+                          : "Verify OTP"
+                        : sendOtp.isPending
+                          ? "Sending OTP…"
+                          : "Send OTP"}
+                    </Button>
+
+                    {otpSent ? (
+                      <button
+                        type="button"
+                        className="w-full text-center text-xs font-semibold text-secondary underline-offset-4 hover:underline"
+                        onClick={() => sendOtp.mutate()}
+                        disabled={sendOtp.isPending}
+                      >
+                        Resend code
+                      </button>
+                    ) : null}
+                  </form>
+                ) : user ? (
+                  <form
+                    className="mt-7 space-y-5"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      submit.mutate();
+                    }}
+                  >
+                    <p className="flex items-center gap-2 rounded-2xl bg-accent/10 px-4 py-3 text-xs font-semibold text-primary">
+                      <BadgeCheck className="size-4 text-secondary" />
+                      Mobile number verified
+                    </p>
 
                     <div className="grid gap-5 sm:grid-cols-2">
                       <Field label="Selected Plan / Service" required>
@@ -282,9 +384,7 @@ function PaymentPage() {
                               }
                             }}
                           >
-                            <option value="">
-                              {customItem || "Custom / other payment"}
-                            </option>
+                            <option value="">{customItem || "Custom / other payment"}</option>
                             {plans.map((p) => (
                               <option key={p.code} value={p.code}>
                                 {p.name} — {inr(p.price)}/
@@ -359,39 +459,13 @@ function PaymentPage() {
                       payment.
                     </p>
                   </form>
-                )}
+                ) : null}
               </div>
             </div>
           )}
         </div>
       </section>
     </PublicPage>
-  );
-}
-
-function BankRow({ label, value, copy }: { label: string; value: string; copy?: boolean }) {
-  return (
-    <div className="flex items-center justify-between gap-3 rounded-xl bg-muted/50 px-4 py-2.5">
-      <dt className="text-xs font-semibold uppercase tracking-wider text-foreground/80">
-        {label}
-      </dt>
-      <dd className="flex items-center gap-2 font-mono text-sm font-semibold text-primary">
-        {value}
-        {copy ? (
-          <button
-            type="button"
-            aria-label={`Copy ${label}`}
-            className="text-secondary transition-colors hover:text-primary"
-            onClick={() => {
-              navigator.clipboard.writeText(value);
-              toast.success(`${label} copied`);
-            }}
-          >
-            <Copy className="size-3.5" />
-          </button>
-        ) : null}
-      </dd>
-    </div>
   );
 }
 
