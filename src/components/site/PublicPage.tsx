@@ -46,7 +46,7 @@ export function PageHero({
           src={bgImage}
           alt=""
           aria-hidden
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+          className="pointer-events-none absolute inset-x-0 top-0 h-auto w-full object-top"
         />
       ) : null}
       {bgImageCss && !cleanBackground ? (
