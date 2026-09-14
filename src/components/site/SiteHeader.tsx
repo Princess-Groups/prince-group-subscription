@@ -29,13 +29,13 @@ export const BRAND_STATEMENT = "THE ONE BRAND ALL YOUR NEEDS";
 export function BrandMark({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
     <span className="flex min-w-0 items-center gap-3">
-      <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-2xl bg-cream shadow-soft ring-1 ring-primary/10">
+      <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-2xl bg-cream shadow-soft ring-1 ring-primary/10">
         <img
           src={princeLogo.url}
           alt="Prince Group logo"
-          width={48}
-          height={48}
-          className="size-10 object-contain"
+          width={56}
+          height={56}
+          className="size-12 object-contain"
         />
       </span>
 
