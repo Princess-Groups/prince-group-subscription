@@ -136,13 +136,13 @@ export const verifyPhoneOtp = createServerFn({ method: "POST" })
       .update({ consumed_at: new Date().toISOString() })
       .eq("id", row.id);
 
-    const profileUpdate: Record<string, unknown> = {
+    const profileUpdate = {
       phone: row.phone,
       phone_verified: true,
+      ...(data.name?.trim() ? { name: data.name.trim().slice(0, 100) } : {}),
+      ...(data.email?.trim() ? { email: data.email.trim().slice(0, 255) } : {}),
+      ...(data.location?.trim() ? { location: data.location.trim().slice(0, 120) } : {}),
     };
-    if (data.name?.trim()) profileUpdate["name"] = data.name.trim().slice(0, 100);
-    if (data.email?.trim()) profileUpdate["email"] = data.email.trim().slice(0, 255);
-    if (data.location?.trim()) profileUpdate["location"] = data.location.trim().slice(0, 120);
 
     const { error } = await supabaseAdmin
       .from("profiles")
