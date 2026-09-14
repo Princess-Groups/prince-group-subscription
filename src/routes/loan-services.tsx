@@ -77,7 +77,7 @@ function AnimatedDataAvailability() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const item = DATA_AVAILABILITY[activeIndex];
+  const item = DATA_AVAILABILITY[activeIndex] ?? DATA_AVAILABILITY[0];
 
   return (
     <div className="mt-4 min-h-20" aria-live="polite" aria-atomic="true">
