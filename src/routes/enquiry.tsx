@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 
+import enquiryBackground from "@/assets/page-themes/enquiry-background.png.asset.json";
 import { EnquiryCard, MemberCard, NetworkPill, UpgradeGate } from "@/components/network/NetworkBits";
 import { PageHero, PublicPage, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
@@ -184,6 +185,8 @@ function EnquiryPage() {
         title="CONNECT. COMMUNICATE."
         highlight="GROW."
         subtitle="Connect with businesses, professionals and opportunities within the Prince Group Subscriber Network."
+        bgImageCss={enquiryBackground.url}
+        cleanBackground
         actions={
           <>
             <Button asChild size="lg" variant="lime">

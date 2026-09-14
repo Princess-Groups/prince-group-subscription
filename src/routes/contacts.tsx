@@ -29,7 +29,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { Skeleton } from "@/components/ui/skeleton";
 import { useBusinesses, useUnlockBusinessContact, type Business } from "@/hooks/useDirectory";
 import { phoneDisplay, shortDate } from "@/lib/format";
-import directoryHomeBg from "@/assets/directory-home-bg.png.asset.json";
+import directoryBackground from "@/assets/page-themes/directory-background.png.asset.json";
 
 const title = "Kanyakumari Business Directory | PRINCE GROUP";
 const description =
@@ -155,7 +155,7 @@ function DirectoryPage() {
         title="Kanyakumari Business Directory"
         highlight="Explore Businesses"
         subtitle="Discover verified businesses across the district by category, area and service. Business details are open — contact numbers stay locked until you unlock them with your subscription."
-        bgImageCss={directoryHomeBg.url}
+        bgImageCss={directoryBackground.url}
         cleanBackground
       />
 

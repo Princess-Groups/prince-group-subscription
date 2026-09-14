@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import offersBackground from "@/assets/page-themes/offers-background.png.asset.json";
 import { DecemberOffer, type OfferRow } from "@/components/site/DecemberOffer";
 import { AdminManagedNote, PageHero, PublicPage } from "@/components/site/PublicPage";
 import { Badge } from "@/components/ui/badge";
@@ -37,6 +38,8 @@ function OffersPage() {
         eyebrow="Offers"
         title="Live membership offers"
         subtitle="Offers are enabled, scheduled and priced by administrators. Only active offers apply at checkout."
+        bgImageCss={offersBackground.url}
+        cleanBackground
       />
 
       {december ? <DecemberOffer offer={december} /> : null}

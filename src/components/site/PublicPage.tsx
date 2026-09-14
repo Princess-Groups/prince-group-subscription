@@ -38,7 +38,7 @@ export function PageHero({
 }) {
   return (
     <section
-      className="relative overflow-hidden bg-cover bg-center bg-no-repeat bg-gradient-olive px-4 py-18 text-cream sm:px-6 sm:py-24"
+      className={`relative overflow-hidden bg-no-repeat bg-gradient-olive px-4 py-18 text-cream sm:px-6 sm:py-24 ${cleanBackground ? "bg-top [background-size:100%_auto]" : "bg-cover bg-center"}`}
       style={bgImageCss ? { backgroundImage: `url(${bgImageCss})` } : undefined}
     >
       {bgImage ? (
@@ -64,9 +64,7 @@ export function PageHero({
       ) : null}
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-        <div
-          className={`reveal ${cleanBackground ? "rounded-3xl border border-cream/15 bg-primary/80 p-6 shadow-2xl backdrop-blur-xl sm:p-10" : ""}`}
-        >
+        <div className="reveal">
           {eyebrow ? <span className="pill-badge">{eyebrow}</span> : null}
           <h1 className="mt-5 max-w-3xl text-3xl font-bold leading-[1.1] sm:text-5xl">
             {title}

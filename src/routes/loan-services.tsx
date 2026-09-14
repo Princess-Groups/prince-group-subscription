@@ -14,7 +14,7 @@ import {
   Store,
   UserRound,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import heroLoans from "@/assets/prince-hero-loans.png.asset.json";
 import { PublicPage } from "@/components/site/PublicPage";
@@ -58,6 +58,38 @@ const CATEGORIES = [
   { icon: GraduationCap, name: "Education Loan" },
   { icon: Store, name: "MSME Loan" },
 ];
+
+const DATA_AVAILABILITY = [
+  { value: "1 Lakh+", label: "Loan Candidates Data" },
+  { value: "6 Lakhs+", label: "B2B Contacts Data" },
+  { value: "1000+", label: "Enquiries" },
+] as const;
+
+function AnimatedDataAvailability() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setInterval(
+      () => setActiveIndex((current) => (current + 1) % DATA_AVAILABILITY.length),
+      2800,
+    );
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const item = DATA_AVAILABILITY[activeIndex];
+
+  return (
+    <div className="mt-4 min-h-20" aria-live="polite" aria-atomic="true">
+      <div key={item.value} className="data-availability-entry">
+        <p className="font-display text-4xl font-bold leading-none text-accent sm:text-5xl">
+          {item.value}
+        </p>
+        <p className="mt-2 text-sm text-cream/90">{item.label}</p>
+      </div>
+    </div>
+  );
+}
 
 type Row = { name: string; type: string; status: "Verified" | "New" | "Follow-up" };
 
@@ -143,8 +175,7 @@ function LoanDataPage() {
                 </span>
                 <Landmark className="size-4 text-accent" />
               </div>
-              <p className="mt-4 font-display text-5xl font-bold text-accent">6,00,000+</p>
-              <p className="text-sm text-cream/90">Kanyakumari district candidate records</p>
+              <AnimatedDataAvailability />
               <div className="mt-6 space-y-3">
                 {CATEGORIES.slice(0, 4).map((c, i) => (
                   <div key={c.name} className="flex items-center gap-3 text-xs text-cream/95">
