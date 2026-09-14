@@ -24,6 +24,7 @@ export function PageHero({
   visual,
   bgImage,
   bgImageCss,
+  cleanBackground,
 }: {
   eyebrow?: string;
   title: ReactNode;
@@ -33,6 +34,7 @@ export function PageHero({
   visual?: ReactNode;
   bgImage?: string;
   bgImageCss?: string;
+  cleanBackground?: boolean;
 }) {
   return (
     <section
@@ -47,18 +49,24 @@ export function PageHero({
           className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
         />
       ) : null}
-      {bgImageCss ? (
+      {bgImageCss && !cleanBackground ? (
         <div
           className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/55 to-primary/25"
           aria-hidden
         />
       ) : null}
-      <div className="grid-lines pointer-events-none absolute inset-0 opacity-50" />
-      <div className="hero-orb -right-20 -top-24 size-96 bg-accent/20" />
-      <div className="hero-orb -left-32 -bottom-10 size-80 bg-secondary/25" />
+      {!cleanBackground ? (
+        <>
+          <div className="grid-lines pointer-events-none absolute inset-0 opacity-50" />
+          <div className="hero-orb -right-20 -top-24 size-96 bg-accent/20" />
+          <div className="hero-orb -left-32 -bottom-10 size-80 bg-secondary/25" />
+        </>
+      ) : null}
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="reveal">
+        <div
+          className={`reveal ${cleanBackground ? "rounded-3xl border border-cream/15 bg-primary/80 p-6 shadow-2xl backdrop-blur-xl sm:p-10" : ""}`}
+        >
           {eyebrow ? <span className="pill-badge">{eyebrow}</span> : null}
           <h1 className="mt-5 max-w-3xl text-3xl font-bold leading-[1.1] sm:text-5xl">
             {title}

@@ -156,6 +156,7 @@ function DirectoryPage() {
         highlight="Explore Businesses"
         subtitle="Discover verified businesses across the district by category, area and service. Business details are open — contact numbers stay locked until you unlock them with your subscription."
         bgImageCss={directoryHomeBg.url}
+        cleanBackground
       />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
