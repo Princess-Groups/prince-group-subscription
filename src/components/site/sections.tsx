@@ -636,7 +636,7 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
 
   return (
     <section
-      className="relative bg-cover bg-center bg-no-repeat py-20"
+      className="relative bg-top bg-no-repeat [background-size:100%_auto] py-20"
       style={{ backgroundImage: `url(${branchesBackground.url})` }}
     >
       <div
