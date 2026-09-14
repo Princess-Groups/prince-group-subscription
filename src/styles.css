@@ -474,6 +474,19 @@
   100% { opacity: 0.5; transform: translate3d(0, -10px, 10px) scale(0.985); }
 }
 
+@keyframes data-availability-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@utility data-availability-entry {
+  animation: data-availability-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .data-availability-entry { animation: none; }
+}
+
 @keyframes stat-ecg-pulse {
   0%, 100% { opacity: 0.45; filter: drop-shadow(0 0 3px oklch(0.834 0.169 121.8 / 0.25)); }
   48% { opacity: 1; filter: drop-shadow(0 0 9px oklch(0.834 0.169 121.8 / 0.7)); }

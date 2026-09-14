@@ -27,7 +27,7 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   const { data: settings } = useSettings();
   const phone = settingString(settings, "support_phone", "9559155535");
-  const email = settingString(settings, "support_email", "support@oliveedge.in");
+  const email = settingString(settings, "support_email", "jp@princegroup.net");
   const address = settingString(settings, "support_address", "Kanyakumari, Tamil Nadu");
 
   return (
