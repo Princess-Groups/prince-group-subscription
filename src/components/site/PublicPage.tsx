@@ -25,6 +25,8 @@ export function PageHero({
   bgImage,
   bgImageCss,
   cleanBackground,
+  eyebrowClassName = "",
+  subtitleClassName = "",
 }: {
   eyebrow?: string;
   title: ReactNode;
@@ -35,6 +37,8 @@ export function PageHero({
   bgImage?: string;
   bgImageCss?: string;
   cleanBackground?: boolean;
+  eyebrowClassName?: string;
+  subtitleClassName?: string;
 }) {
   return (
     <section
@@ -65,13 +69,17 @@ export function PageHero({
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="reveal">
-          {eyebrow ? <span className="pill-badge">{eyebrow}</span> : null}
+          {eyebrow ? (
+            <span className={`pill-badge ${eyebrowClassName}`}>{eyebrow}</span>
+          ) : null}
           <h1 className="mt-5 max-w-3xl text-3xl font-bold leading-[1.1] sm:text-5xl">
             {title}
             {highlight ? <span className="mt-1 block text-gradient-olive">{highlight}</span> : null}
           </h1>
           {subtitle ? (
-            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-cream/90 sm:text-base">
+            <p
+              className={`mt-5 max-w-2xl text-sm leading-relaxed text-cream/90 sm:text-base ${subtitleClassName}`}
+            >
               {subtitle}
             </p>
           ) : null}
