@@ -186,7 +186,9 @@ function EnquiryPage() {
         highlight="GROW."
         subtitle="Connect with businesses, professionals and opportunities within the Prince Group Subscriber Network."
         bgImageCss={enquiryBackground.url}
+        bottomBlend
         cleanBackground
+
         actions={
           <>
             <Button asChild size="lg" variant="lime">
