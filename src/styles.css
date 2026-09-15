@@ -455,8 +455,8 @@
 
 /* ---- Homepage live statistic cards ---- */
 @keyframes stat-heartbeat-scroll {
-  from { transform: translate3d(0, 0, 12px); }
-  to { transform: translate3d(-360px, 0, 12px); }
+  from { transform: translate3d(-360px, 0, 12px); }
+  to { transform: translate3d(0, 0, 12px); }
 }
 
 @keyframes stat-progress-breathe {
