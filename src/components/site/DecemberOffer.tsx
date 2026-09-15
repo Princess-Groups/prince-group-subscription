@@ -192,7 +192,7 @@ export function DecemberOffer({ offer }: { offer: OfferRow }) {
           </div>
 
           <div className="relative">
-            <ChristmasScene />
+            
             <div className="xmas-card relative z-10 overflow-hidden rounded-[2rem] p-8 text-center sm:p-10">
               <Snowflake aria-hidden className="absolute left-5 top-8 size-6 text-cream/45" />
               <Snowflake aria-hidden className="absolute right-6 top-6 size-7 text-cream/35" />
