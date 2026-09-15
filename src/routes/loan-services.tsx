@@ -92,7 +92,9 @@ function AnimatedDataAvailability() {
         <p className="font-display text-4xl font-bold leading-none text-accent sm:text-5xl">
           {item.value}
         </p>
-        <p className="mt-2 text-sm text-cream/90">{item.label}</p>
+        <p className="mt-3 font-display text-lg font-bold leading-tight text-cream drop-shadow-[0_2px_8px_oklch(0.18_0.05_148/0.55)] sm:text-xl">
+          {item.label}
+        </p>
       </div>
     </div>
   );
