@@ -656,13 +656,14 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
     <section className="relative overflow-hidden bg-gradient-olive py-20">
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading
-          tone="light"
-          eyebrow="Branch Network"
-          title="20 Branches"
-          highlight="All Over Kanyakumari"
-          subtitle="Local teams across Kanyakumari District for documentation, registration, business and data services — with admin-verified coverage in every town."
-        />
+        <div className="[&_h2]:text-accent [&_h2_span]:text-accent">
+          <SectionHeading
+            tone="light"
+            eyebrow="Branch Network"
+            title="20 Branches Across Kanyakumari"
+            subtitle="Local teams across Kanyakumari District for documentation, registration, business and data services — with admin-verified coverage in every town."
+          />
+        </div>
 
         <div className="mt-12">
           <div className="relative overflow-hidden rounded-[2rem] bg-gradient-olive p-8 text-cream shadow-lift">

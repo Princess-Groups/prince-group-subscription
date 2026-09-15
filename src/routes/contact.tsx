@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 
+import contactBackground from "@/assets/page-themes/contact-page-background.png.asset.json";
 import { AdminManagedNote, PageHero, PublicPage } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
 import { phoneDisplay } from "@/lib/format";
@@ -36,6 +37,8 @@ function ContactPage() {
         eyebrow="Contact"
         title="We're here to help"
         subtitle="For plan availability, premium slots and account approvals, reach the support desk directly."
+        bgImageCss={contactBackground.url}
+        cleanBackground
       />
 
       <div className="mx-auto grid max-w-7xl gap-6 px-4 py-16 sm:px-6 lg:grid-cols-3">
