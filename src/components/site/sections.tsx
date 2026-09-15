@@ -82,10 +82,15 @@ const STAT_ENTRIES = [
 
 function LiveStatGraph({ index }: { index: number }) {
   return (
-    <div className="stat-ecg" aria-hidden="true" style={{ animationDelay: `${index * -0.45}s` }}>
+    <div className="stat-ecg" aria-hidden="true">
       <svg viewBox="0 0 360 48" preserveAspectRatio="none" className="size-full overflow-visible">
-        <path className="stat-ecg-glow" d="M0 25 H82 L94 25 L104 8 L116 41 L128 18 L140 25 H220 L232 25 L242 8 L254 41 L266 18 L278 25 H360" />
-        <path className="stat-ecg-line" d="M0 25 H82 L94 25 L104 8 L116 41 L128 18 L140 25 H220 L232 25 L242 8 L254 41 L266 18 L278 25 H360" />
+        <path className="stat-ecg-baseline" d="M0 26 H360" />
+        <g className="stat-heartbeat-beat" style={{ animationDelay: `${index * -0.12}s` }}>
+          <path className="stat-ecg-glow" d="M0 26 H74 L88 25 L98 19 L107 32 L118 3 L130 44 L143 17 L154 26 H211 L224 25 L234 21 L243 30 L252 10 L263 39 L274 20 L286 26 H360" />
+          <path className="stat-ecg-line" d="M0 26 H74 L88 25 L98 19 L107 32 L118 3 L130 44 L143 17 L154 26 H211 L224 25 L234 21 L243 30 L252 10 L263 39 L274 20 L286 26 H360" />
+          <circle className="stat-heartbeat-pop stat-heartbeat-pop-primary" cx="118" cy="3" r="3.5" />
+          <circle className="stat-heartbeat-pop stat-heartbeat-pop-secondary" cx="252" cy="10" r="3" />
+        </g>
       </svg>
     </div>
   );
@@ -113,10 +118,10 @@ function LiveStatEntry({ index }: { index: number }) {
       <div key={`${index}-${activeIndex}`} className="stat-live-entry">
         <span className="stat-entry-icon"><Icon className="size-5" /></span>
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-sm font-semibold text-cream">{entry.name}</span>
-          <span className="mt-0.5 block truncate text-xs text-cream/90">{entry.detail}</span>
+          <span className="block truncate text-sm font-bold text-primary">{entry.name}</span>
+          <span className="mt-0.5 block truncate text-xs font-medium text-foreground/75">{entry.detail}</span>
         </span>
-        {"meta" in entry ? <span className="shrink-0 text-[10px] text-cream/95">{entry.meta}</span> : null}
+        {"meta" in entry ? <span className="shrink-0 text-[10px] font-medium text-primary/70">{entry.meta}</span> : null}
       </div>
       <div className="stat-entry-dots" aria-hidden="true">
         {entries.map((item, itemIndex) => (
@@ -184,10 +189,10 @@ export function HeroSection() {
         <div className="mt-14 grid gap-5 sm:mt-16 md:grid-cols-3 lg:gap-6">
           {HERO_STATS.map((s, index) => (
             <div key={s.label} className="stat-card">
-              <p className="font-display text-4xl font-bold leading-none text-accent sm:text-5xl lg:text-[3.25rem]">
+              <p className="font-display text-4xl font-bold leading-none text-primary sm:text-5xl lg:text-[3.25rem]">
                 <CountUp to={s.to} suffix={s.suffix} />
               </p>
-              <p className="mt-4 min-h-10 text-sm font-medium uppercase leading-snug text-cream/90">
+              <p className="mt-4 min-h-10 text-sm font-bold uppercase leading-snug text-primary/90">
                 {s.label}
               </p>
               <LiveStatGraph index={index} />
