@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 
 import bankExecutiveTeam from "@/assets/bank-executive-team.webp";
+import oneRupeeCoin from "@/assets/one-rupee-coin.png";
 import arumanaiBranch from "@/assets/branches/branch-arumanai.webp.asset.json";
 import karungalBranch from "@/assets/branches/branch-karungal.webp.asset.json";
 import kollemcodeBranch from "@/assets/branches/branch-kollemcode.webp.asset.json";
@@ -135,16 +136,17 @@ export function HeroSection() {
           <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 bg-primary px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-cream">
             <Sparkles className="size-3.5" /> Limited Premium Membership
           </span>
-          <h1 className="mt-6 font-brand text-[1.25rem] font-bold leading-[1.05] tracking-[-0.02em] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)] whitespace-normal sm:text-[1.5rem] md:text-[2rem] lg:text-[2.625rem]">
-            <span className="block text-cream">
-              <span className="inline-flex flex-wrap items-center gap-2 sm:gap-3">
+          <h1 className="mt-6 font-brand text-[clamp(0.82rem,2.35vw,1.95rem)] font-bold leading-[1.05] tracking-[-0.02em] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)]">
+            <span className="block whitespace-nowrap text-cream">
+              <span className="inline-flex items-center gap-[0.35em]">
                 ALL IN ONE
-                <span
-                  className="inline-flex h-[1.15em] w-[1.15em] flex-shrink-0 items-center justify-center rounded-full border-2 border-cream/90 bg-gradient-lime text-[0.55em] font-bold text-cream shadow-[0_0_18px_oklch(0.834_0.169_121.8/0.45)]"
-                  aria-label="₹1"
-                >
-                  <span className="leading-none">₹1</span>
-                </span>
+                <img
+                  src={oneRupeeCoin}
+                  alt="Original Indian one rupee coin"
+                  width={816}
+                  height={816}
+                  className="inline-block h-[1.3em] w-[1.3em] shrink-0 object-contain drop-shadow-[0_2px_10px_oklch(0.2_0.04_148/0.65)]"
+                />
                 POWERFUL SUBSCRIPTION
               </span>
             </span>

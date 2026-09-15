@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
 
 import { PublicPage } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
@@ -43,35 +44,97 @@ function AuthPage() {
     if (!loading && user) navigate({ to: "/dashboard", replace: true });
   }, [loading, user, navigate]);
 
+  const signInSchema = z.object({
+    email: z.string().trim().email({ message: "Please enter a valid email address." }).max(255),
+    password: z.string().min(6, { message: "Password must be at least 6 characters." }).max(72),
+  });
+
+  const signUpSchema = signInSchema.extend({
+    fullName: z
+      .string()
+      .trim()
+      .min(2, { message: "Please enter your full name." })
+      .max(100),
+    phone: z
+      .string()
+      .trim()
+      .regex(/^[0-9+\-\s]{10,15}$/, { message: "Please enter a valid mobile number." }),
+  });
+
   async function signIn(e: React.FormEvent) {
     e.preventDefault();
-    setBusy(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setBusy(false);
-    if (error) {
-      toast.error(error.message);
+    const parsed = signInSchema.safeParse({ email: email.trim(), password });
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Please check your details.");
       return;
     }
-    navigate({ to: "/dashboard" });
+    setBusy(true);
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: parsed.data.email,
+      password: parsed.data.password,
+    });
+    setBusy(false);
+    if (error) {
+      toast.error(
+        error.message.toLowerCase().includes("invalid")
+          ? "Incorrect email or password. Please try again."
+          : error.message,
+      );
+      return;
+    }
+    if (!data.session) {
+      toast.error("Sign in could not be completed. Please try again.");
+      return;
+    }
+    toast.success("Signed in successfully.");
+    navigate({ to: "/dashboard", replace: true });
   }
 
   async function signUp(e: React.FormEvent) {
     e.preventDefault();
-    setBusy(true);
-    const { error } = await supabase.auth.signUp({
-      email,
+    const parsed = signUpSchema.safeParse({
+      email: email.trim(),
       password,
+      fullName: fullName.trim(),
+      phone: phone.trim(),
+    });
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Please check your details.");
+      return;
+    }
+    setBusy(true);
+    const { data, error } = await supabase.auth.signUp({
+      email: parsed.data.email,
+      password: parsed.data.password,
       options: {
         emailRedirectTo: window.location.origin,
-        data: { full_name: fullName, phone },
+        data: { full_name: parsed.data.fullName, phone: parsed.data.phone },
       },
     });
     setBusy(false);
     if (error) {
-      toast.error(error.message);
+      toast.error(
+        error.message.toLowerCase().includes("already registered")
+          ? "This email already has an account. Please sign in instead."
+          : error.message,
+      );
       return;
     }
-    toast.success("Account created. You can sign in now.");
+    if (data.session) {
+      toast.success("Account created. Welcome to PRINCE.");
+      navigate({ to: "/dashboard", replace: true });
+      return;
+    }
+    const signedIn = await supabase.auth.signInWithPassword({
+      email: parsed.data.email,
+      password: parsed.data.password,
+    });
+    if (signedIn.data.session) {
+      toast.success("Account created. Welcome to PRINCE.");
+      navigate({ to: "/dashboard", replace: true });
+      return;
+    }
+    toast.success("Account created. Please confirm your email, then sign in.");
   }
 
   async function google() {
@@ -83,7 +146,7 @@ function AuthPage() {
       return;
     }
     if (result.redirected) return;
-    navigate({ to: "/dashboard" });
+    navigate({ to: "/dashboard", replace: true });
   }
 
   return (
