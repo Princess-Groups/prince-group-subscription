@@ -195,27 +195,28 @@ export function DecemberOffer({ offer }: { offer: OfferRow }) {
           </div>
 
           <div className="relative">
-            
-            <div className="xmas-card relative z-10 overflow-hidden rounded-[2rem] p-8 text-center sm:p-10">
-              <Snowflake aria-hidden className="absolute left-5 top-8 size-6 text-cream/45" />
-              <Snowflake aria-hidden className="absolute right-6 top-6 size-7 text-cream/35" />
-              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-cream/90">
-                Save up to
-              </p>
-              <p className="xmas-percent mt-3 font-display text-[clamp(3.6rem,11vw,6rem)] font-extrabold leading-none">
-                {offer.discount ?? 0}%
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-cream/90">
-                Applied automatically at checkout during the campaign window.
-              </p>
-              <div className="mt-6 flex items-center gap-3">
-                <span className="h-px flex-1 bg-gradient-lime opacity-40" />
-                <Gift className="size-4 text-accent" />
-                <span className="h-px flex-1 bg-gradient-lime opacity-40" />
+            <div className="xmas-float relative rounded-[2rem]">
+              <div className="xmas-card relative z-10 overflow-hidden rounded-[2rem] p-8 text-center sm:p-10">
+                <Snowflake aria-hidden className="absolute left-5 top-8 size-6 text-cream/45" />
+                <Snowflake aria-hidden className="absolute right-6 top-6 size-7 text-cream/35" />
+                <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-cream/90">
+                  Save up to
+                </p>
+                <p className="xmas-percent mt-3 font-display text-[clamp(3.6rem,11vw,6rem)] font-extrabold leading-none">
+                  {offer.discount ?? 0}%
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-cream/90">
+                  Applied automatically at checkout during the campaign window.
+                </p>
+                <div className="mt-6 flex items-center gap-3">
+                  <span className="h-px flex-1 bg-gradient-lime opacity-40" />
+                  <Gift className="size-4 text-accent" />
+                  <span className="h-px flex-1 bg-gradient-lime opacity-40" />
+                </div>
+                <p className="mt-5 text-xs leading-relaxed text-cream/85">
+                  Discount value, dates and eligible plan are configured by administrators.
+                </p>
               </div>
-              <p className="mt-5 text-xs leading-relaxed text-cream/85">
-                Discount value, dates and eligible plan are configured by administrators.
-              </p>
             </div>
           </div>
         </div>
