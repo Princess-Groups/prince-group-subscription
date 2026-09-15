@@ -30,7 +30,7 @@ import palliyadiBranch from "@/assets/branches/branch-palliyadi.webp.asset.json"
 import palugalBranch from "@/assets/branches/branch-palugal.webp.asset.json";
 import thiruvattarBranch from "@/assets/branches/branch-thiruvattar.webp.asset.json";
 import verkilambiBranch from "@/assets/branches/branch-verkilambi.webp.asset.json";
-import branchesBackground from "@/assets/prince-kanyakumari-branches-bg.png.asset.json";
+
 import heroImage from "@/assets/prince-homepage-hero.png.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
@@ -651,17 +651,7 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
   }
 
   return (
-    <section
-      className="relative bg-top bg-no-repeat [background-size:100%_auto] py-20"
-      style={{ backgroundImage: `url(${branchesBackground.url})` }}
-    >
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, oklch(0.18 0.05 148 / 0.72) 0%, oklch(0.18 0.05 148 / 0.42) 50%, oklch(0.18 0.05 148 / 0.72) 100%)",
-        }}
-      />
+    <section className="relative overflow-hidden bg-gradient-olive py-20">
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading

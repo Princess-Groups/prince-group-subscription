@@ -36,10 +36,7 @@ export function PlansHero() {
 
 
       <div className="relative max-w-6xl text-left">
-        <span className="pill-badge">
-          <Crown className="size-3.5" /> Premium Membership
-        </span>
-        <h1 className="mt-6 text-4xl font-bold leading-[1.06] sm:text-5xl lg:text-6xl">
+        <h1 className="text-4xl font-bold leading-[1.06] sm:text-5xl lg:text-6xl">
           Choose Your
           <span className="block text-gradient-olive">Subscription Plan</span>
         </h1>

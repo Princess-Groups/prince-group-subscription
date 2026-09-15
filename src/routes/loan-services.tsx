@@ -5,14 +5,21 @@ import {
   Car,
   Database,
   Filter,
+  Gift,
   GraduationCap,
+  Handshake,
   Home,
   Landmark,
+  Lightbulb,
   MapPin,
+  MessagesSquare,
   Search,
+  Share2,
   ShieldCheck,
   Store,
+  TrendingUp,
   UserRound,
+  Users,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
@@ -40,13 +47,42 @@ export const Route = createFileRoute("/loan-services")({
   component: LoanDataPage,
 });
 
-const VOLUMES = [
-  { value: "1 Lakh+", label: "Candidate Data", note: "Entry data pack" },
-  { value: "2 Lakh+", label: "Candidate Data", note: "Taluk-level coverage" },
-  { value: "3 Lakh+", label: "Candidate Data", note: "Nagercoil & Marthandam belt" },
-  { value: "4 Lakh+", label: "Candidate Data", note: "Coastal & inland Kanyakumari" },
-  { value: "5 Lakh+", label: "Candidate Data", note: "District-wide coverage" },
-  { value: "6 Lakh+", label: "Candidate Data", note: "Full Kanyakumari network" },
+const BENEFITS = [
+  {
+    icon: Users,
+    title: "6 Lakh+ B2B Contacts",
+    body: "Reach verified businesses, professionals and service providers across Kanyakumari District.",
+  },
+  {
+    icon: MessagesSquare,
+    title: "Direct Communication & Networking",
+    body: "Connect straight to decision-makers and build trusted local business relationships.",
+  },
+  {
+    icon: Share2,
+    title: "Business Referrals",
+    body: "Give and receive quality referrals within the PRINCE network to grow revenue faster.",
+  },
+  {
+    icon: Handshake,
+    title: "Valuable Business Contacts",
+    body: "Access curated contacts for partnerships, vendor tie-ups and branch-level outreach.",
+  },
+  {
+    icon: Gift,
+    title: "Services & Offers",
+    body: "Unlock member-only pricing and exclusive service discounts as part of your subscription.",
+  },
+  {
+    icon: Lightbulb,
+    title: "Business Opportunities",
+    body: "Discover new leads, collaborations and expansion opportunities published by local businesses.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Lead & Inquiry Benefits",
+    body: "Track, claim and manage verified inquiries with allocation limits and audit logging.",
+  },
 ];
 
 
@@ -85,7 +121,9 @@ function AnimatedDataAvailability() {
         <p className="font-display text-4xl font-bold leading-none text-accent sm:text-5xl">
           {item.value}
         </p>
-        <p className="mt-2 text-sm text-cream/90">{item.label}</p>
+        <p className="mt-3 font-display text-lg font-bold leading-tight text-cream drop-shadow-[0_2px_8px_oklch(0.18_0.05_148/0.55)] sm:text-xl">
+          {item.label}
+        </p>
       </div>
     </div>
   );
@@ -199,36 +237,33 @@ function LoanDataPage() {
         </div>
       </section>
 
-      {/* Volumes */}
+      {/* Benefits / What You Get */}
       <section className="bg-gradient-cream py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">
-              Available Volumes
+              What You Get
             </span>
             <h2 className="mt-3 text-3xl font-bold text-primary sm:text-4xl">
-              Kanyakumari district candidate data packs
+              Unlock real business value from Kanyakumari data
             </h2>
             <p className="mt-3 text-sm text-foreground/80">
-              Every pack is sourced from Kanyakumari district, category-tagged and refreshed by our
-              data team. Choose the coverage that matches your branch target.
+              Every record is category-tagged, refreshed by our data team, and designed to help bank
+              executives and business professionals connect, refer and grow.
             </p>
           </div>
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {VOLUMES.map((v) => (
+            {BENEFITS.map((b) => (
               <div
-                key={v.value}
+                key={b.title}
                 className="card-lift rounded-3xl border border-primary/10 bg-card p-7 shadow-soft"
               >
                 <span className="grid size-11 place-items-center rounded-2xl bg-gradient-olive text-accent">
-                  <Database className="size-5" />
+                  <b.icon className="size-5" />
                 </span>
-                <p className="mt-5 font-display text-3xl font-bold text-primary">{v.value}</p>
-                <p className="text-sm font-medium text-secondary">{v.label}</p>
-                <p className="mt-3 text-xs uppercase tracking-wider text-foreground/80">
-                  {v.note}
-                </p>
+                <h3 className="mt-5 text-lg font-semibold text-primary">{b.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-foreground/80">{b.body}</p>
               </div>
             ))}
           </div>

@@ -35,7 +35,7 @@ function BranchesPage() {
       <PageHero
         bgImage={branchesHeroBg.url}
         eyebrow="Branch Network"
-        title="20 Branches."
+        title={<span className="text-gradient-olive">20 Branches.</span>}
         highlight="All Over Kanyakumari."
         subtitle="PRINCE GROUP operates 20 branches all over Kanyakumari District, giving members local support for documentation, registration and business services wherever they are."
         actions={
