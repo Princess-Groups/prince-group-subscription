@@ -208,36 +208,33 @@ function LoanDataPage() {
         </div>
       </section>
 
-      {/* Volumes */}
+      {/* Benefits / What You Get */}
       <section className="bg-gradient-cream py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">
-              Available Volumes
+              What You Get
             </span>
             <h2 className="mt-3 text-3xl font-bold text-primary sm:text-4xl">
-              Kanyakumari district candidate data packs
+              Unlock real business value from Kanyakumari data
             </h2>
             <p className="mt-3 text-sm text-foreground/80">
-              Every pack is sourced from Kanyakumari district, category-tagged and refreshed by our
-              data team. Choose the coverage that matches your branch target.
+              Every record is category-tagged, refreshed by our data team, and designed to help bank
+              executives and business professionals connect, refer and grow.
             </p>
           </div>
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {VOLUMES.map((v) => (
+            {BENEFITS.map((b) => (
               <div
-                key={v.value}
+                key={b.title}
                 className="card-lift rounded-3xl border border-primary/10 bg-card p-7 shadow-soft"
               >
                 <span className="grid size-11 place-items-center rounded-2xl bg-gradient-olive text-accent">
-                  <Database className="size-5" />
+                  <b.icon className="size-5" />
                 </span>
-                <p className="mt-5 font-display text-3xl font-bold text-primary">{v.value}</p>
-                <p className="text-sm font-medium text-secondary">{v.label}</p>
-                <p className="mt-3 text-xs uppercase tracking-wider text-foreground/80">
-                  {v.note}
-                </p>
+                <h3 className="mt-5 text-lg font-semibold text-primary">{b.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-foreground/80">{b.body}</p>
               </div>
             ))}
           </div>
