@@ -103,7 +103,7 @@ function MemberProfilePage() {
               <div className="relative flex flex-col gap-6 sm:flex-row sm:items-start">
                 <span className="grid size-24 shrink-0 place-items-center overflow-hidden rounded-3xl bg-primary/10 text-2xl font-bold text-primary ring-1 ring-primary/15">
                   {data.photo_url || data.company_logo_url ? (
-                    <img src={data.photo_url ?? data.company_logo_url ?? ""} alt="" className="size-full object-cover" />
+                    <img src={data.photo_url ?? data.company_logo_url ?? ""} alt="" loading="lazy" decoding="async" className="size-full object-cover" />
                   ) : (
                     data.full_name.slice(0, 2).toUpperCase()
                   )}

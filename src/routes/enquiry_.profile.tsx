@@ -279,7 +279,7 @@ function ImageField({ label, url, onFile }: { label: string; url: string; onFile
       <Label>{label}</Label>
       <div className="mt-1 flex items-center gap-3">
         <span className="grid size-16 shrink-0 place-items-center overflow-hidden rounded-2xl bg-primary/10 ring-1 ring-primary/15">
-          {url ? <img src={url} alt="" className="size-full object-cover" /> : <ImagePlus className="size-5 text-primary/60" />}
+          {url ? <img src={url} alt="" loading="lazy" decoding="async" className="size-full object-cover" /> : <ImagePlus className="size-5 text-primary/60" />}
         </span>
         <Input
           type="file"

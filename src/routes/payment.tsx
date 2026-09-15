@@ -233,6 +233,8 @@ function PaymentPage() {
                   <img
                     src={paymentQr.url}
                     alt="Prince Group UPI QR code — scan to pay with any UPI app"
+                    loading="lazy"
+                    decoding="async"
                     className="mx-auto mt-5 w-full max-w-xs rounded-2xl border border-primary/10"
                   />
                 </div>

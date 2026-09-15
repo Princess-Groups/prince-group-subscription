@@ -21,6 +21,8 @@ export function SiteFooter() {
               <img
                 src={princeLogo.url}
                 alt="Prince Group logo"
+                loading="lazy"
+                decoding="async"
                 width={44}
                 height={44}
                 className="size-9 object-contain"

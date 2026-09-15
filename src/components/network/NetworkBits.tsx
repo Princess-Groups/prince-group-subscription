@@ -45,7 +45,7 @@ function Avatar({ src, name, logo }: { src: string | null; name: string; logo?: 
     .join("");
   return (
     <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-2xl bg-primary/10 text-base font-bold text-primary ring-1 ring-primary/15">
-      {image ? <img src={image} alt="" className="size-full object-cover" /> : initials || "PG"}
+      {image ? <img src={image} alt="" loading="lazy" decoding="async" className="size-full object-cover" /> : initials || "PG"}
     </span>
   );
 }
