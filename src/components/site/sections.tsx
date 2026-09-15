@@ -21,16 +21,25 @@ import {
 
 import bankExecutiveTeam from "@/assets/bank-executive-team.webp";
 import oneRupeeCoin from "@/assets/one-rupee-coin.png";
-import arumanaiBranch from "@/assets/branches/branch-arumanai.webp.asset.json";
-import karungalBranch from "@/assets/branches/branch-karungal.webp.asset.json";
-import kollemcodeBranch from "@/assets/branches/branch-kollemcode.webp.asset.json";
-import marthandamBranch from "@/assets/branches/branch-marthandam.webp.asset.json";
-import munchiraiBranch from "@/assets/branches/branch-munchirai.webp.asset.json";
-import nagercoilBranch from "@/assets/branches/branch-nagercoil.webp.asset.json";
-import palliyadiBranch from "@/assets/branches/branch-palliyadi.webp.asset.json";
-import palugalBranch from "@/assets/branches/branch-palugal.webp.asset.json";
-import thiruvattarBranch from "@/assets/branches/branch-thiruvattar.webp.asset.json";
-import verkilambiBranch from "@/assets/branches/branch-verkilambi.webp.asset.json";
+import arumanaiBranch from "@/assets/branches/home/arumanai.webp.asset.json";
+import boothapandiBranch from "@/assets/branches/home/boothapandi.webp.asset.json";
+import edalakudiBranch from "@/assets/branches/home/edalakudi.webp.asset.json";
+import eranielBranch from "@/assets/branches/home/eraniel.webp.asset.json";
+import karungalBranch from "@/assets/branches/home/karungal.webp.asset.json";
+import kollemcodeBranch from "@/assets/branches/home/kollemcode.webp.asset.json";
+import kottaramBranch from "@/assets/branches/home/kottaram.webp.asset.json";
+import manavalakurichiBranch from "@/assets/branches/home/manavalakurichi.webp.asset.json";
+import marthandamBranch from "@/assets/branches/home/marthandam.webp.asset.json";
+import mondayMarketBranch from "@/assets/branches/home/monday-market.webp.asset.json";
+import munchiraiBranch from "@/assets/branches/home/munchirai.webp.asset.json";
+import nagercoilBranch from "@/assets/branches/home/nagercoil.webp.asset.json";
+import palliyadiBranch from "@/assets/branches/home/palliyadi.webp.asset.json";
+import palugalBranch from "@/assets/branches/home/palugal.webp.asset.json";
+import rajakkamangalamBranch from "@/assets/branches/home/rajakkamangalam.webp.asset.json";
+import thiruvattarBranch from "@/assets/branches/home/thiruvattar.webp.asset.json";
+import thovalaiBranch from "@/assets/branches/home/thovalai.webp.asset.json";
+import thuckalayBranch from "@/assets/branches/home/thuckalay.webp.asset.json";
+import verkilambiBranch from "@/assets/branches/home/verkilambi.webp.asset.json";
 
 import heroImage from "@/assets/prince-homepage-hero.png.asset.json";
 import { CountUp } from "@/components/site/CountUp";
@@ -536,7 +545,7 @@ export const BRANCHES = [
 ];
 
 const BRANCH_PHOTOS: Record<string, string> = {
-  "Monday Market (Head Office)": nagercoilBranch.url,
+  "Monday Market (Head Office)": mondayMarketBranch.url,
   Kollemcode: kollemcodeBranch.url,
   Palugal: palugalBranch.url,
   Arumanai: arumanaiBranch.url,
@@ -546,26 +555,21 @@ const BRANCH_PHOTOS: Record<string, string> = {
   Munchirai: munchiraiBranch.url,
   Karungal: karungalBranch.url,
   Palliyadi: palliyadiBranch.url,
+  Thuckalay: thuckalayBranch.url,
+  Eraniel: eranielBranch.url,
+  Manavalakurichi: manavalakurichiBranch.url,
+  Rajakkamangalam: rajakkamangalamBranch.url,
   Nagercoil: nagercoilBranch.url,
+  Edalakudi: edalakudiBranch.url,
+  Kottaram: kottaramBranch.url,
+  Thovalai: thovalaiBranch.url,
+  Boothapandi: boothapandiBranch.url,
 };
 
-const REFERENCE_BRANCH_PHOTOS = [
-  nagercoilBranch.url,
-  kollemcodeBranch.url,
-  palugalBranch.url,
-  arumanaiBranch.url,
-  marthandamBranch.url,
-  thiruvattarBranch.url,
-  verkilambiBranch.url,
-  munchiraiBranch.url,
-  karungalBranch.url,
-  palliyadiBranch.url,
-];
-
-const HOMEPAGE_BRANCHES = BRANCHES.map((name, index) => ({
+const HOMEPAGE_BRANCHES = BRANCHES.map((name) => ({
   name,
   address: `${name.replace(" (Head Office)", "")}, Kanyakumari District`,
-  image: BRANCH_PHOTOS[name] ?? REFERENCE_BRANCH_PHOTOS[index % REFERENCE_BRANCH_PHOTOS.length],
+  image: BRANCH_PHOTOS[name],
 }));
 
 export function BranchesSection({ full = false }: { full?: boolean }) {
