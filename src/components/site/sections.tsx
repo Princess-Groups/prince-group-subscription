@@ -609,12 +609,12 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
                 key={branch.name}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-primary/10 bg-primary text-cream shadow-soft transition-[transform,box-shadow] duration-500 ease-out motion-safe:hover:-translate-y-1.5 motion-safe:hover:shadow-lift"
               >
-                <div className="relative h-32 shrink-0 overflow-hidden bg-olive-dark sm:h-36">
+                <div className="relative aspect-[795/354] w-full shrink-0 overflow-hidden bg-olive-dark">
                   <img
                     src={branch.image}
                     alt={`${branch.name.replace(" (Head Office)", "")} branch location in Kanyakumari District`}
                     loading="lazy"
-                    className="absolute inset-0 size-full object-contain object-center transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.035]"
+                    className="block size-full object-contain object-center"
                   />
                 </div>
 
