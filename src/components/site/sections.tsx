@@ -642,8 +642,6 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
                   </div>
                 </div>
               </article>
-
-              </article>
             ))}
           </div>
 
