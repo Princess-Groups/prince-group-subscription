@@ -149,12 +149,12 @@ export function HeroSection() {
               </span>
             </span>
             <span className="mt-3 block sm:mt-4">
-              <a
-                href="#plans"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-lime px-4 py-2 text-[0.55em] font-bold uppercase tracking-[0.12em] text-cream shadow-lift transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cream/50 sm:px-5 sm:py-2.5"
+              <Link
+                to="/payment"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-lime px-4 py-2 text-[0.55em] font-bold uppercase tracking-[0.12em] text-cream shadow-lift drop-shadow-[0_1px_2px_oklch(0.2_0.04_148/0.85)] transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cream/50 sm:px-5 sm:py-2.5"
               >
                 GO PREMIUM UNLOCK MORE →
-              </a>
+              </Link>
             </span>
           </h1>
           <p className="mt-6 max-w-xl font-sans text-base font-medium leading-relaxed text-cream drop-shadow-[0_2px_12px_oklch(0.18_0.05_148/0.6)] sm:text-lg">
