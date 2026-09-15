@@ -651,17 +651,7 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
   }
 
   return (
-    <section
-      className="relative bg-top bg-no-repeat [background-size:100%_auto] py-20"
-      style={{ backgroundImage: `url(${branchesBackground.url})` }}
-    >
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, oklch(0.18 0.05 148 / 0.72) 0%, oklch(0.18 0.05 148 / 0.42) 50%, oklch(0.18 0.05 148 / 0.72) 100%)",
-        }}
-      />
+    <section className="relative overflow-hidden bg-gradient-olive py-20">
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
