@@ -37,15 +37,31 @@ export function PageHero({
   visual?: ReactNode;
   bgImage?: string;
   bgImageCss?: string;
+  bottomBlend?: boolean;
   cleanBackground?: boolean;
   eyebrowClassName?: string;
   subtitleClassName?: string;
 }) {
+  const blendLayers =
+    "radial-gradient(120% 95% at 74% 0%, rgba(44,96,26,0.62) 0%, rgba(20,58,16,0.35) 45%, rgba(9,33,10,0) 72%)," +
+    "linear-gradient(180deg, rgb(13,44,12) 0%, rgb(9,34,10) 48%, rgb(6,25,8) 100%)";
   return (
     <section
       className={`relative overflow-hidden bg-no-repeat bg-gradient-olive bg-top [background-size:100%_auto] px-4 py-18 text-cream sm:px-6 sm:py-24 ${cleanBackground ? "bg-primary" : ""}`}
-      style={bgImageCss ? { backgroundImage: `url(${bgImageCss})` } : undefined}
+      style={
+        bgImageCss
+          ? bottomBlend
+            ? {
+                backgroundImage: `url(${bgImageCss}), ${blendLayers}`,
+                backgroundSize: "100% auto, cover, cover",
+                backgroundPosition: "top center, bottom center, bottom center",
+                backgroundRepeat: "no-repeat, no-repeat, no-repeat",
+              }
+            : { backgroundImage: `url(${bgImageCss})` }
+          : undefined
+      }
     >
+
       {bgImage ? (
         <img
           src={bgImage}
