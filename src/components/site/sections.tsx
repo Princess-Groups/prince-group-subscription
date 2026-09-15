@@ -135,13 +135,29 @@ export function HeroSection() {
           <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 bg-primary px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-cream">
             <Sparkles className="size-3.5" /> Limited Premium Membership
           </span>
-          <h1 className="mt-6 font-brand text-[1.25rem] font-bold leading-[1.05] tracking-[-0.02em] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)] whitespace-normal sm:whitespace-nowrap sm:text-[1.5rem] md:text-[2rem] lg:text-[2.625rem]">
-            <span className="block">
-              ALL IN ONE <span className="text-[0.72em] font-normal tracking-tight">(₹ ONE)</span> POWERFUL SUBSCRIPTION
+          <h1 className="mt-6 font-brand text-[1.25rem] font-bold leading-[1.05] tracking-[-0.02em] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)] whitespace-normal sm:text-[1.5rem] md:text-[2rem] lg:text-[2.625rem]">
+            <span className="block text-cream">
+              <span className="inline-flex flex-wrap items-center gap-2 sm:gap-3">
+                ALL IN ONE
+                <span
+                  className="inline-flex h-[1.15em] w-[1.15em] flex-shrink-0 items-center justify-center rounded-full border-2 border-cream/90 bg-gradient-lime text-[0.55em] font-bold text-cream shadow-[0_0_18px_oklch(0.834_0.169_121.8/0.45)]"
+                  aria-label="₹1"
+                >
+                  <span className="leading-none">₹1</span>
+                </span>
+                POWERFUL SUBSCRIPTION
+              </span>
             </span>
-            <span className="block text-gradient-olive">GO PREMIUM UNLOCK MORE</span>
+            <span className="mt-3 block sm:mt-4">
+              <a
+                href="#plans"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-lime px-4 py-2 text-[0.55em] font-bold uppercase tracking-[0.12em] text-cream shadow-lift transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cream/50 sm:px-5 sm:py-2.5"
+              >
+                GO PREMIUM UNLOCK MORE →
+              </a>
+            </span>
           </h1>
-          <p className="mt-6 max-w-xl font-brand text-base font-semibold leading-relaxed text-primary drop-shadow-[0_1px_0_oklch(0.969_0.016_95.2/0.9)] sm:text-lg">
+          <p className="mt-6 max-w-xl font-sans text-base font-medium leading-relaxed text-cream drop-shadow-[0_2px_12px_oklch(0.18_0.05_148/0.6)] sm:text-lg">
             Subscription get started with one rupee. Unlock loan candidate data for just ₹10. Go Premium for ₹100 — all in one powerful subscription.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
