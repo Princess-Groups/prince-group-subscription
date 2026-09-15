@@ -121,7 +121,10 @@ export function DecemberOffer({ offer }: { offer: OfferRow }) {
           />
         ))}
 
+        <ChristmasScene />
+
         <div className="relative grid items-center gap-10 lg:grid-cols-[1.08fr_0.92fr]">
+
           <div className="relative z-10">
             <span className="inline-flex items-center gap-2 rounded-full border border-[oklch(0.86_0.13_95/0.5)] bg-[oklch(0.86_0.13_95/0.1)] px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.24em] text-[oklch(0.93_0.11_98)]">
               <Gift className="size-3.5" /> Seasonal Campaign
