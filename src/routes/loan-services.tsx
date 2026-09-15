@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   BadgeCheck,
+  Bike,
   Briefcase,
+  Building2,
   Car,
   Database,
   Filter,
@@ -13,6 +15,7 @@ import {
   Lightbulb,
   MapPin,
   MessagesSquare,
+  Rocket,
   Search,
   Share2,
   ShieldCheck,
