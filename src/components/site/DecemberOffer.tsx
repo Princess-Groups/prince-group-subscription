@@ -127,7 +127,7 @@ export function DecemberOffer({ offer }: { offer: OfferRow }) {
               <Gift className="size-3.5" /> Seasonal Campaign
             </span>
 
-            <h2 className="xmas-title mt-5 font-display text-[clamp(2.4rem,7vw,4.6rem)] font-extrabold uppercase leading-[0.95] tracking-tight">
+            <h2 className="xmas-title mt-5 font-display text-[clamp(2.2rem,5.6vw,4.2rem)] font-extrabold uppercase leading-[0.95] tracking-tight">
               <span className="xmas-title-main">December</span>{" "}
               <span className="xmas-title-accent">Offer</span>
             </h2>
