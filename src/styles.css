@@ -787,7 +787,7 @@
   position: absolute;
   left: 50%;
   bottom: -6%;
-  width: min(34rem, 52%);
+  width: min(20rem, 60%);
   aspect-ratio: 320 / 300;
   transform: translateX(-52%);
   z-index: 0;
@@ -796,8 +796,9 @@
 
 @media (min-width: 1024px) {
   .xmas-scene {
-    left: 46%;
-    width: 30rem;
+    left: 58%;
+    bottom: -10%;
+    width: 23rem;
     opacity: 1;
   }
 }
