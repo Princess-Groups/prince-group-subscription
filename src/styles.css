@@ -785,10 +785,21 @@
 
 @utility xmas-scene {
   position: absolute;
-  inset: auto -6% -12% -10%;
-  height: 118%;
+  left: 50%;
+  bottom: -6%;
+  width: min(34rem, 52%);
+  aspect-ratio: 320 / 300;
+  transform: translateX(-52%);
   z-index: 0;
-  opacity: 0.95;
+  opacity: 0.55;
+}
+
+@media (min-width: 1024px) {
+  .xmas-scene {
+    left: 46%;
+    width: 30rem;
+    opacity: 1;
+  }
 }
 
 @utility xmas-snow {
