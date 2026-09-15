@@ -607,43 +607,37 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
             {HOMEPAGE_BRANCHES.map((branch) => (
               <article
                 key={branch.name}
-                className="group flex min-h-[25rem] flex-col overflow-hidden rounded-2xl border border-primary/10 bg-primary text-cream shadow-soft transition-[transform,box-shadow] duration-500 ease-out motion-safe:hover:-translate-y-1.5 motion-safe:hover:shadow-lift"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-primary/10 bg-primary text-cream shadow-soft transition-[transform,box-shadow] duration-500 ease-out motion-safe:hover:-translate-y-1.5 motion-safe:hover:shadow-lift"
               >
-                <div className="relative aspect-[1.52/1] shrink-0 overflow-hidden">
+                <div className="relative h-32 shrink-0 overflow-hidden bg-olive-dark sm:h-36">
                   <img
                     src={branch.image}
                     alt={`${branch.name.replace(" (Head Office)", "")} branch location in Kanyakumari District`}
                     loading="lazy"
-                    className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.035]"
+                    className="absolute inset-0 size-full object-contain object-center transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.035]"
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary" />
-                  <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-cream/20 bg-primary/85 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-cream shadow-soft backdrop-blur-md">
-                    <Building2 className="size-3" aria-hidden /> Branch Office
-                  </span>
                 </div>
 
-                <div className="-mt-10 flex flex-1 flex-col bg-gradient-to-b from-transparent via-primary/95 to-olive-dark px-5 pb-5 pt-3">
-                  <div className="relative min-h-[5.5rem]">
-                    <h3 className="text-xl font-bold text-cream">{branch.name}</h3>
-                    <p className="mt-1 text-xs leading-relaxed text-cream/95">
-                      Documentation · Registration · Business services
-                    </p>
-                  </div>
-                  <div className="mt-auto grid gap-3 rounded-xl border border-cream/10 bg-olive-dark/65 p-4">
+                <div className="flex flex-1 flex-col bg-gradient-to-b from-primary to-olive-dark px-4 pb-4 pt-3">
+                  <h3 className="text-lg font-bold text-cream">{branch.name}</h3>
+                  <p className="mt-0.5 text-[11px] leading-relaxed text-cream/90">
+                    Documentation · Registration · Business services
+                  </p>
+                  <div className="mt-3 grid gap-2 rounded-xl border border-cream/10 bg-olive-dark/65 p-3">
                     <div className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-start gap-2.5">
                       <MapPin className="mt-0.5 size-4 text-accent" aria-hidden />
-                      <p className="text-xs leading-relaxed text-cream/95">{branch.address}</p>
+                      <p className="text-[11px] leading-relaxed text-cream/95">{branch.address}</p>
                     </div>
                     <a
                       href={`tel:${phone}`}
-                      className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-center gap-2.5 text-xs font-semibold text-cream transition-colors hover:text-accent"
+                      className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-center gap-2.5 text-[11px] font-semibold text-cream transition-colors hover:text-accent"
                     >
                       <Phone className="size-4 text-accent" aria-hidden />
                       <span>+91 {phoneDisplay(phone)}</span>
                     </a>
                     <div className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-center gap-2.5">
                       <Clock3 className="size-4 text-accent" aria-hidden />
-                      <p className="text-xs text-cream/95">Mon – Sat · 9:00 AM – 7:00 PM</p>
+                      <p className="text-[11px] text-cream/95">Mon – Sat · 9:00 AM – 7:00 PM</p>
                     </div>
                   </div>
                 </div>
