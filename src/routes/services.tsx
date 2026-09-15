@@ -81,8 +81,10 @@ function ServicesPage() {
       <PageHero
         bgImage={servicesHeroBg.url}
         eyebrow="Services"
+        eyebrowClassName="text-olive-dark text-xs tracking-[0.22em] font-extrabold"
         title={<span className="text-primary">Every service, one member discount</span>}
         subtitle="Your plan discount is applied automatically to eligible services. Starter members save 10%, Business 25% and Premium a flat 50%."
+        subtitleClassName="text-olive-dark font-semibold text-shadow-cream-sm"
       />
 
       {/* Documentation Services — premium cream + liquid glass */}
