@@ -298,6 +298,10 @@
   color: var(--accent);
 }
 
+@utility text-shadow-cream-sm {
+  text-shadow: 0 1px 2px oklch(0.969 0.016 95.2 / 0.45);
+}
+
 @utility reveal {
   animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
