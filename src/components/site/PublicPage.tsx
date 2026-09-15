@@ -24,6 +24,7 @@ export function PageHero({
   visual,
   bgImage,
   bgImageCss,
+  bottomBlend,
   cleanBackground,
   eyebrowClassName = "",
   subtitleClassName = "",
