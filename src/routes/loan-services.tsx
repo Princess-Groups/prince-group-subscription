@@ -91,11 +91,16 @@ const BENEFITS = [
 
 const CATEGORIES = [
   { icon: Home, name: "Home Loan" },
-  { icon: Briefcase, name: "Business Loan" },
+  { icon: Landmark, name: "Mortgage Loan" },
   { icon: UserRound, name: "Personal Loan" },
-  { icon: Car, name: "Vehicle Loan" },
+  { icon: Building2, name: "Property Loan" },
   { icon: GraduationCap, name: "Education Loan" },
+  { icon: Car, name: "Vehicle Loan" },
+  { icon: Bike, name: "Two-Wheeler Loan" },
+  { icon: Briefcase, name: "Business Loan" },
   { icon: Store, name: "MSME Loan" },
+  { icon: TrendingUp, name: "Working Capital Loan" },
+  { icon: Rocket, name: "Startup Loan" },
 ];
 
 const DATA_AVAILABILITY = [
@@ -141,8 +146,11 @@ const SAMPLE: Row[] = [
   { name: "Priya Devi", type: "Vehicle Loan", status: "Verified" },
   { name: "Karthik R.", type: "Education Loan", status: "New" },
   { name: "Selvi Murugan", type: "MSME Loan", status: "Verified" },
-  { name: "Ramesh Babu", type: "Home Loan", status: "Follow-up" },
-  { name: "Anitha Krishnan", type: "Personal Loan", status: "Verified" },
+  { name: "Ramesh Babu", type: "Mortgage Loan", status: "Follow-up" },
+  { name: "Anitha Krishnan", type: "Startup Loan", status: "Verified" },
+  { name: "Dinesh K.", type: "Working Capital Loan", status: "New" },
+  { name: "Lakshmi P.", type: "Two-Wheeler Loan", status: "Verified" },
+  { name: "Suresh N.", type: "Property Loan", status: "Follow-up" },
 ];
 
 const STATUS_TONE: Record<Row["status"], string> = {
