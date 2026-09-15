@@ -47,13 +47,42 @@ export const Route = createFileRoute("/loan-services")({
   component: LoanDataPage,
 });
 
-const VOLUMES = [
-  { value: "1 Lakh+", label: "Candidate Data", note: "Entry data pack" },
-  { value: "2 Lakh+", label: "Candidate Data", note: "Taluk-level coverage" },
-  { value: "3 Lakh+", label: "Candidate Data", note: "Nagercoil & Marthandam belt" },
-  { value: "4 Lakh+", label: "Candidate Data", note: "Coastal & inland Kanyakumari" },
-  { value: "5 Lakh+", label: "Candidate Data", note: "District-wide coverage" },
-  { value: "6 Lakh+", label: "Candidate Data", note: "Full Kanyakumari network" },
+const BENEFITS = [
+  {
+    icon: Users,
+    title: "6 Lakh+ B2B Contacts",
+    body: "Reach verified businesses, professionals and service providers across Kanyakumari District.",
+  },
+  {
+    icon: MessagesSquare,
+    title: "Direct Communication & Networking",
+    body: "Connect straight to decision-makers and build trusted local business relationships.",
+  },
+  {
+    icon: Share2,
+    title: "Business Referrals",
+    body: "Give and receive quality referrals within the PRINCE network to grow revenue faster.",
+  },
+  {
+    icon: Handshake,
+    title: "Valuable Business Contacts",
+    body: "Access curated contacts for partnerships, vendor tie-ups and branch-level outreach.",
+  },
+  {
+    icon: Gift,
+    title: "Services & Offers",
+    body: "Unlock member-only pricing and exclusive service discounts as part of your subscription.",
+  },
+  {
+    icon: Lightbulb,
+    title: "Business Opportunities",
+    body: "Discover new leads, collaborations and expansion opportunities published by local businesses.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Lead & Inquiry Benefits",
+    body: "Track, claim and manage verified inquiries with allocation limits and audit logging.",
+  },
 ];
 
 
