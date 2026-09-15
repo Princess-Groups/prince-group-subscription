@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import offersBackground from "@/assets/page-themes/offers-background.png.asset.json";
+import offersBackground from "@/assets/page-themes/offers-page-background.png.asset.json";
 import { DecemberOffer, type OfferRow } from "@/components/site/DecemberOffer";
 import { AdminManagedNote, PageHero, PublicPage } from "@/components/site/PublicPage";
 import { Badge } from "@/components/ui/badge";
