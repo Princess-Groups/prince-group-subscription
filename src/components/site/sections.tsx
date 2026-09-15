@@ -614,7 +614,7 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
                     src={branch.image}
                     alt={`${branch.name.replace(" (Head Office)", "")} branch location in Kanyakumari District`}
                     loading="lazy"
-                    className="block h-auto max-w-full object-contain object-center"
+                    className="block h-auto w-full object-contain object-center"
                   />
                 </div>
 
