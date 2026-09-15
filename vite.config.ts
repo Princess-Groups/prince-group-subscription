@@ -8,7 +8,7 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import type { PluginOption } from "vite";
 
 const assetOrigin =
-  process.env.VITE_ASSET_ORIGIN?.trim().replace(/\/$/, "") ||
+  process.env["VITE_ASSET_ORIGIN"]?.trim().replace(/\/$/, "") ||
   "https://project--92032d2e-ff07-40e9-82dd-e2202315f52f.lovable.app";
 
 const productionAssetUrls: PluginOption = {
