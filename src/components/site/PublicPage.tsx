@@ -43,8 +43,8 @@ export function PageHero({
   subtitleClassName?: string;
 }) {
   const blendLayers =
-    "radial-gradient(120% 95% at 74% 0%, rgba(44,96,26,0.62) 0%, rgba(20,58,16,0.35) 45%, rgba(9,33,10,0) 72%)," +
-    "linear-gradient(180deg, rgb(13,44,12) 0%, rgb(9,34,10) 48%, rgb(6,25,8) 100%)";
+    "radial-gradient(120% 95% at 74% 0%, rgba(48,104,28,0.55) 0%, rgba(22,64,18,0.32) 48%, rgba(10,36,11,0) 75%)," +
+    "linear-gradient(180deg, rgb(10,42,11) 0%, rgb(9,36,11) 55%, rgb(7,29,9) 100%)";
   return (
     <section
       className={`relative overflow-hidden bg-no-repeat bg-gradient-olive bg-top [background-size:100%_auto] px-4 py-18 text-cream sm:px-6 sm:py-24 ${cleanBackground ? "bg-primary" : ""}`}
