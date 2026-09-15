@@ -84,7 +84,7 @@ function ServicesPage() {
         eyebrowClassName="text-olive-dark text-xs tracking-[0.22em] font-extrabold"
         title={<span className="text-primary">Every service, one member discount</span>}
         subtitle="Your plan discount is applied automatically to eligible services. Starter members save 10%, Business 25% and Premium a flat 50%."
-        subtitleClassName="text-olive-light font-bold text-shadow-readable"
+        subtitleClassName="text-olive font-bold text-shadow-readable"
       />
 
       {/* Documentation Services — premium cream + liquid glass */}
