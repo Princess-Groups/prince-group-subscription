@@ -820,6 +820,17 @@
   animation: xmasPulse 1.8s ease-in-out infinite;
 }
 
+@utility xmas-float {
+  animation:
+    xmasFloatIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+    xmasFloat 4s 0.85s ease-in-out infinite;
+  transform-origin: center bottom;
+  will-change: transform;
+  box-shadow:
+    0 24px 60px -18px oklch(0.12 0.045 145 / 0.65),
+    0 0 44px oklch(0.8 0.2 126 / 0.3);
+}
+
 @keyframes xmasSnow {
   0%,
   100% {
@@ -850,10 +861,32 @@
   }
 }
 
+@keyframes xmasFloatIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes xmasFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.03);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .xmas-snow,
   .xmas-bauble,
-  .xmas-dot {
+  .xmas-dot,
+  .xmas-float {
     animation: none !important;
   }
 }
