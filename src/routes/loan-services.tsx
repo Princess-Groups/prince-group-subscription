@@ -5,14 +5,21 @@ import {
   Car,
   Database,
   Filter,
+  Gift,
   GraduationCap,
+  Handshake,
   Home,
   Landmark,
+  Lightbulb,
   MapPin,
+  MessagesSquare,
   Search,
+  Share2,
   ShieldCheck,
   Store,
+  TrendingUp,
   UserRound,
+  Users,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
