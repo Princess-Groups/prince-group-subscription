@@ -616,9 +616,9 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
                   />
                 </div>
 
-                <div className="bg-gradient-to-b from-primary to-olive-dark px-3 py-2.5">
-                  <h3 className="text-base font-bold leading-tight text-cream sm:text-lg">{branch.name}</h3>
-                  <div className="mt-1 flex items-center gap-1.5 text-[11px] font-medium text-cream/90">
+                <div className="bg-gradient-to-b from-primary to-olive-dark px-4 py-3">
+                  <h3 className="text-lg font-bold leading-tight text-cream sm:text-xl">{branch.name}</h3>
+                  <div className="mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-cream/90">
                     <Clock3 className="size-3.5 text-accent" aria-hidden />
                     <span>Mon – Sat · 9:00 AM – 5:00 PM</span>
                   </div>
