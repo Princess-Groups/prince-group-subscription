@@ -581,8 +581,6 @@ const HOMEPAGE_BRANCHES = BRANCHES.map((name) => ({
 
 export function BranchesSection({ full = false }: { full?: boolean }) {
   const list = full ? BRANCHES : BRANCHES.slice(0, 10);
-  const { data: settings } = useSettings();
-  const phone = settingString(settings, "support_phone", "9559155535");
 
   if (!full) {
     return (
@@ -603,7 +601,7 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
             </p>
           </header>
 
-          <div className="mt-10 grid items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-5">
+          <div className="mt-10 grid items-start gap-5 sm:grid-cols-2 xl:grid-cols-5">
             {HOMEPAGE_BRANCHES.map((branch) => (
               <article
                 key={branch.name}
@@ -618,27 +616,11 @@ export function BranchesSection({ full = false }: { full?: boolean }) {
                   />
                 </div>
 
-                <div className="flex flex-1 flex-col bg-gradient-to-b from-primary to-olive-dark px-4 pb-4 pt-3">
-                  <h3 className="text-lg font-bold text-cream">{branch.name}</h3>
-                  <p className="mt-0.5 text-[11px] leading-relaxed text-cream/90">
-                    Documentation · Registration · Business services
-                  </p>
-                  <div className="mt-3 grid gap-2 rounded-xl border border-cream/10 bg-olive-dark/65 p-3">
-                    <div className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-start gap-2.5">
-                      <MapPin className="mt-0.5 size-4 text-accent" aria-hidden />
-                      <p className="text-[11px] leading-relaxed text-cream/95">{branch.address}</p>
-                    </div>
-                    <a
-                      href={`tel:${phone}`}
-                      className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-center gap-2.5 text-[11px] font-semibold text-cream transition-colors hover:text-accent"
-                    >
-                      <Phone className="size-4 text-accent" aria-hidden />
-                      <span>+91 {phoneDisplay(phone)}</span>
-                    </a>
-                    <div className="grid grid-cols-[1.1rem_minmax(0,1fr)] items-center gap-2.5">
-                      <Clock3 className="size-4 text-accent" aria-hidden />
-                      <p className="text-[11px] text-cream/95">Mon – Sat · 9:00 AM – 7:00 PM</p>
-                    </div>
+                <div className="bg-gradient-to-b from-primary to-olive-dark px-4 py-3">
+                  <h3 className="text-lg font-bold leading-tight text-cream sm:text-xl">{branch.name}</h3>
+                  <div className="mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-cream/90">
+                    <Clock3 className="size-3.5 text-accent" aria-hidden />
+                    <span>Mon – Sat · 9:00 AM – 5:00 PM</span>
                   </div>
                 </div>
               </article>
