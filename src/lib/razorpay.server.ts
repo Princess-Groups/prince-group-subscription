@@ -153,7 +153,7 @@ export async function markPaymentSuccessful(
 
 export async function markPaymentFailed(
   admin: AdminClient,
-  args: { orderId: string; paymentId?: string },
+  args: { orderId: string; paymentId?: string | undefined },
 ): Promise<void> {
   const { data: payment } = await admin
     .from("payments")
