@@ -1,7 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { BadgeCheck, Building2, QrCode, ShieldCheck, SmartphoneNfc, Upload } from "lucide-react";
+import {
+  BadgeCheck,
+  Building2,
+  CreditCard,
+  QrCode,
+  ShieldCheck,
+  SmartphoneNfc,
+  Upload,
+} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -16,6 +24,34 @@ import { usePlans } from "@/hooks/usePlatform";
 import { supabase } from "@/integrations/supabase/client";
 import { inr } from "@/lib/format";
 import { sendPhoneOtp, verifyPhoneOtp } from "@/lib/otp.functions";
+import {
+  createRazorpayOrder,
+  getRazorpayKeyId,
+  verifyRazorpayPayment,
+} from "@/lib/razorpay.functions";
+
+type RazorpayCheckout = new (options: Record<string, unknown>) => {
+  open: () => void;
+  on: (event: string, handler: (response: unknown) => void) => void;
+};
+
+function loadRazorpayScript(): Promise<RazorpayCheckout> {
+  return new Promise((resolve, reject) => {
+    const existing = (window as unknown as { Razorpay?: RazorpayCheckout }).Razorpay;
+    if (existing) return resolve(existing);
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = () => {
+      const ctor = (window as unknown as { Razorpay?: RazorpayCheckout }).Razorpay;
+      if (ctor) resolve(ctor);
+      else reject(new Error("Could not load the payment window. Please try again."));
+    };
+    script.onerror = () => reject(new Error("Could not load the payment window. Please try again."));
+    document.body.appendChild(script);
+  });
+}
+
 
 const title = "Payment & Unlock | PRINCE GROUP";
 const description =
@@ -83,6 +119,69 @@ function PaymentPage() {
 
   const sendOtpFn = useServerFn(sendPhoneOtp);
   const verifyOtpFn = useServerFn(verifyPhoneOtp);
+  const createOrderFn = useServerFn(createRazorpayOrder);
+  const verifyPaymentFn = useServerFn(verifyRazorpayPayment);
+  const keyIdFn = useServerFn(getRazorpayKeyId);
+
+  const razorpayStatus = useQuery({
+    queryKey: ["razorpay-config"],
+    queryFn: () => keyIdFn({}),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const payOnline = useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error("Please sign in to pay.");
+      if (!verified) throw new Error("Please verify your mobile number first.");
+      if (!plan) throw new Error("Please choose a subscription plan to pay online.");
+
+      const Razorpay = await loadRazorpayScript();
+      const order = await createOrderFn({ data: { planCode: plan.code } });
+
+      return await new Promise<"success" | "failed" | "dismissed">((resolve, reject) => {
+        const checkout = new Razorpay({
+          key: order.keyId,
+          order_id: order.orderId,
+          amount: order.amount,
+          currency: order.currency,
+          name: "PRINCE GROUP",
+          description: `${plan.name} Subscription`,
+          prefill: { name: name.trim(), email: email.trim(), contact: mobile.trim() },
+          theme: { color: "#3f5b1f" },
+          modal: { ondismiss: () => resolve("dismissed") },
+          handler: (response: unknown) => {
+            const r = response as {
+              razorpay_order_id: string;
+              razorpay_payment_id: string;
+              razorpay_signature: string;
+            };
+            verifyPaymentFn({
+              data: {
+                razorpay_order_id: r.razorpay_order_id,
+                razorpay_payment_id: r.razorpay_payment_id,
+                razorpay_signature: r.razorpay_signature,
+              },
+            })
+              .then((res) => resolve(res.status))
+              .catch(reject);
+          },
+        });
+        checkout.on("payment.failed", () => resolve("failed"));
+        checkout.open();
+      });
+    },
+    onSuccess: (result) => {
+      queryClient.invalidateQueries();
+      if (result === "success") {
+        toast.success("Payment verified — your subscription is now active.");
+        setSubmitted(true);
+      } else if (result === "failed") {
+        toast.error("The payment did not go through. Please try again.");
+      }
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
 
   const sendOtp = useMutation({
     mutationFn: async () => {
@@ -221,6 +320,34 @@ function PaymentPage() {
                     auto-confirmed.
                   </p>
                 </div>
+
+                {razorpayStatus.data?.configured && plan ? (
+                  <div className="rounded-3xl border border-primary/10 bg-card p-7 shadow-soft">
+                    <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
+                      <CreditCard className="size-5 text-secondary" /> Pay online securely
+                    </h3>
+                    <p className="mt-2 text-xs text-foreground/80">
+                      Pay {inr(amount)} by card, UPI, net banking or wallet. Your access is
+                      activated as soon as the payment is confirmed.
+                    </p>
+                    <Button
+                      variant="hero"
+                      size="lg"
+                      className="mt-5 w-full"
+                      disabled={payOnline.isPending || !user || !verified}
+                      onClick={() => payOnline.mutate()}
+                    >
+                      {payOnline.isPending ? "Opening payment…" : `Pay Now — ${inr(amount)}`}
+                    </Button>
+                    {!user || !verified ? (
+                      <p className="mt-3 text-center text-[11px] text-foreground/80">
+                        Sign in and verify your mobile number to pay online.
+                      </p>
+                    ) : null}
+                  </div>
+                ) : null}
+
+
 
                 <div className="rounded-3xl border border-primary/10 bg-card p-7 text-center shadow-soft">
                   <h3 className="flex items-center justify-center gap-2 text-lg font-semibold text-primary">
