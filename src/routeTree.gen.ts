@@ -34,6 +34,7 @@ import { Route as AuthenticatedNetworkAdminRouteImport } from './routes/_authent
 import { Route as AuthenticatedSubscriptionRouteImport } from './routes/_authenticated/subscription'
 import { Route as EnquiryMessagesRouteImport } from './routes/enquiry_.messages'
 import { Route as EnquiryProfileRouteImport } from './routes/enquiry_.profile'
+import { Route as ApiPublicRazorpayWebhookRouteImport } from './routes/api/public/razorpay-webhook'
 import { Route as EnquiryMembersIdRouteImport } from './routes/enquiry_.members.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -162,6 +163,12 @@ const EnquiryProfileRoute = EnquiryProfileRouteImport.update({
   path: '/enquiry/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicRazorpayWebhookRoute =
+  ApiPublicRazorpayWebhookRouteImport.update({
+    id: '/api/public/razorpay-webhook',
+    path: '/api/public/razorpay-webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const EnquiryMembersIdRoute = EnquiryMembersIdRouteImport.update({
   id: '/enquiry_/members/$id',
   path: '/enquiry/members/$id',
@@ -193,6 +200,7 @@ export interface FileRoutesByFullPath {
   '/subscription': typeof AuthenticatedSubscriptionRoute
   '/enquiry/messages': typeof EnquiryMessagesRoute
   '/enquiry/profile': typeof EnquiryProfileRoute
+  '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
   '/enquiry/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRoutesByTo {
@@ -220,6 +228,7 @@ export interface FileRoutesByTo {
   '/subscription': typeof AuthenticatedSubscriptionRoute
   '/enquiry/messages': typeof EnquiryMessagesRoute
   '/enquiry/profile': typeof EnquiryProfileRoute
+  '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
   '/enquiry/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRoutesById {
@@ -249,6 +258,7 @@ export interface FileRoutesById {
   '/_authenticated/subscription': typeof AuthenticatedSubscriptionRoute
   '/enquiry_/messages': typeof EnquiryMessagesRoute
   '/enquiry_/profile': typeof EnquiryProfileRoute
+  '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
   '/enquiry_/members/$id': typeof EnquiryMembersIdRoute
 }
 export interface FileRouteTypes {
@@ -278,6 +288,7 @@ export interface FileRouteTypes {
     | '/subscription'
     | '/enquiry/messages'
     | '/enquiry/profile'
+    | '/api/public/razorpay-webhook'
     | '/enquiry/members/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -305,6 +316,7 @@ export interface FileRouteTypes {
     | '/subscription'
     | '/enquiry/messages'
     | '/enquiry/profile'
+    | '/api/public/razorpay-webhook'
     | '/enquiry/members/$id'
   id:
     | '__root__'
@@ -333,6 +345,7 @@ export interface FileRouteTypes {
     | '/_authenticated/subscription'
     | '/enquiry_/messages'
     | '/enquiry_/profile'
+    | '/api/public/razorpay-webhook'
     | '/enquiry_/members/$id'
   fileRoutesById: FileRoutesById
 }
@@ -357,6 +370,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   EnquiryMessagesRoute: typeof EnquiryMessagesRoute
   EnquiryProfileRoute: typeof EnquiryProfileRoute
+  ApiPublicRazorpayWebhookRoute: typeof ApiPublicRazorpayWebhookRoute
   EnquiryMembersIdRoute: typeof EnquiryMembersIdRoute
 }
 
@@ -537,6 +551,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnquiryProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/razorpay-webhook': {
+      id: '/api/public/razorpay-webhook'
+      path: '/api/public/razorpay-webhook'
+      fullPath: '/api/public/razorpay-webhook'
+      preLoaderRoute: typeof ApiPublicRazorpayWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/enquiry_/members/$id': {
       id: '/enquiry_/members/$id'
       path: '/enquiry/members/$id'
@@ -587,6 +608,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   EnquiryMessagesRoute: EnquiryMessagesRoute,
   EnquiryProfileRoute: EnquiryProfileRoute,
+  ApiPublicRazorpayWebhookRoute: ApiPublicRazorpayWebhookRoute,
   EnquiryMembersIdRoute: EnquiryMembersIdRoute,
 }
 export const routeTree = rootRouteImport
