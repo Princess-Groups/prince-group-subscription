@@ -119,6 +119,69 @@ function PaymentPage() {
 
   const sendOtpFn = useServerFn(sendPhoneOtp);
   const verifyOtpFn = useServerFn(verifyPhoneOtp);
+  const createOrderFn = useServerFn(createRazorpayOrder);
+  const verifyPaymentFn = useServerFn(verifyRazorpayPayment);
+  const keyIdFn = useServerFn(getRazorpayKeyId);
+
+  const razorpayStatus = useQuery({
+    queryKey: ["razorpay-config"],
+    queryFn: () => keyIdFn({}),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const payOnline = useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error("Please sign in to pay.");
+      if (!verified) throw new Error("Please verify your mobile number first.");
+      if (!plan) throw new Error("Please choose a subscription plan to pay online.");
+
+      const Razorpay = await loadRazorpayScript();
+      const order = await createOrderFn({ data: { planCode: plan.code } });
+
+      return await new Promise<"success" | "failed" | "dismissed">((resolve, reject) => {
+        const checkout = new Razorpay({
+          key: order.keyId,
+          order_id: order.orderId,
+          amount: order.amount,
+          currency: order.currency,
+          name: "PRINCE GROUP",
+          description: `${plan.name} Subscription`,
+          prefill: { name: name.trim(), email: email.trim(), contact: mobile.trim() },
+          theme: { color: "#3f5b1f" },
+          modal: { ondismiss: () => resolve("dismissed") },
+          handler: (response: unknown) => {
+            const r = response as {
+              razorpay_order_id: string;
+              razorpay_payment_id: string;
+              razorpay_signature: string;
+            };
+            verifyPaymentFn({
+              data: {
+                razorpay_order_id: r.razorpay_order_id,
+                razorpay_payment_id: r.razorpay_payment_id,
+                razorpay_signature: r.razorpay_signature,
+              },
+            })
+              .then((res) => resolve(res.status))
+              .catch(reject);
+          },
+        });
+        checkout.on("payment.failed", () => resolve("failed"));
+        checkout.open();
+      });
+    },
+    onSuccess: (result) => {
+      queryClient.invalidateQueries();
+      if (result === "success") {
+        toast.success("Payment verified — your subscription is now active.");
+        setSubmitted(true);
+      } else if (result === "failed") {
+        toast.error("The payment did not go through. Please try again.");
+      }
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
 
   const sendOtp = useMutation({
     mutationFn: async () => {
