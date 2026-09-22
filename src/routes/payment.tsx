@@ -321,6 +321,34 @@ function PaymentPage() {
                   </p>
                 </div>
 
+                {razorpayStatus.data?.configured && plan ? (
+                  <div className="rounded-3xl border border-primary/10 bg-card p-7 shadow-soft">
+                    <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
+                      <CreditCard className="size-5 text-secondary" /> Pay online securely
+                    </h3>
+                    <p className="mt-2 text-xs text-foreground/80">
+                      Pay {inr(amount)} by card, UPI, net banking or wallet. Your access is
+                      activated as soon as the payment is confirmed.
+                    </p>
+                    <Button
+                      variant="hero"
+                      size="lg"
+                      className="mt-5 w-full"
+                      disabled={payOnline.isPending || !user || !verified}
+                      onClick={() => payOnline.mutate()}
+                    >
+                      {payOnline.isPending ? "Opening payment…" : `Pay Now — ${inr(amount)}`}
+                    </Button>
+                    {!user || !verified ? (
+                      <p className="mt-3 text-center text-[11px] text-foreground/80">
+                        Sign in and verify your mobile number to pay online.
+                      </p>
+                    ) : null}
+                  </div>
+                ) : null}
+
+
+
                 <div className="rounded-3xl border border-primary/10 bg-card p-7 text-center shadow-soft">
                   <h3 className="flex items-center justify-center gap-2 text-lg font-semibold text-primary">
                     <QrCode className="size-5 text-secondary" /> Select Payment Option
