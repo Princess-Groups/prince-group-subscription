@@ -1,7 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { BadgeCheck, Building2, QrCode, ShieldCheck, SmartphoneNfc, Upload } from "lucide-react";
+import {
+  BadgeCheck,
+  Building2,
+  CreditCard,
+  QrCode,
+  ShieldCheck,
+  SmartphoneNfc,
+  Upload,
+} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -16,6 +24,34 @@ import { usePlans } from "@/hooks/usePlatform";
 import { supabase } from "@/integrations/supabase/client";
 import { inr } from "@/lib/format";
 import { sendPhoneOtp, verifyPhoneOtp } from "@/lib/otp.functions";
+import {
+  createRazorpayOrder,
+  getRazorpayKeyId,
+  verifyRazorpayPayment,
+} from "@/lib/razorpay.functions";
+
+type RazorpayCheckout = new (options: Record<string, unknown>) => {
+  open: () => void;
+  on: (event: string, handler: (response: unknown) => void) => void;
+};
+
+function loadRazorpayScript(): Promise<RazorpayCheckout> {
+  return new Promise((resolve, reject) => {
+    const existing = (window as unknown as { Razorpay?: RazorpayCheckout }).Razorpay;
+    if (existing) return resolve(existing);
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = () => {
+      const ctor = (window as unknown as { Razorpay?: RazorpayCheckout }).Razorpay;
+      if (ctor) resolve(ctor);
+      else reject(new Error("Could not load the payment window. Please try again."));
+    };
+    script.onerror = () => reject(new Error("Could not load the payment window. Please try again."));
+    document.body.appendChild(script);
+  });
+}
+
 
 const title = "Payment & Unlock | PRINCE GROUP";
 const description =
