@@ -71,6 +71,13 @@
       "when": 1789550770000,
       "tag": "0009_razorpay_plan_change",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1789725600000,
+      "tag": "0010_remove_gst_at_checkout",
+      "breakpoints": true
     }
   ]
 }
