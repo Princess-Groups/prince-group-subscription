@@ -1,15 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import {
-  BadgeCheck,
-  Building2,
-  CreditCard,
-  QrCode,
-  ShieldCheck,
-  SmartphoneNfc,
-  Upload,
-} from "lucide-react";
+import { BadgeCheck, Building2, CreditCard, Mail, QrCode, ShieldCheck, Upload } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -23,7 +15,7 @@ import { useProfile, useSession } from "@/hooks/useAuth";
 import { usePlans } from "@/hooks/usePlatform";
 import { supabase } from "@/integrations/supabase/client";
 import { inr } from "@/lib/format";
-import { sendPhoneOtp, verifyPhoneOtp } from "@/lib/otp.functions";
+import { saveProfileDetails } from "@/lib/profile.functions";
 import {
   createRazorpayOrder,
   getRazorpayKeyId,
@@ -47,15 +39,15 @@ function loadRazorpayScript(): Promise<RazorpayCheckout> {
       if (ctor) resolve(ctor);
       else reject(new Error("Could not load the payment window. Please try again."));
     };
-    script.onerror = () => reject(new Error("Could not load the payment window. Please try again."));
+    script.onerror = () =>
+      reject(new Error("Could not load the payment window. Please try again."));
     document.body.appendChild(script);
   });
 }
 
-
 const title = "Payment & Unlock | PRINCE GROUP";
 const description =
-  "Pay for your PRINCE GROUP subscription or unlock package, verify your mobile number and submit your payment details for verification.";
+  "Pay for your PRINCE GROUP subscription or unlock package and submit your payment details for verification.";
 
 const searchSchema = z.object({
   plan: z.string().optional(),
@@ -93,13 +85,9 @@ function PaymentPage() {
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
-  const [otp, setOtp] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
   const [utr, setUtr] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [submitted, setSubmitted] = useState(false);
-
-  const verified = profile?.phone_verified === true;
 
   useEffect(() => {
     if (!profile) return;
@@ -117,8 +105,7 @@ function PaymentPage() {
   const itemLabel = plan ? `${plan.name} Subscription` : customItem || "Custom Payment";
   const amount = plan ? plan.price : Number(customAmount) || 0;
 
-  const sendOtpFn = useServerFn(sendPhoneOtp);
-  const verifyOtpFn = useServerFn(verifyPhoneOtp);
+  const saveDetailsFn = useServerFn(saveProfileDetails);
   const createOrderFn = useServerFn(createRazorpayOrder);
   const verifyPaymentFn = useServerFn(verifyRazorpayPayment);
   const keyIdFn = useServerFn(getRazorpayKeyId);
@@ -132,8 +119,18 @@ function PaymentPage() {
   const payOnline = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error("Please sign in to pay.");
-      if (!verified) throw new Error("Please verify your mobile number first.");
       if (!plan) throw new Error("Please choose a subscription plan to pay online.");
+
+      if (name.trim() && mobile.trim() && email.trim() && location.trim()) {
+        await saveDetailsFn({
+          data: {
+            name: name.trim(),
+            phone: mobile.trim(),
+            email: email.trim(),
+            location: location.trim(),
+          },
+        });
+      }
 
       const Razorpay = await loadRazorpayScript();
       const order = await createOrderFn({ data: { planCode: plan.code } });
@@ -182,43 +179,9 @@ function PaymentPage() {
     onError: (e: Error) => toast.error(e.message),
   });
 
-
-  const sendOtp = useMutation({
-    mutationFn: async () => {
-      if (!name.trim() || !mobile.trim() || !email.trim() || !location.trim()) {
-        throw new Error("Please fill in your name, mobile number, location and email.");
-      }
-      await sendOtpFn({ data: { phone: mobile.trim() } });
-    },
-    onSuccess: () => {
-      setOtpSent(true);
-      toast.success("Verification code sent to your mobile number.");
-    },
-    onError: (e: Error) => toast.error(e.message),
-  });
-
-  const verifyOtp = useMutation({
-    mutationFn: async () => {
-      await verifyOtpFn({
-        data: {
-          code: otp,
-          name: name.trim(),
-          email: email.trim(),
-          location: location.trim(),
-        },
-      });
-    },
-    onSuccess: () => {
-      toast.success("Mobile number verified.");
-      queryClient.invalidateQueries();
-    },
-    onError: (e: Error) => toast.error(e.message),
-  });
-
   const submit = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error("Please sign in to submit payment details.");
-      if (!verified) throw new Error("Please verify your mobile number first.");
       if (!name.trim() || !mobile.trim() || !email.trim() || !utr.trim() || !file) {
         throw new Error("Please fill in all required fields.");
       }
@@ -226,6 +189,15 @@ function PaymentPage() {
         throw new Error("Please enter a valid email address.");
       }
       if (amount <= 0) throw new Error("Please choose a plan or enter a valid amount.");
+
+      await saveDetailsFn({
+        data: {
+          name: name.trim(),
+          phone: mobile.trim(),
+          email: email.trim(),
+          location: location.trim(),
+        },
+      });
 
       const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
       const screenshotPath = `${user.id}/${Date.now()}-${safeName}`;
@@ -265,7 +237,7 @@ function PaymentPage() {
         eyebrow="Secure Payment"
         title="Complete Your Payment"
         highlight="Verify & Activate."
-        subtitle="Scan the QR code to pay, then sign in and verify your mobile number with an OTP. Our team verifies every payment manually before activating your plan or profile access."
+        subtitle="Scan the QR code to pay, then sign in and submit your payment details. Our team verifies every payment manually before activating your plan or profile access."
       />
 
       <section className="bg-gradient-cream py-16 sm:py-20">
@@ -334,20 +306,18 @@ function PaymentPage() {
                       variant="hero"
                       size="lg"
                       className="mt-5 w-full"
-                      disabled={payOnline.isPending || !user || !verified}
+                      disabled={payOnline.isPending || !user}
                       onClick={() => payOnline.mutate()}
                     >
                       {payOnline.isPending ? "Opening payment…" : `Pay Now — ${inr(amount)}`}
                     </Button>
-                    {!user || !verified ? (
+                    {!user ? (
                       <p className="mt-3 text-center text-[11px] text-foreground/80">
-                        Sign in and verify your mobile number to pay online.
+                        Sign in to pay online.
                       </p>
                     ) : null}
                   </div>
                 ) : null}
-
-
 
                 <div className="rounded-3xl border border-primary/10 bg-card p-7 text-center shadow-soft">
                   <h3 className="flex items-center justify-center gap-2 text-lg font-semibold text-primary">
@@ -367,14 +337,14 @@ function PaymentPage() {
                 </div>
               </div>
 
-              {/* Right: sign in → OTP → confirmation */}
+              {/* Right: sign in → confirmation */}
               <div className="rounded-3xl border border-primary/10 bg-card p-7 shadow-soft sm:p-8">
                 <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
                   <Building2 className="size-5 text-secondary" /> Complete &amp; activate
                 </h3>
                 <ol className="mt-4 list-decimal space-y-1 pl-5 text-xs leading-relaxed text-foreground/80">
                   <li>Scan the QR code and complete your payment.</li>
-                  <li>Sign in and verify your mobile number with the OTP we send you.</li>
+                  <li>Sign in with the email address you registered with.</li>
                   <li>Submit your payment reference and screenshot to activate access.</li>
                 </ol>
 
@@ -387,19 +357,17 @@ function PaymentPage() {
                       <Link to="/auth">Sign in to continue</Link>
                     </Button>
                   </div>
-                ) : user && !verified ? (
+                ) : user ? (
                   <form
                     className="mt-7 space-y-5"
                     onSubmit={(e) => {
                       e.preventDefault();
-                      if (otpSent) verifyOtp.mutate();
-                      else sendOtp.mutate();
+                      submit.mutate();
                     }}
                   >
                     <div className="flex items-center gap-2 rounded-2xl bg-muted/60 px-4 py-3 text-xs text-foreground/80">
-                      <SmartphoneNfc className="size-4 text-secondary" />
-                      Mobile OTP verification is required before your subscription functions are
-                      activated.
+                      <Mail className="size-4 text-secondary" />
+                      You are signed in as {user.email}. Confirm your details below to continue.
                     </div>
 
                     <div className="grid gap-5 sm:grid-cols-2">
@@ -445,59 +413,6 @@ function PaymentPage() {
                         />
                       </Field>
                     </div>
-
-                    {otpSent ? (
-                      <Field label="Enter OTP" required>
-                        <Input
-                          value={otp}
-                          onChange={(e) => setOtp(e.target.value)}
-                          maxLength={6}
-                          required
-                          inputMode="numeric"
-                          placeholder="6-digit code"
-                        />
-                      </Field>
-                    ) : null}
-
-                    <Button
-                      type="submit"
-                      variant="hero"
-                      size="lg"
-                      className="w-full"
-                      disabled={sendOtp.isPending || verifyOtp.isPending}
-                    >
-                      {otpSent
-                        ? verifyOtp.isPending
-                          ? "Verifying…"
-                          : "Verify OTP"
-                        : sendOtp.isPending
-                          ? "Sending OTP…"
-                          : "Send OTP"}
-                    </Button>
-
-                    {otpSent ? (
-                      <button
-                        type="button"
-                        className="w-full text-center text-xs font-semibold text-secondary underline-offset-4 hover:underline"
-                        onClick={() => sendOtp.mutate()}
-                        disabled={sendOtp.isPending}
-                      >
-                        Resend code
-                      </button>
-                    ) : null}
-                  </form>
-                ) : user ? (
-                  <form
-                    className="mt-7 space-y-5"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      submit.mutate();
-                    }}
-                  >
-                    <p className="flex items-center gap-2 rounded-2xl bg-accent/10 px-4 py-3 text-xs font-semibold text-primary">
-                      <BadgeCheck className="size-4 text-secondary" />
-                      Mobile number verified
-                    </p>
 
                     <div className="grid gap-5 sm:grid-cols-2">
                       <Field label="Selected Plan / Service" required>
