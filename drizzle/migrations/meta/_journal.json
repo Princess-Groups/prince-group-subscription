@@ -64,6 +64,13 @@
       "when": 1789464378023,
       "tag": "0008_add_documentation_services",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1789550770000,
+      "tag": "0009_razorpay_plan_change",
+      "breakpoints": true
     }
   ]
 }

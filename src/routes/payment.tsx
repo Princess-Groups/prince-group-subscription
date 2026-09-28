@@ -1,19 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { BadgeCheck, Building2, CreditCard, Mail, QrCode, ShieldCheck, Upload } from "lucide-react";
+import { BadgeCheck, Building2, CreditCard, Mail, ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import paymentQr from "@/assets/payment-qr.jpeg.asset.json";
 import { PageHero, PublicPage } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useProfile, useSession } from "@/hooks/useAuth";
 import { usePlans } from "@/hooks/usePlatform";
-import { supabase } from "@/integrations/supabase/client";
 import { inr } from "@/lib/format";
 import { saveProfileDetails } from "@/lib/profile.functions";
 import {
@@ -47,7 +45,7 @@ function loadRazorpayScript(): Promise<RazorpayCheckout> {
 
 const title = "Payment & Unlock | PRINCE GROUP";
 const description =
-  "Pay for your PRINCE GROUP subscription or unlock package and submit your payment details for verification.";
+  "Pay for your PRINCE GROUP subscription or unlock package securely through Razorpay.";
 
 const searchSchema = z.object({
   plan: z.string().optional(),
@@ -72,22 +70,18 @@ export const Route = createFileRoute("/payment")({
 });
 
 function PaymentPage() {
-  const { plan: planParam, item: itemParam, amount: amountParam } = Route.useSearch();
+  const { plan: planParam, item: itemParam } = Route.useSearch();
   const { user, loading: sessionLoading } = useSession();
   const { data: profile } = useProfile(user?.id);
   const { data: plans } = usePlans();
   const queryClient = useQueryClient();
 
   const [selectedPlan, setSelectedPlan] = useState(planParam ?? "");
-  const [customItem, setCustomItem] = useState(itemParam ?? "");
-  const [customAmount, setCustomAmount] = useState(amountParam ? String(amountParam) : "");
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
-  const [utr, setUtr] = useState("");
-  const [file, setFile] = useState<File | null>(null);
-  const [submitted, setSubmitted] = useState(false);
+  const [paid, setPaid] = useState(false);
 
   useEffect(() => {
     if (!profile) return;
@@ -102,8 +96,8 @@ function PaymentPage() {
     [plans, selectedPlan],
   );
 
-  const itemLabel = plan ? `${plan.name} Subscription` : customItem || "Custom Payment";
-  const amount = plan ? plan.price : Number(customAmount) || 0;
+  const itemLabel = plan ? `${plan.name} Subscription` : itemParam || "Select a plan";
+  const amount = plan?.price ?? 0;
 
   const saveDetailsFn = useServerFn(saveProfileDetails);
   const createOrderFn = useServerFn(createRazorpayOrder);
@@ -119,18 +113,22 @@ function PaymentPage() {
   const payOnline = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error("Please sign in to pay.");
-      if (!plan) throw new Error("Please choose a subscription plan to pay online.");
-
-      if (name.trim() && mobile.trim() && email.trim() && location.trim()) {
-        await saveDetailsFn({
-          data: {
-            name: name.trim(),
-            phone: mobile.trim(),
-            email: email.trim(),
-            location: location.trim(),
-          },
-        });
+      if (!plan) throw new Error("Please choose a subscription plan to pay for.");
+      if (!name.trim() || !mobile.trim() || !email.trim() || !location.trim()) {
+        throw new Error("Please fill in your name, mobile number, location and email.");
       }
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) {
+        throw new Error("Please enter a valid email address.");
+      }
+
+      await saveDetailsFn({
+        data: {
+          name: name.trim(),
+          phone: mobile.trim(),
+          email: email.trim(),
+          location: location.trim(),
+        },
+      });
 
       const Razorpay = await loadRazorpayScript();
       const order = await createOrderFn({ data: { planCode: plan.code } });
@@ -171,7 +169,7 @@ function PaymentPage() {
       queryClient.invalidateQueries();
       if (result === "success") {
         toast.success("Payment verified — your subscription is now active.");
-        setSubmitted(true);
+        setPaid(true);
       } else if (result === "failed") {
         toast.error("The payment did not go through. Please try again.");
       }
@@ -179,78 +177,27 @@ function PaymentPage() {
     onError: (e: Error) => toast.error(e.message),
   });
 
-  const submit = useMutation({
-    mutationFn: async () => {
-      if (!user) throw new Error("Please sign in to submit payment details.");
-      if (!name.trim() || !mobile.trim() || !email.trim() || !utr.trim() || !file) {
-        throw new Error("Please fill in all required fields.");
-      }
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) {
-        throw new Error("Please enter a valid email address.");
-      }
-      if (amount <= 0) throw new Error("Please choose a plan or enter a valid amount.");
-
-      await saveDetailsFn({
-        data: {
-          name: name.trim(),
-          phone: mobile.trim(),
-          email: email.trim(),
-          location: location.trim(),
-        },
-      });
-
-      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
-      const screenshotPath = `${user.id}/${Date.now()}-${safeName}`;
-      const { error: upErr } = await supabase.storage
-        .from("payment-proofs")
-        .upload(screenshotPath, file, { contentType: file.type });
-      if (upErr) throw upErr;
-
-      const { error } = await supabase.from("payment_submissions").insert({
-        user_id: user.id,
-        name: name.trim(),
-        mobile: mobile.trim(),
-        email: email.trim(),
-        plan_code: plan?.code ?? null,
-        item: itemLabel,
-        amount,
-        utr: utr.trim(),
-        screenshot_path: screenshotPath,
-      });
-      if (error) throw error;
-
-      if (plan) {
-        // Preserve the existing subscription backend: register a pending subscription.
-        await supabase.rpc("start_subscription", { _plan_code: plan.code });
-      }
-    },
-    onSuccess: () => {
-      setSubmitted(true);
-      queryClient.invalidateQueries();
-    },
-    onError: (e: Error) => toast.error(e.message),
-  });
+  const notConfigured = !razorpayStatus.data?.configured;
 
   return (
     <PublicPage>
       <PageHero
         eyebrow="Secure Payment"
         title="Complete Your Payment"
-        highlight="Verify & Activate."
-        subtitle="Scan the QR code to pay, then sign in and submit your payment details. Our team verifies every payment manually before activating your plan or profile access."
+        highlight="Pay & Activate."
+        subtitle="Sign in with the email address you registered with, choose your plan and pay securely by card, UPI, net banking or wallet through Razorpay."
       />
 
       <section className="bg-gradient-cream py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          {submitted ? (
+          {paid ? (
             <div className="mx-auto max-w-2xl rounded-3xl border border-primary/10 bg-card p-10 text-center shadow-lift">
               <span className="mx-auto grid size-16 place-items-center rounded-full bg-accent/15 text-secondary">
                 <BadgeCheck className="size-8" />
               </span>
-              <h2 className="mt-6 text-2xl font-bold text-primary">Payment details submitted</h2>
+              <h2 className="mt-6 text-2xl font-bold text-primary">Payment successful</h2>
               <p className="mt-3 text-sm leading-relaxed text-foreground/80">
-                Payment details submitted successfully. Our team will verify your payment and
-                activate your plan/profile access.
+                We have received your payment and your plan is now active.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Button asChild variant="hero">
@@ -263,7 +210,7 @@ function PaymentPage() {
             </div>
           ) : (
             <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr]">
-              {/* Left: summary + payment option */}
+              {/* Left: order summary */}
               <div className="space-y-6">
                 <div className="rounded-3xl bg-gradient-olive p-7 text-cream shadow-lift">
                   <p className="text-xs font-bold uppercase tracking-[0.22em] text-accent">
@@ -285,68 +232,37 @@ function PaymentPage() {
                       {plan.discount_percentage}% member discount · {plan.lead_limit} lead
                       allocations
                     </p>
-                  ) : null}
+                  ) : (
+                    <p className="mt-2 text-sm text-cream/95">
+                      Pick a plan on the right to see the exact amount, including GST and any
+                      offers.
+                    </p>
+                  )}
                   <p className="mt-4 flex items-center gap-2 text-xs text-cream/90">
                     <ShieldCheck className="size-4 text-accent" />
-                    Payments are activated only after manual verification — nothing is
-                    auto-confirmed.
+                    Payments run through Razorpay checkout and are activated only after Razorpay
+                    confirms the capture.
                   </p>
                 </div>
 
-                {razorpayStatus.data?.configured && plan ? (
-                  <div className="rounded-3xl border border-primary/10 bg-card p-7 shadow-soft">
-                    <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
-                      <CreditCard className="size-5 text-secondary" /> Pay online securely
-                    </h3>
-                    <p className="mt-2 text-xs text-foreground/80">
-                      Pay {inr(amount)} by card, UPI, net banking or wallet. Your access is
-                      activated as soon as the payment is confirmed.
-                    </p>
-                    <Button
-                      variant="hero"
-                      size="lg"
-                      className="mt-5 w-full"
-                      disabled={payOnline.isPending || !user}
-                      onClick={() => payOnline.mutate()}
-                    >
-                      {payOnline.isPending ? "Opening payment…" : `Pay Now — ${inr(amount)}`}
-                    </Button>
-                    {!user ? (
-                      <p className="mt-3 text-center text-[11px] text-foreground/80">
-                        Sign in to pay online.
-                      </p>
-                    ) : null}
-                  </div>
-                ) : null}
-
-                <div className="rounded-3xl border border-primary/10 bg-card p-7 text-center shadow-soft">
-                  <h3 className="flex items-center justify-center gap-2 text-lg font-semibold text-primary">
-                    <QrCode className="size-5 text-secondary" /> Select Payment Option
+                <div className="rounded-3xl border border-primary/10 bg-card p-7 shadow-soft">
+                  <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
+                    <CreditCard className="size-5 text-secondary" /> How payment works
                   </h3>
-                  <p className="mt-2 text-xs text-foreground/80">
-                    Scan this QR code with any UPI app (GPay, PhonePe, Paytm, BHIM…) and pay{" "}
-                    {inr(amount)}.
-                  </p>
-                  <img
-                    src={paymentQr.url}
-                    alt="Prince Group UPI QR code — scan to pay with any UPI app"
-                    loading="lazy"
-                    decoding="async"
-                    className="mx-auto mt-5 w-full max-w-xs rounded-2xl border border-primary/10"
-                  />
+                  <ol className="mt-4 list-decimal space-y-1 pl-5 text-xs leading-relaxed text-foreground/80">
+                    <li>Sign in with the email address you registered with.</li>
+                    <li>Choose your plan and confirm your contact details.</li>
+                    <li>Pay by card, UPI, net banking or wallet in the Razorpay window.</li>
+                    <li>Your plan activates as soon as Razorpay confirms the payment.</li>
+                  </ol>
                 </div>
               </div>
 
-              {/* Right: sign in → confirmation */}
+              {/* Right: sign in → plan → Razorpay */}
               <div className="rounded-3xl border border-primary/10 bg-card p-7 shadow-soft sm:p-8">
                 <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
                   <Building2 className="size-5 text-secondary" /> Complete &amp; activate
                 </h3>
-                <ol className="mt-4 list-decimal space-y-1 pl-5 text-xs leading-relaxed text-foreground/80">
-                  <li>Scan the QR code and complete your payment.</li>
-                  <li>Sign in with the email address you registered with.</li>
-                  <li>Submit your payment reference and screenshot to activate access.</li>
-                </ol>
 
                 {!user && !sessionLoading ? (
                   <div className="mt-8 rounded-2xl bg-muted p-6 text-center">
@@ -362,7 +278,7 @@ function PaymentPage() {
                     className="mt-7 space-y-5"
                     onSubmit={(e) => {
                       e.preventDefault();
-                      submit.mutate();
+                      payOnline.mutate();
                     }}
                   >
                     <div className="flex items-center gap-2 rounded-2xl bg-muted/60 px-4 py-3 text-xs text-foreground/80">
@@ -420,15 +336,9 @@ function PaymentPage() {
                           <select
                             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                             value={selectedPlan}
-                            onChange={(e) => {
-                              setSelectedPlan(e.target.value);
-                              if (e.target.value) {
-                                setCustomItem("");
-                                setCustomAmount("");
-                              }
-                            }}
+                            onChange={(e) => setSelectedPlan(e.target.value)}
                           >
-                            <option value="">{customItem || "Custom / other payment"}</option>
+                            <option value="">Select a plan</option>
                             {plans.map((p) => (
                               <option key={p.code} value={p.code}>
                                 {p.name} — {inr(p.price)}/
@@ -437,70 +347,41 @@ function PaymentPage() {
                             ))}
                           </select>
                         ) : (
-                          <Input value={itemLabel} readOnly />
+                          <Input value={itemParam ?? ""} readOnly />
                         )}
                       </Field>
                       <Field label="Amount (₹)" required>
                         <Input
-                          value={plan ? String(plan.price) : customAmount}
-                          onChange={(e) => {
-                            if (!plan) setCustomAmount(e.target.value);
-                          }}
-                          readOnly={!!plan}
+                          value={plan ? String(plan.price) : ""}
+                          readOnly
                           inputMode="numeric"
                           required
-                          placeholder="Amount paid"
+                          placeholder="Select a plan"
                         />
                       </Field>
                     </div>
 
-                    {!plan && !itemParam ? (
-                      <Field label="Payment for (description)">
-                        <Input
-                          value={customItem}
-                          onChange={(e) => setCustomItem(e.target.value)}
-                          maxLength={120}
-                          placeholder="e.g. Candidate data unlock, service payment"
-                        />
-                      </Field>
+                    {notConfigured ? (
+                      <p className="rounded-2xl bg-destructive/10 px-4 py-3 text-xs text-destructive">
+                        Online payments are not available right now. Please contact support.
+                      </p>
                     ) : null}
-
-                    <Field label="Payment Reference / UTR Number" required>
-                      <Input
-                        value={utr}
-                        onChange={(e) => setUtr(e.target.value)}
-                        maxLength={40}
-                        required
-                        placeholder="e.g. 412345678901"
-                      />
-                    </Field>
-
-                    <Field label="Payment Screenshot / Receipt" required>
-                      <label className="flex cursor-pointer items-center justify-center gap-2 rounded-2xl border border-dashed border-primary/25 bg-muted/40 px-4 py-6 text-sm text-foreground/80 transition-colors hover:border-secondary/50">
-                        <Upload className="size-4 text-secondary" />
-                        {file ? file.name : "Click to upload payment screenshot"}
-                        <input
-                          type="file"
-                          accept="image/*,.pdf"
-                          required
-                          className="hidden"
-                          onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-                        />
-                      </label>
-                    </Field>
 
                     <Button
                       type="submit"
                       variant="hero"
                       size="lg"
                       className="w-full"
-                      disabled={submit.isPending}
+                      disabled={payOnline.isPending || notConfigured || !plan}
                     >
-                      {submit.isPending ? "Submitting…" : `Submit Payment — ${inr(amount)}`}
+                      {payOnline.isPending
+                        ? "Opening payment…"
+                        : plan
+                          ? `Pay Now — ${inr(amount)}`
+                          : "Select a plan to pay"}
                     </Button>
                     <p className="text-center text-[11px] text-foreground/80">
-                      Your plan/profile access is activated only after our team verifies the
-                      payment.
+                      You will be taken to Razorpay to complete the payment securely.
                     </p>
                   </form>
                 ) : null}

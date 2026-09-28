@@ -105,9 +105,7 @@ export async function isValidCheckoutSignature(input: {
   return timingSafeEqualHex(expected, input.signature.trim().toLowerCase());
 }
 
-type AdminClient = Awaited<
-  typeof import("@/integrations/supabase/client.server")
->["supabaseAdmin"];
+type AdminClient = Awaited<typeof import("@/integrations/supabase/client.server")>["supabaseAdmin"];
 
 /** Marks a payment row paid and activates its subscription. Idempotent. */
 export async function markPaymentSuccessful(
@@ -116,7 +114,7 @@ export async function markPaymentSuccessful(
 ): Promise<{ updated: boolean }> {
   const { data: payment, error } = await admin
     .from("payments")
-    .select("id, subscription_id, status")
+    .select("id, subscription_id, status, pending_plan_code")
     .eq("razorpay_order_id", args.orderId)
     .maybeSingle();
   if (error) throw error;
@@ -138,12 +136,25 @@ export async function markPaymentSuccessful(
   if (payErr) throw payErr;
 
   if (payment.subscription_id) {
+    // A plan change only moves the subscription once the payment is captured, so
+    // an abandoned checkout leaves the customer's current plan untouched.
+    const planUpdate: { plan_id?: string } = {};
+    if (payment.pending_plan_code) {
+      const { data: targetPlan } = await admin
+        .from("plans")
+        .select("id")
+        .eq("code", payment.pending_plan_code)
+        .maybeSingle();
+      if (targetPlan) planUpdate.plan_id = targetPlan.id;
+    }
+
     const { error: subErr } = await admin
       .from("subscriptions")
       .update({
         status: "active",
         start_date: now.toISOString(),
         renewal_date: renewal.toISOString(),
+        ...planUpdate,
       })
       .eq("id", payment.subscription_id);
     if (subErr) throw subErr;
@@ -157,7 +168,7 @@ export async function markPaymentFailed(
 ): Promise<void> {
   const { data: payment } = await admin
     .from("payments")
-    .select("id, subscription_id, status")
+    .select("id, subscription_id, status, pending_plan_code")
     .eq("razorpay_order_id", args.orderId)
     .maybeSingle();
   if (!payment || payment.status === "success") return;
@@ -166,10 +177,21 @@ export async function markPaymentFailed(
     .from("payments")
     .update({ status: "failed", razorpay_payment_id: args.paymentId ?? null })
     .eq("id", payment.id);
-  if (payment.subscription_id) {
-    await admin
+  if (!payment.subscription_id) return;
+
+  // A failed plan change must not cancel an access the customer already paid for,
+  // so only subscriptions still waiting on this payment are downgraded.
+  if (payment.pending_plan_code) {
+    const { data: subscription } = await admin
       .from("subscriptions")
-      .update({ status: "payment_failed" })
-      .eq("id", payment.subscription_id);
+      .select("status")
+      .eq("id", payment.subscription_id)
+      .maybeSingle();
+    if (subscription?.status === "active") return;
   }
+
+  await admin
+    .from("subscriptions")
+    .update({ status: "payment_failed" })
+    .eq("id", payment.subscription_id);
 }
