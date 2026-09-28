@@ -81,7 +81,7 @@ async function preparePlanChangePayment(
 
   const { data: targetPlan, error: planErr } = await supabaseAdmin
     .from("plans")
-    .select("id, code, active, slot_limit, bank_executive_eligible")
+    .select("id, code, price, active, slot_limit, bank_executive_eligible")
     .eq("code", planCode)
     .maybeSingle();
   if (planErr) throw new Error(planErr.message);
@@ -141,19 +141,9 @@ async function preparePlanChangePayment(
     if (staleErr) throw new Error(staleErr.message);
   }
 
-  const { data: hasSuccess } = await supabaseAdmin
-    .from("payments")
-    .select("id", { count: "exact", head: true })
-    .eq("user_id", userId)
-    .eq("status", "success");
-  const { data: quote, error: quoteErr } = await supabaseAdmin.rpc("quote_for_plan", {
-    _plan_code: targetPlan.code,
-    _first_payment: (hasSuccess ?? 0) === 0,
-  });
-  if (quoteErr) throw new Error(quoteErr.message);
-  const q = (quote ?? {}) as Record<string, unknown>;
-  if (q["error"]) {
-    throw new Error(planChangeMessages[String(q["error"])] ?? "Could not price this plan.");
+  const planPrice = Number(targetPlan.price);
+  if (!Number.isFinite(planPrice) || planPrice < 0) {
+    throw new Error("Could not price this plan.");
   }
 
   const planChange = subscription.plan_id !== targetPlan.id;
@@ -162,11 +152,11 @@ async function preparePlanChangePayment(
     .insert({
       user_id: userId,
       subscription_id: subscription.id,
-      base_amount: Number(q["base_amount"] ?? 0),
-      discount: Number(q["discount"] ?? 0),
-      gst: Number(q["gst"] ?? 0),
-      application_fee: Number(q["application_fee"] ?? 0),
-      total_amount: Number(q["total_amount"] ?? 0),
+      base_amount: planPrice,
+      discount: 0,
+      gst: 0,
+      application_fee: 0,
+      total_amount: planPrice,
       status: "created",
       pending_plan_code: planChange ? targetPlan.code : null,
     })
@@ -182,13 +172,7 @@ async function preparePlanChangePayment(
     meta: {
       plan_code: targetPlan.code,
       previous_plan_code: currentPlanCode,
-      quote: {
-        base_amount: Number(q["base_amount"] ?? 0),
-        discount: Number(q["discount"] ?? 0),
-        gst: Number(q["gst"] ?? 0),
-        application_fee: Number(q["application_fee"] ?? 0),
-        total_amount: Number(q["total_amount"] ?? 0),
-      },
+      quote: { base_amount: planPrice, discount: 0, gst: 0, application_fee: 0, total_amount: planPrice },
     },
   });
 
@@ -231,8 +215,19 @@ export const createRazorpayOrder = createServerFn({ method: "POST" })
 
     if (!payment) throw new Error("No pending payment found for your account.");
 
-    const amountPaise = Math.round(Number(payment.total_amount) * 100);
-    if (!Number.isFinite(amountPaise) || amountPaise < 100) {
+    const { data: planRow, error: priceErr } = await supabaseAdmin
+      .from("plans")
+      .select("price")
+      .eq("code", data.planCode)
+      .maybeSingle();
+    if (priceErr) throw new Error(priceErr.message);
+    if (!planRow || !Number.isFinite(Number(planRow.price)) || Number(planRow.price) < 0) {
+      throw new Error("Could not price this plan.");
+    }
+    const planPrice = Number(planRow.price);
+
+    const amountPaise = Math.round(planPrice * 100);
+    if (amountPaise < 100) {
       throw new Error("This payment amount is invalid. Please contact support.");
     }
 
@@ -244,7 +239,15 @@ export const createRazorpayOrder = createServerFn({ method: "POST" })
 
     const { error: updErr } = await supabaseAdmin
       .from("payments")
-      .update({ razorpay_order_id: order.id, status: "pending" })
+      .update({
+        razorpay_order_id: order.id,
+        status: "pending",
+        base_amount: planPrice,
+        discount: 0,
+        gst: 0,
+        application_fee: 0,
+        total_amount: planPrice,
+      })
       .eq("id", payment.id);
     if (updErr) throw new Error(updErr.message);
 
