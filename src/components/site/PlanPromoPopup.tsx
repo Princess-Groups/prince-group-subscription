@@ -53,6 +53,7 @@ export function PlanPromoPopup() {
 
   const plan = list[index];
   if (!plan) return null;
+  if (typeof window !== "undefined" && window.location.pathname === "/auth") return null;
 
   return (
     <div

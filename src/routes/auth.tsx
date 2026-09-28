@@ -7,7 +7,6 @@ import { PublicPage } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSession } from "@/hooks/useAuth";
 import { lovable } from "@/integrations/lovable/index";
 import { supabase } from "@/integrations/supabase/client";
@@ -35,6 +34,7 @@ function AuthPage() {
   const navigate = useNavigate();
   const { user, loading } = useSession();
   const [busy, setBusy] = useState(false);
+  const [tab, setTab] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -69,25 +69,30 @@ function AuthPage() {
       return;
     }
     setBusy(true);
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: parsed.data.email,
-      password: parsed.data.password,
-    });
-    setBusy(false);
-    if (error) {
-      toast.error(
-        error.message.toLowerCase().includes("invalid")
-          ? "Incorrect email or password. Please try again."
-          : error.message,
-      );
-      return;
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: parsed.data.email,
+        password: parsed.data.password,
+      });
+      if (error) {
+        toast.error(
+          error.message.toLowerCase().includes("invalid")
+            ? "Incorrect email or password. Please try again."
+            : error.message,
+        );
+        return;
+      }
+      if (!data.session) {
+        toast.error("Sign in could not be completed. Please try again.");
+        return;
+      }
+      toast.success("Signed in successfully.");
+      navigate({ to: "/dashboard", replace: true });
+    } catch {
+      toast.error("Sign in failed. Please try again.");
+    } finally {
+      setBusy(false);
     }
-    if (!data.session) {
-      toast.error("Sign in could not be completed. Please try again.");
-      return;
-    }
-    toast.success("Signed in successfully.");
-    navigate({ to: "/dashboard", replace: true });
   }
 
   async function signUp(e: React.FormEvent) {
@@ -103,38 +108,43 @@ function AuthPage() {
       return;
     }
     setBusy(true);
-    const { data, error } = await supabase.auth.signUp({
-      email: parsed.data.email,
-      password: parsed.data.password,
-      options: {
-        emailRedirectTo: window.location.origin,
-        data: { full_name: parsed.data.fullName, phone: parsed.data.phone },
-      },
-    });
-    setBusy(false);
-    if (error) {
-      toast.error(
-        error.message.toLowerCase().includes("already registered")
-          ? "This email already has an account. Please sign in instead."
-          : error.message,
-      );
-      return;
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: parsed.data.email,
+        password: parsed.data.password,
+        options: {
+          emailRedirectTo: window.location.origin,
+          data: { full_name: parsed.data.fullName, phone: parsed.data.phone },
+        },
+      });
+      if (error) {
+        toast.error(
+          error.message.toLowerCase().includes("already registered")
+            ? "This email already has an account. Please sign in instead."
+            : error.message,
+        );
+        return;
+      }
+      if (data.session) {
+        toast.success("Account created. Welcome to PRINCE.");
+        navigate({ to: "/dashboard", replace: true });
+        return;
+      }
+      const signedIn = await supabase.auth.signInWithPassword({
+        email: parsed.data.email,
+        password: parsed.data.password,
+      });
+      if (signedIn.data.session) {
+        toast.success("Account created. Welcome to PRINCE.");
+        navigate({ to: "/dashboard", replace: true });
+        return;
+      }
+      toast.success("Account created. Please confirm your email, then sign in.");
+    } catch {
+      toast.error("We could not create your account. Please try again.");
+    } finally {
+      setBusy(false);
     }
-    if (data.session) {
-      toast.success("Account created. Welcome to PRINCE.");
-      navigate({ to: "/dashboard", replace: true });
-      return;
-    }
-    const signedIn = await supabase.auth.signInWithPassword({
-      email: parsed.data.email,
-      password: parsed.data.password,
-    });
-    if (signedIn.data.session) {
-      toast.success("Account created. Welcome to PRINCE.");
-      navigate({ to: "/dashboard", replace: true });
-      return;
-    }
-    toast.success("Account created. Please confirm your email, then sign in.");
   }
 
   async function google() {
@@ -174,34 +184,46 @@ function AuthPage() {
               Sign in to manage your subscription, leads and business access.
             </p>
 
-            <Tabs defaultValue="signin" className="mt-8">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Create Account</TabsTrigger>
-              </TabsList>
+            <div className="mt-8 grid w-full grid-cols-2 rounded-lg bg-muted p-1 text-foreground/80">
+              <button
+                type="button"
+                onClick={() => setTab("signin")}
+                className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background cursor-pointer transition-all hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+                  tab === "signin" ? "bg-background text-foreground shadow" : "text-foreground/80"
+                }`}
+              >
+                Sign In
+              </button>
+              <button
+                type="button"
+                onClick={() => setTab("signup")}
+                className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background cursor-pointer transition-all hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+                  tab === "signup" ? "bg-background text-foreground shadow" : "text-foreground/80"
+                }`}
+              >
+                Create Account
+              </button>
+            </div>
 
-              <TabsContent value="signin">
-                <form onSubmit={signIn} className="mt-6 space-y-4">
-                  <Field id="email" label="Email" type="email" value={email} onChange={setEmail} />
-                  <Field id="password" label="Password" type="password" value={password} onChange={setPassword} />
-                  <Button type="submit" variant="hero" className="w-full" disabled={busy}>
-                    Sign In
-                  </Button>
-                </form>
-              </TabsContent>
-
-              <TabsContent value="signup">
-                <form onSubmit={signUp} className="mt-6 space-y-4">
-                  <Field id="name" label="Full name" value={fullName} onChange={setFullName} />
-                  <Field id="phone" label="Phone" value={phone} onChange={setPhone} />
-                  <Field id="email2" label="Email" type="email" value={email} onChange={setEmail} />
-                  <Field id="password2" label="Password" type="password" value={password} onChange={setPassword} />
-                  <Button type="submit" variant="hero" className="w-full" disabled={busy}>
-                    Create Account
-                  </Button>
-                </form>
-              </TabsContent>
-            </Tabs>
+            {tab === "signin" ? (
+              <form onSubmit={signIn} className="mt-6 space-y-4">
+                <Field id="email" label="Email" type="email" value={email} onChange={setEmail} />
+                <Field id="password" label="Password" type="password" value={password} onChange={setPassword} />
+                <Button type="submit" variant="hero" className="w-full" disabled={busy}>
+                  Sign In
+                </Button>
+              </form>
+            ) : (
+              <form onSubmit={signUp} className="mt-6 space-y-4">
+                <Field id="name" label="Full name" value={fullName} onChange={setFullName} />
+                <Field id="phone" label="Phone" value={phone} onChange={setPhone} />
+                <Field id="email2" label="Email" type="email" value={email} onChange={setEmail} />
+                <Field id="password2" label="Password" type="password" value={password} onChange={setPassword} />
+                <Button type="submit" variant="hero" className="w-full" disabled={busy}>
+                  Create Account
+                </Button>
+              </form>
+            )}
 
             <div className="my-6 flex items-center gap-3 text-xs uppercase tracking-widest text-foreground/80">
               <span className="h-px flex-1 bg-border" /> or <span className="h-px flex-1 bg-border" />
