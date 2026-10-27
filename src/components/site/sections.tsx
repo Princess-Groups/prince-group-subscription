@@ -474,15 +474,41 @@ const SERVICES = [
   "Social Media Marketing",
 ];
 
+const DOCUMENT_SERVICES = [
+  "Receipt Document",
+  "Mortgage Deed",
+  "Will Deed",
+  "Release Deed",
+  "Registered Rental Agreement",
+  "House Loan Estimate",
+  "Patta & Chitta",
+  "Document Copy",
+  "Encumbrance Certificate",
+  "Rental Contract Agreement (Unregistered)",
+  "Home Loan Assistance",
+  "Rectification Deed",
+  "Lease Agreement",
+  "Partition Deed",
+  "Cancellation Deed",
+  "General Power of Attorney",
+  "Agreement Deed",
+];
+
+const TICKER_ROWS = [
+  [...DOCUMENT_SERVICES.slice(0, 9), ...SERVICES.slice(0, 6)],
+  [...DOCUMENT_SERVICES.slice(9), ...SERVICES.slice(6)],
+];
+
 function ServiceTicker({ reverse = false }: { reverse?: boolean }) {
-  const items = [...SERVICES, ...SERVICES];
+  const row = reverse ? TICKER_ROWS[1]! : TICKER_ROWS[0]!;
+  const items = [...row, ...row];
   return (
     <div className="marquee">
       <div className={reverse ? "marquee-track marquee-reverse" : "marquee-track"}>
         {items.map((s, i) => (
           <span
             key={`${s}-${i}`}
-            className="mx-3 inline-flex shrink-0 items-center gap-2 rounded-full border border-primary/12 bg-card px-6 py-3 text-sm font-semibold text-primary shadow-soft"
+            className="mx-2 inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-primary/12 bg-card px-4 py-2.5 text-xs font-semibold text-primary shadow-soft sm:mx-3 sm:px-5 sm:text-sm"
           >
             <Star className="size-3.5 shrink-0 text-secondary" />
             {s}
