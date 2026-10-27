@@ -500,7 +500,7 @@ const TICKER_ROWS = [
 ];
 
 function ServiceTicker({ reverse = false }: { reverse?: boolean }) {
-  const row = TICKER_ROWS[reverse ? 1 : 0];
+  const row = reverse ? TICKER_ROWS[1]! : TICKER_ROWS[0]!;
   const items = [...row, ...row];
   return (
     <div className="marquee">
