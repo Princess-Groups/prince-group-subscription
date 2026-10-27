@@ -825,6 +825,7 @@ export type Database = {
           gst: number
           id: string
           paid_at: string | null
+          pending_plan_code: string | null
           razorpay_order_id: string | null
           razorpay_payment_id: string | null
           status: Database["public"]["Enums"]["pay_status"]
@@ -840,6 +841,7 @@ export type Database = {
           gst?: number
           id?: string
           paid_at?: string | null
+          pending_plan_code?: string | null
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
           status?: Database["public"]["Enums"]["pay_status"]
@@ -855,6 +857,7 @@ export type Database = {
           gst?: number
           id?: string
           paid_at?: string | null
+          pending_plan_code?: string | null
           razorpay_order_id?: string | null
           razorpay_payment_id?: string | null
           status?: Database["public"]["Enums"]["pay_status"]
