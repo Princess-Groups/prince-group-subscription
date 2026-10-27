@@ -60,10 +60,11 @@ export function PlanPromoPopup() {
       role="complementary"
       aria-label="Subscription plan promotion"
       className={`pointer-events-none fixed bottom-4 right-4 z-[60] w-[min(22rem,calc(100vw-2rem))] transition-all duration-500 ${
-        open ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
+        open ? "translate-y-0 opacity-100" : "invisible translate-y-4 opacity-0"
       }`}
+      aria-hidden={!open}
     >
-      <div className="glass-dark pointer-events-auto relative max-h-[calc(100dvh-2rem)] overflow-x-hidden overflow-y-auto rounded-3xl border border-accent/30 p-5 text-cream shadow-lift">
+      <div className={`glass-dark relative max-h-[calc(100dvh-2rem)] overflow-x-hidden overflow-y-auto rounded-3xl border border-accent/30 p-5 text-cream shadow-lift ${open ? "pointer-events-auto" : "pointer-events-none"}`}>
         <div className="hero-orb -right-10 -top-10 size-32 bg-accent/25" />
         <button
           type="button"
