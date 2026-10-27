@@ -85,6 +85,13 @@
       "when": 1789812000000,
       "tag": "0011_charge_plan_price_only",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1793118600684,
+      "tag": "0012_payments_pending_plan_code",
+      "breakpoints": true
     }
   ]
 }
