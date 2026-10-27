@@ -152,31 +152,27 @@ export function HeroSection() {
           <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 bg-primary px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-cream">
             <Sparkles className="size-3.5" /> Limited Premium Membership
           </span>
-          <h1 className="mt-6 font-brand text-[clamp(0.82rem,2.35vw,1.95rem)] font-bold leading-[1.05] tracking-[-0.02em] drop-shadow-[0_2px_18px_oklch(0.18_0.05_148/0.7)]">
-            <span className="block whitespace-nowrap text-cream">
-              <span className="inline-flex items-center gap-[0.35em]">
+          <h1 className="mt-6 font-brand text-[clamp(0.82rem,2.35vw,1.95rem)] font-bold leading-[1.05] tracking-[-0.02em]">
+            <span className="block whitespace-nowrap text-cream [text-shadow:0_2px_0_oklch(0.22_0.06_148/0.85),0_3px_14px_oklch(0.16_0.05_148/0.75)]">
+              <span className="inline-flex items-baseline gap-[0.3em]">
                 ALL IN ONE
-                <img
-                  src={oneRupeeCoin}
-                  alt="Original Indian one rupee coin"
-                  width={816}
-                  height={816}
-                  className="inline-block h-[1.3em] w-[1.3em] shrink-0 object-contain drop-shadow-[0_2px_10px_oklch(0.2_0.04_148/0.65)]"
-                />
+                <span className="text-[1.35em] font-extrabold leading-none text-accent [text-shadow:0_2px_0_oklch(0.22_0.06_148/0.9),0_0_18px_oklch(0.85_0.2_125/0.55)]">
+                  ₹1
+                </span>
                 POWERFUL SUBSCRIPTION
               </span>
             </span>
             <span className="mt-3 block sm:mt-4">
               <Link
                 to="/payment"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-lime px-4 py-2 text-[0.55em] font-bold uppercase tracking-[0.12em] text-cream shadow-lift drop-shadow-[0_1px_2px_oklch(0.2_0.04_148/0.85)] transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cream/50 sm:px-5 sm:py-2.5"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-lime px-4 py-2 text-[0.55em] font-extrabold uppercase tracking-[0.12em] text-primary shadow-lift transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cream/50 sm:px-5 sm:py-2.5"
               >
                 GO PREMIUM UNLOCK MORE →
               </Link>
             </span>
           </h1>
-          <p className="mt-6 max-w-xl font-sans text-base font-medium leading-relaxed text-cream drop-shadow-[0_2px_12px_oklch(0.18_0.05_148/0.6)] sm:text-lg">
-            Subscription get started with one rupee. Unlock loan candidate data for just ₹10. Go Premium for ₹100 — all in one powerful subscription.
+          <p className="mt-6 max-w-xl font-sans text-lg font-bold leading-snug text-cream [text-shadow:0_2px_4px_oklch(0.16_0.05_148/0.85),0_2px_16px_oklch(0.16_0.05_148/0.6)] sm:text-xl lg:text-2xl">
+            Subscription gets started with one rupee. Unlock candidate data for just ₹1. Go Premium for ₹100 — all in one powerful subscription.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
