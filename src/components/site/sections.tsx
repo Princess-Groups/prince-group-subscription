@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 
 import bankExecutiveTeam from "@/assets/bank-executive-team.webp";
-import oneRupeeCoin from "@/assets/one-rupee-coin.png";
 import arumanaiBranch from "@/assets/branches/home/arumanai.webp.asset.json";
 import boothapandiBranch from "@/assets/branches/home/boothapandi.webp.asset.json";
 import edalakudiBranch from "@/assets/branches/home/edalakudi.webp.asset.json";
