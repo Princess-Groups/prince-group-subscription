@@ -1,4 +1,5 @@
-import { expect, test } from "bun:test";
+import { test } from "node:test";
+import assert from "node:assert/strict";
 import { transformWithOxc } from "vite";
 import { normalizeViteEnvAccess } from "./vite-env-access";
 
@@ -13,12 +14,12 @@ test("both browser connection settings survive Vite's environment replacement", 
       "import.meta.env": "{}",
     },
   });
-  expect(result.code).toContain('"https://example.invalid"');
-  expect(result.code).toContain('"sb_publishable_test"');
-  expect(result.code).not.toContain('{}[');
+  assert.ok(result.code.includes('"https://example.invalid"'));
+  assert.ok(result.code.includes('"sb_publishable_test"'));
+  assert.ok(!result.code.includes('{}['));
 });
 
 test("server secrets and dynamic lookups are left unchanged", () => {
   const source = "process.env['RAZORPAY_KEY_SECRET']; import.meta.env[key];";
-  expect(normalizeViteEnvAccess(source)).toBe(source);
+  assert.equal(normalizeViteEnvAccess(source), source);
 });
