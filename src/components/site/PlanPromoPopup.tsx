@@ -64,7 +64,7 @@ export function PlanPromoPopup() {
       }`}
       aria-hidden={!open}
     >
-      <div className={`glass-dark relative max-h-[calc(100dvh-2rem)] overflow-x-hidden overflow-y-auto rounded-3xl border border-accent/30 p-5 text-cream shadow-lift ${open ? "pointer-events-auto" : "pointer-events-none"}`}>
+      <div className={`subscription-plan-text glass-dark relative max-h-[calc(100dvh-2rem)] overflow-x-hidden overflow-y-auto rounded-3xl border border-accent/30 p-5 text-cream shadow-lift ${open ? "pointer-events-auto" : "pointer-events-none"}`}>
         <div className="hero-orb -right-10 -top-10 size-32 bg-accent/25" />
         <button
           type="button"

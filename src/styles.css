@@ -187,6 +187,13 @@
   color: transparent;
 }
 
+/* Plan-card copy uses the same dark olive in every state, including shimmer text. */
+.subscription-plan-text,
+.subscription-plan-text :where(div, p, span, h3, ul, li, a, button) {
+  color: var(--olive-dark) !important;
+  -webkit-text-fill-color: var(--olive-dark) !important;
+}
+
 @utility shadow-soft {
   box-shadow: var(--shadow-soft);
 }

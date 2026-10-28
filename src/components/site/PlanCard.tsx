@@ -29,7 +29,7 @@ export function PlanCard({
   return (
     <div
       className={cn(
-        "hover-glow relative flex h-full flex-col rounded-[1.75rem] border p-7 text-cream",
+        "subscription-plan-text hover-glow relative flex h-full flex-col rounded-[1.75rem] border p-7 text-cream",
         highlight
           ? "border-accent/45 bg-cream/10 shadow-lift glow-lime"
           : "glass-dark border-cream/12",

@@ -59,7 +59,7 @@ export function PlansHero() {
                   <div
                     key={plan.id}
                     className={cn(
-                      "podium-card group relative flex flex-col rounded-[1.75rem] border p-7 text-center transition-all duration-500",
+                      "subscription-plan-text podium-card group relative flex flex-col rounded-[1.75rem] border p-7 text-center transition-all duration-500",
                       featured
                         ? "border-accent/45 bg-cream/10 shadow-lift glow-lime sm:-mb-2 sm:scale-[1.05]"
                         : "glass-dark border-cream/12 hover:-translate-y-1.5",

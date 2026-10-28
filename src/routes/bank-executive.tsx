@@ -74,7 +74,7 @@ function BankExecutivePage() {
             {EXECUTIVE_PLANS.map((p) => (
               <div
                 key={p.code}
-                className={`flex h-full flex-col rounded-[1.75rem] border p-7 ${
+                className={`subscription-plan-text flex h-full flex-col rounded-[1.75rem] border p-7 ${
                   p.featured ? "border-accent/45 bg-cream/10 shadow-lift" : "glass-dark border-cream/12"
                 }`}
               >
