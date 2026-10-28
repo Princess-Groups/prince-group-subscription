@@ -1,4 +1,4 @@
 - [x] Reproduce screenshot error and isolate connection-settings packaging failure.
 - [x] Repair packaging without editing generated integration files or changing the UI.
-- [ ] Run regression checks and audit public pages, links, and mobile navigation.
-- [ ] Verify signed-in pages (requires a user-selected test account).
+- [x] Run regression checks: two passing tests, 48 desktop/mobile page checks, 30 footer clicks, primary navigation, searches, and selected-plan payment navigation.
+- [ ] Verify signed-in workflows; blocked until the user selects an existing account (account question skipped).
