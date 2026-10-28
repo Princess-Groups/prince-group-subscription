@@ -6,6 +6,17 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import type { PluginOption } from "vite";
+import { normalizeViteEnvAccess } from "./src/lib/vite-env-access";
+
+const browserConnectionEnv: PluginOption = {
+  name: "browser-connection-env",
+  enforce: "pre",
+  transform(source, id) {
+    if (!id.split("?")[0]?.endsWith("/integrations/supabase/client.ts")) return null;
+    const code = normalizeViteEnvAccess(source);
+    return code === source ? null : { code, map: null };
+  },
+};
 
 const assetOrigin =
   process.env["VITE_ASSET_ORIGIN"]?.trim().replace(/\/$/, "") ||
@@ -29,7 +40,7 @@ const productionAssetUrls: PluginOption = {
 
 export default defineConfig({
   vite: {
-    plugins: [productionAssetUrls],
+    plugins: [browserConnectionEnv, productionAssetUrls],
   },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
