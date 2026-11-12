@@ -5,15 +5,20 @@
 //     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
-import type { PluginOption } from "vite";
+import { loadEnv, type PluginOption } from "vite";
 import { normalizeViteEnvAccess } from "./src/lib/vite-env-access";
 
+let browserPublicEnv: Record<string, string> = {};
 const browserConnectionEnv: PluginOption = {
   name: "browser-connection-env",
   enforce: "pre",
+  configResolved(config) {
+    const loaded = loadEnv(config.mode, config.envDir, "VITE_");
+    browserPublicEnv = { ...loaded, ...config.env };
+  },
   transform(source, id) {
     if (!id.split("?")[0]?.endsWith("/integrations/supabase/client.ts")) return null;
-    const code = normalizeViteEnvAccess(source);
+    const code = normalizeViteEnvAccess(source, browserPublicEnv);
     return code === source ? null : { code, map: null };
   },
 };
@@ -24,6 +29,7 @@ const assetOrigin =
 
 const productionAssetUrls: PluginOption = {
   name: "production-asset-urls",
+  apply: "build",
   enforce: "pre",
   transform(source, id) {
     if (!id.endsWith(".asset.json")) return null;

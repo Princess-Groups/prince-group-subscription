@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { PlanCard } from "@/components/site/PlanCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import { settingString, usePlans, useSettings, useSlots } from "@/hooks/usePlatform";
 
 export function PlansSection({
@@ -16,7 +17,7 @@ export function PlansSection({
   filter?: (code: string) => boolean;
   cinematicFocus?: boolean;
 }) {
-  const { data: plans, isLoading } = usePlans();
+  const { data: plans, isLoading, isError, refetch, isFetching } = usePlans();
   const { data: slots } = useSlots();
   const { data: settings } = useSettings();
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export function PlansSection({
     if (!cinematicFocus) return;
 
     const section = sectionRef.current;
-    if (!section) return;
+    if (!section || typeof IntersectionObserver === "undefined") return;
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry?.isIntersecting ?? false),
@@ -92,7 +93,14 @@ export function PlansSection({
       >
         {isLoading
           ? [0, 1, 2].map((i) => <Skeleton key={i} className="h-[520px] rounded-3xl" />)
-          : list.map((plan, index) => (
+          : list.length === 0 ? (
+              <div role="status" className="lg:col-span-3">
+                <p>{isError ? "Plans could not be loaded. Please try again." : "No plans are currently available."}</p>
+                <Button variant="onOlive" className="mt-4" disabled={isFetching} onClick={() => void refetch()}>
+                  Try again
+                </Button>
+              </div>
+            ) : list.map((plan, index) => (
               <div
                 key={plan.id}
                 className={cinematicFocus ? "subscription-focus-card h-full" : "h-full"}
