@@ -121,6 +121,7 @@
   --gradient-lime: linear-gradient(120deg, oklch(0.775 0.152 124) 0%, oklch(0.884 0.181 120) 100%);
   --gradient-cream: linear-gradient(180deg, oklch(0.984 0.011 95.2) 0%, oklch(0.955 0.02 100) 100%);
   --glow-lime: 0 0 0 1px oklch(0.834 0.169 121.8 / 0.28), 0 18px 60px oklch(0.834 0.169 121.8 / 0.28);
+  --plan-readable-glass: oklch(0.969 0.016 95.2 / 0.88);
 }
 
 
@@ -192,6 +193,12 @@
 .subscription-plan-text :where(div, p, span, h3, ul, li, a, button) {
   color: var(--olive-dark) !important;
   -webkit-text-fill-color: var(--olive-dark) !important;
+}
+
+/* Keep dark olive copy legible on the existing homepage glass cards. */
+#plans .subscription-plan-text {
+  background-color: var(--plan-readable-glass);
+  backdrop-filter: blur(18px);
 }
 
 @utility shadow-soft {
