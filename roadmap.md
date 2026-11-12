@@ -2,3 +2,5 @@
 - [x] Repair packaging without editing generated integration files or changing the UI.
 - [x] Run regression checks: two passing tests, 48 desktop/mobile page checks, 30 footer clicks, primary navigation, searches, and selected-plan payment navigation.
 - [ ] Verify signed-in workflows; blocked until the user selects an existing account (account question skipped).
+- [ ] Restore readable homepage plan cards while preserving dark olive text and glass effects.
+- [ ] Diagnose current preview loading and verify public pages on desktop and mobile.
