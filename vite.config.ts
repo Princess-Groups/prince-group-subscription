@@ -6,7 +6,8 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { loadEnv, type PluginOption } from "vite";
-import { normalizeViteEnvAccess } from "./src/lib/vite-env-access";
+import { normalizeViteEnvAccess, resolvePublicConnectionEnv } from "./src/lib/vite-env-access";
+import publicConnection from "./src/lib/public-connection.json";
 
 let browserPublicEnv: Record<string, string> = {};
 const browserConnectionEnv: PluginOption = {
@@ -14,7 +15,7 @@ const browserConnectionEnv: PluginOption = {
   enforce: "pre",
   configResolved(config) {
     const loaded = loadEnv(config.mode, config.envDir, "VITE_");
-    browserPublicEnv = { ...loaded, ...config.env };
+    browserPublicEnv = resolvePublicConnectionEnv(publicConnection, loaded, config.env);
   },
   transform(source, id) {
     if (!id.split("?")[0]?.endsWith("/integrations/supabase/client.ts")) return null;
