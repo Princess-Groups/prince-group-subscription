@@ -20,6 +20,8 @@ export const Route = createFileRoute("/_authenticated/network-admin")({
       { property: "og:title", content: "Network Admin | PRINCE" },
       { property: "og:description", content: "Prince Group subscriber network administration." },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: NetworkAdminPage,

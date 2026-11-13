@@ -28,6 +28,8 @@ export const Route = createFileRoute("/_authenticated/admin")({
       { property: "og:title", content: "Admin Control Centre | PRINCE" },
       { property: "og:description", content: "Platform analytics, approvals and audit logs." },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AdminPage,

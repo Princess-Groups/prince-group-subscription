@@ -28,6 +28,8 @@ export const Route = createFileRoute("/_authenticated/leads")({
       { property: "og:title", content: "My Allocated Leads | PRINCE" },
       { property: "og:description", content: "Allocated leads with protected contact reveal." },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: LeadsPage,
