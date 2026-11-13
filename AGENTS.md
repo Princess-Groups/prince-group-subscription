@@ -13,3 +13,4 @@
 - Embed available public browser connection settings in that transform for both SSR and browser output; do not embed server secrets.
 - Resolve only the two public browser connection settings from build env with a checked-in public fallback; blank env values must not erase them, and missing values fail at build time to prevent hosted blank pages.
 - Rewrite asset-pointer URLs only during production builds so local SSR and browser hydration use identical asset addresses.
+- Public directory and opportunity SELECT policies expose only status='available' listings; preserve admin management policies and separate subscription-gated phone access to prevent unpublished listing exposure.
