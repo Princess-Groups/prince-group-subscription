@@ -4,7 +4,6 @@ import { PublicPage } from "@/components/site/PublicPage";
 import { PlansSection } from "@/components/site/PlansSection";
 import {
   BankExecutiveSection,
-  BranchesSection,
   ContactCtaSection,
   HeroSection,
   LoanCandidateDataSection,
@@ -15,7 +14,7 @@ import {
 
 const title = "PRINCE GROUP — Premium Data Access, Offers & Services in Kanyakumari";
 const description =
-  "Subscribe to unlock 1,00,000+ loan candidate profiles, 6,00,000+ Kanyakumari business contacts, exclusive service discounts and live slot availability — 20 branches all over Kanyakumari.";
+  "Subscribe to unlock 1,00,000+ loan candidate profiles, 6,00,000+ Kanyakumari business contacts, exclusive service discounts and live slot availability.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -40,7 +39,6 @@ function Index() {
       <ServiceShowcaseSection />
       <LoanCandidateDataSection />
       <PlansSection cinematicFocus />
-      <BranchesSection />
       <TrustSection />
       <ContactCtaSection />
     </PublicPage>

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { MapPin, Menu, Phone, Sparkles } from "lucide-react";
+import { Menu, Phone, Sparkles } from "lucide-react";
 import { useState } from "react";
 
 import princeLogo from "@/assets/prince-logo.png.asset.json";
@@ -14,7 +14,6 @@ const NAV = [
   { to: "/plans", label: "Plans" },
   { to: "/loan-services", label: "Candidate Data" },
   { to: "/services", label: "Services" },
-  { to: "/branches", label: "Branches" },
   { to: "/opportunities", label: "Opportunities" },
   { to: "/contacts", label: "Directory" },
   { to: "/enquiry", label: "Enquiry" },
@@ -23,7 +22,6 @@ const NAV = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
-export const BRANCH_TAGLINE = "20 Branches All Over Kanyakumari";
 export const BRAND_STATEMENT = "THE ONE BRAND ALL YOUR NEEDS";
 
 export function BrandMark({ tone = "dark" }: { tone?: "dark" | "light" }) {
@@ -96,10 +94,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50">
       {/* Tagline strip */}
       <div className="bg-gradient-olive text-cream">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-4 py-1.5 text-center sm:px-6 md:justify-between">
-          <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-accent sm:text-[11px]">
-            <MapPin className="size-3.5 shrink-0" /> {BRANCH_TAGLINE}
-          </span>
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-4 py-1.5 text-center sm:px-6 md:justify-end">
           <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-cream/95 sm:text-[11px]">
             <Sparkles className="size-3.5 shrink-0 text-accent" /> {BRAND_STATEMENT}
           </span>
@@ -147,9 +142,6 @@ export function SiteHeader() {
                 <SheetContent side="right" className="w-80 border-l border-cream/10 bg-gradient-olive">
                   <div className="mt-8 flex flex-col gap-1">
                     <BrandMark tone="light" />
-                    <p className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">
-                      <MapPin className="size-3.5" /> {BRANCH_TAGLINE}
-                    </p>
                     <div className="mt-6 flex flex-col gap-1">
                       {NAV.map((item) => (
                         <Link

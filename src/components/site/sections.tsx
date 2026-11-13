@@ -5,11 +5,8 @@ import {
   BadgeCheck,
   BarChart3,
   Building2,
-  Clock3,
   Database,
   Lock,
-  MapPin,
-  Navigation,
   Phone,
   ShieldCheck,
   Sparkles,
@@ -20,34 +17,14 @@ import {
 } from "lucide-react";
 
 import bankExecutiveTeam from "@/assets/bank-executive-team.webp";
-import arumanaiBranch from "@/assets/branches/home/arumanai.webp.asset.json";
-import boothapandiBranch from "@/assets/branches/home/boothapandi.webp.asset.json";
-import edalakudiBranch from "@/assets/branches/home/edalakudi.webp.asset.json";
-import eranielBranch from "@/assets/branches/home/eraniel.webp.asset.json";
-import karungalBranch from "@/assets/branches/home/karungal.webp.asset.json";
-import kollemcodeBranch from "@/assets/branches/home/kollemcode.webp.asset.json";
-import kottaramBranch from "@/assets/branches/home/kottaram.webp.asset.json";
-import manavalakurichiBranch from "@/assets/branches/home/manavalakurichi.webp.asset.json";
-import marthandamBranch from "@/assets/branches/home/marthandam.webp.asset.json";
-import mondayMarketBranch from "@/assets/branches/home/monday-market.webp.asset.json";
-import munchiraiBranch from "@/assets/branches/home/munchirai.webp.asset.json";
-import nagercoilBranch from "@/assets/branches/home/nagercoil.webp.asset.json";
-import palliyadiBranch from "@/assets/branches/home/palliyadi.webp.asset.json";
-import palugalBranch from "@/assets/branches/home/palugal.webp.asset.json";
-import rajakkamangalamBranch from "@/assets/branches/home/rajakkamangalam.webp.asset.json";
-import thiruvattarBranch from "@/assets/branches/home/thiruvattar.webp.asset.json";
-import thovalaiBranch from "@/assets/branches/home/thovalai.webp.asset.json";
-import thuckalayBranch from "@/assets/branches/home/thuckalay.webp.asset.json";
-import verkilambiBranch from "@/assets/branches/home/verkilambi.webp.asset.json";
 
 import heroImage from "@/assets/prince-homepage-hero.png.asset.json";
 import { CountUp } from "@/components/site/CountUp";
-import { AdminManagedNote, DemoBadge, SectionHeading } from "@/components/site/PublicPage";
+import { DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
 import { phoneDisplay } from "@/lib/format";
 import { settingString, useSettings } from "@/hooks/usePlatform";
 
-export const BRANCH_TAGLINE = "20 Branches All Over Kanyakumari";
 
 /* ---------------- Hero with live animated statistics ---------------- */
 
@@ -138,7 +115,7 @@ export function HeroSection() {
     <section className="relative isolate overflow-hidden bg-gradient-olive text-cream">
       <div
         role="img"
-        aria-label="Glowing green Kanyakumari map with connected location pins representing the PRINCE branch network"
+        aria-label="Glowing green Kanyakumari map with connected location pins in Kanyakumari District"
         className="absolute inset-0 -z-20 size-full bg-top bg-no-repeat [background-size:100%_auto]"
         style={{ backgroundImage: `url(${heroImage.url})` }}
       />
@@ -543,189 +520,6 @@ export function ServiceShowcaseSection() {
         <Button asChild size="lg" variant="lime">
           <Link to="/services">View member pricing →</Link>
         </Button>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- Branch network — Kanyakumari ---------------- */
-
-export const BRANCHES = [
-  "Monday Market (Head Office)",
-  "Kollemcode",
-  "Palugal",
-  "Arumanai",
-  "Marthandam",
-  "Thiruvattar",
-  "Verkilambi",
-  "Munchirai",
-  "Karungal",
-  "Palliyadi",
-  "Thuckalay",
-  "Eraniel",
-  "Manavalakurichi",
-  "Rajakkamangalam",
-  "Nagercoil",
-  "Edalakudi",
-  "Kottaram",
-  "Thovalai",
-  "Boothapandi",
-];
-
-const BRANCH_PHOTOS: Record<string, string> = {
-  "Monday Market (Head Office)": mondayMarketBranch.url,
-  Kollemcode: kollemcodeBranch.url,
-  Palugal: palugalBranch.url,
-  Arumanai: arumanaiBranch.url,
-  Marthandam: marthandamBranch.url,
-  Thiruvattar: thiruvattarBranch.url,
-  Verkilambi: verkilambiBranch.url,
-  Munchirai: munchiraiBranch.url,
-  Karungal: karungalBranch.url,
-  Palliyadi: palliyadiBranch.url,
-  Thuckalay: thuckalayBranch.url,
-  Eraniel: eranielBranch.url,
-  Manavalakurichi: manavalakurichiBranch.url,
-  Rajakkamangalam: rajakkamangalamBranch.url,
-  Nagercoil: nagercoilBranch.url,
-  Edalakudi: edalakudiBranch.url,
-  Kottaram: kottaramBranch.url,
-  Thovalai: thovalaiBranch.url,
-  Boothapandi: boothapandiBranch.url,
-};
-
-const HOMEPAGE_BRANCHES = BRANCHES.map((name) => ({
-  name,
-  address: `${name.replace(" (Head Office)", "")}, Kanyakumari District`,
-  image: BRANCH_PHOTOS[name],
-}));
-
-export function BranchesSection({ full = false }: { full?: boolean }) {
-  const list = full ? BRANCHES : BRANCHES.slice(0, 10);
-
-  if (!full) {
-    return (
-      <section className="relative overflow-hidden bg-cream-soft py-20 sm:py-24">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-secondary/35 to-transparent" />
-        <div className="relative mx-auto max-w-[90rem] px-4 sm:px-6">
-          <header className="mx-auto max-w-2xl text-center">
-            <span className="mx-auto grid size-12 place-items-center rounded-full bg-accent/15 text-secondary shadow-soft">
-              <MapPin className="size-6" aria-hidden />
-            </span>
-            <div className="mt-5 flex items-center justify-center gap-4 sm:gap-7">
-              <span className="h-px w-12 bg-secondary/55 sm:w-20" aria-hidden />
-              <h2 className="text-3xl font-bold text-primary sm:text-4xl">Our Branches</h2>
-              <span className="h-px w-12 bg-secondary/55 sm:w-20" aria-hidden />
-            </div>
-            <p className="mt-3 text-sm text-foreground/80 sm:text-base">
-              Serving you across Kanyakumari District
-            </p>
-          </header>
-
-          <div className="mt-10 grid items-start gap-5 sm:grid-cols-2 xl:grid-cols-5">
-            {HOMEPAGE_BRANCHES.map((branch) => (
-              <article
-                key={branch.name}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-primary/10 bg-primary text-cream shadow-soft transition-[transform,box-shadow] duration-500 ease-out motion-safe:hover:-translate-y-1.5 motion-safe:hover:shadow-lift"
-              >
-                <div className="relative w-full shrink-0 bg-olive-dark">
-                  <img
-                    src={branch.image}
-                    alt={`${branch.name.replace(" (Head Office)", "")} branch location in Kanyakumari District`}
-                    loading="lazy"
-                    className="block h-auto w-full object-contain object-center"
-                  />
-                </div>
-
-                <div className="bg-gradient-to-b from-primary to-olive-dark px-4 py-3">
-                  <h3 className="text-lg font-bold leading-tight text-cream sm:text-xl">{branch.name}</h3>
-                  <div className="mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-cream/90">
-                    <Clock3 className="size-3.5 text-accent" aria-hidden />
-                    <span>Mon – Sat · 9:00 AM – 5:00 PM</span>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center">
-            <Button asChild variant="lime" size="lg" className="w-full sm:w-auto">
-              <Link to="/branches">
-                <Navigation className="size-4" /> View all 20 branches
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  return (
-    <section className="relative overflow-hidden bg-gradient-olive py-20">
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="[&_h2]:text-accent [&_h2_span]:text-accent">
-          <SectionHeading
-            tone="light"
-            eyebrow="Branch Network"
-            title="20 Branches Across Kanyakumari"
-            subtitle="Local teams across Kanyakumari District for documentation, registration, business and data services — with admin-verified coverage in every town."
-          />
-        </div>
-
-        <div className="mt-12">
-          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-olive p-8 text-cream shadow-lift">
-            <div className="hero-orb -right-16 -top-16 size-64 bg-accent/25" />
-            <div className="relative grid gap-4 sm:grid-cols-3">
-              {[
-                { value: "20", label: "Branches" },
-                { value: "Kanyakumari", label: "District coverage" },
-                { value: "Local", label: "On-ground teams" },
-              ].map((s) => (
-                <div key={s.label} className="glass-dark rounded-2xl px-4 py-5 text-center">
-                  <p className="font-display text-2xl font-bold text-accent sm:text-3xl">{s.value}</p>
-                  <p className="mt-1 text-[11px] uppercase tracking-wider text-cream/90">{s.label}</p>
-                </div>
-              ))}
-            </div>
-            <p className="relative mt-6 text-sm text-cream/90">
-              Branch discovery, coverage and contact routing are administered centrally so members
-              always reach the right local team.
-            </p>
-            <Button asChild variant="lime" className="relative mt-6 w-full sm:w-auto">
-              <Link to="/branches">
-                <Navigation className="size-4" /> Find a branch
-              </Link>
-            </Button>
-          </div>
-        </div>
-
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {list.map((town, i) => (
-            <div
-              key={town}
-              className={`glass-branch group rounded-3xl p-6 ${i === 0 ? "ring-1 ring-accent/25" : ""}`}
-            >
-              <span className="grid size-11 place-items-center rounded-2xl bg-gradient-olive text-accent transition-transform group-hover:scale-105">
-                {i === 0 ? <Star className="size-5" /> : <MapPin className="size-5" />}
-              </span>
-              <h3 className="mt-5 text-lg font-semibold text-cream">{town}</h3>
-              <p className="mt-1 text-sm text-cream/90">
-                Documentation · Registration · Business services
-              </p>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-accent">
-                Branch open
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-3 rounded-2xl bg-olive-dark/60 px-4 py-3 text-cream/90">
-          <AdminManagedNote>
-            Branch towns, addresses and contact routing are configurable from Admin Settings; the list
-            above is the current published coverage across Kanyakumari District.
-          </AdminManagedNote>
-        </div>
       </div>
     </section>
   );

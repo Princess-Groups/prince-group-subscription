@@ -69,7 +69,7 @@ const BENEFITS = [
   {
     icon: Handshake,
     title: "Valuable Business Contacts",
-    body: "Access curated contacts for partnerships, vendor tie-ups and branch-level outreach.",
+    body: "Access curated contacts for partnerships and vendor tie-ups.",
   },
   {
     icon: Gift,
@@ -382,7 +382,7 @@ function LoanDataPage() {
           </div>
 
           <div className="mt-12 rounded-[2rem] border border-accent/25 bg-accent/10 p-8 text-center">
-            <h3 className="text-2xl font-bold text-cream">Need data for your branch targets?</h3>
+            <h3 className="text-2xl font-bold text-cream">Need data for your targets?</h3>
             <p className="mx-auto mt-2 max-w-2xl text-sm text-cream/90">
               Share your loan category and volume requirement for Kanyakumari district. Our team will confirm current
               availability and data terms.

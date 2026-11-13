@@ -5,7 +5,6 @@ import {
   Crown,
   Mail,
   MapPin,
-  Navigation,
   Phone,
   Sparkles,
   Users,
@@ -55,7 +54,7 @@ function OfficePage() {
   const desks = [
     { icon: Users, title: "Membership Desk", body: "Plan onboarding, renewals and member support." },
     { icon: Building2, title: "Bank Executive Desk", body: "Candidate data access and executive accounts." },
-    { icon: Crown, title: "Partnerships", body: "Branch tie-ups, service partners and enterprise data." },
+    { icon: Crown, title: "Partnerships", body: "Service partners and enterprise data." },
   ];
 
   return (
@@ -82,18 +81,13 @@ function OfficePage() {
               </h1>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/90">
                 One address for membership support, bank executive data access and partnership
-                conversations — backed by our branch network across Kanyakumari District.
+                conversations.
               </p>
               <div className="mt-9 flex flex-wrap gap-3">
                 <Button asChild size="lg" variant="lime" className="w-full sm:w-auto">
                   <a href={`tel:${phone}`}>
                     <Phone className="size-4" /> Call the office
                   </a>
-                </Button>
-                <Button asChild size="lg" variant="onOlive" className="w-full sm:w-auto">
-                  <Link to="/branches">
-                    <Navigation className="size-4" /> Find a branch
-                  </Link>
                 </Button>
               </div>
             </div>
