@@ -99,6 +99,13 @@
       "when": 1793118841331,
       "tag": "0013_add_mortgage_deed_service",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1794542365950,
+      "tag": "0014_restrict_public_directory_and_opportunity_reads",
+      "breakpoints": true
     }
   ]
 }
