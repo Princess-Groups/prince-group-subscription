@@ -27,6 +27,8 @@ export const Route = createFileRoute("/_authenticated/subscription")({
       { property: "og:title", content: "Subscription & Billing | PRINCE" },
       { property: "og:description", content: "Manage your plan, advance access and payment history." },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: SubscriptionPage,
