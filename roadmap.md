@@ -5,4 +5,4 @@
 - [x] Restore readable homepage plan cards; all three buttons preserve selected plans at three screen sizes.
 - [x] Repair preview connection replacement and asset hydration mismatch; three regression tests and 49 local page checks passed. Hosted preview verification unavailable without an active preview tab; recovered member-navigation warnings remain outside fresh-tab checks.
 - [x] Repair recurring hosted missing-public-settings error: public-only build fallback, refreshed Cloud bindings, six passing regression tests, seventeen public pages loaded without runtime errors; hosted update requires publishing.
-- [ ] Remove branch pages, sections, navigation, copy and unused assets website-wide; verify desktop/tablet/mobile.
+- [x] Remove branch pages, sections, navigation, copy and unused assets website-wide; 69 desktop/tablet/mobile page checks passed, no branch references remain in src/public, and the deleted page returns 404. Signed-in-only content remains unverified without a selected account.
