@@ -102,7 +102,7 @@ function ServicesPage() {
             </span>
             <h2 className="mt-4 text-3xl font-bold text-primary sm:text-4xl">{cat}</h2>
             <p className="mt-3 max-w-2xl text-sm text-foreground/80">
-              Certificates, registrations and legal paperwork handled end to end by our branch teams
+              Certificates, registrations and legal paperwork handled end to end by our teams
               across Kanyakumari district.
             </p>
 

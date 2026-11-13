@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { MapPin, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
 
 import princeLogo from "@/assets/prince-logo.png.asset.json";
 import { phoneDisplay } from "@/lib/format";
@@ -45,12 +45,6 @@ export function SiteFooter() {
             >
               <Phone className="size-4" /> {phoneDisplay(phone)}
             </a>
-            <Link
-              to="/branches"
-              className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-sm font-semibold text-cream/95 transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
-            >
-              <MapPin className="size-4" /> 20 Branches All Over Kanyakumari
-            </Link>
           </div>
         </div>
 
@@ -61,7 +55,6 @@ export function SiteFooter() {
             <li><Link to="/loan-services" className="hover:text-accent">Loan Candidate Data</Link></li>
             <li><Link to="/services" className="hover:text-accent">Member Services</Link></li>
             <li><Link to="/office" className="hover:text-accent">Our Office</Link></li>
-            <li><Link to="/branches" className="hover:text-accent">Branch Network</Link></li>
             <li><Link to="/opportunities" className="hover:text-accent">Data Opportunities</Link></li>
             <li><Link to="/contacts" className="hover:text-accent">Business Contacts</Link></li>
             <li><Link to="/offers" className="hover:text-accent">Offers</Link></li>

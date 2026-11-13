@@ -13,7 +13,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BankExecutiveRouteImport } from './routes/bank-executive'
-import { Route as BranchesRouteImport } from './routes/branches'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContactsRouteImport } from './routes/contacts'
 import { Route as EnquiryRouteImport } from './routes/enquiry'
@@ -54,11 +53,6 @@ const AuthRoute = AuthRouteImport.update({
 const BankExecutiveRoute = BankExecutiveRouteImport.update({
   id: '/bank-executive',
   path: '/bank-executive',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BranchesRoute = BranchesRouteImport.update({
-  id: '/branches',
-  path: '/branches',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -179,7 +173,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/bank-executive': typeof BankExecutiveRoute
-  '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
   '/enquiry': typeof EnquiryRoute
@@ -207,7 +200,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/bank-executive': typeof BankExecutiveRoute
-  '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
   '/enquiry': typeof EnquiryRoute
@@ -237,7 +229,6 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/bank-executive': typeof BankExecutiveRoute
-  '/branches': typeof BranchesRoute
   '/contact': typeof ContactRoute
   '/contacts': typeof ContactsRoute
   '/enquiry': typeof EnquiryRoute
@@ -267,7 +258,6 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/bank-executive'
-    | '/branches'
     | '/contact'
     | '/contacts'
     | '/enquiry'
@@ -295,7 +285,6 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/bank-executive'
-    | '/branches'
     | '/contact'
     | '/contacts'
     | '/enquiry'
@@ -324,7 +313,6 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/bank-executive'
-    | '/branches'
     | '/contact'
     | '/contacts'
     | '/enquiry'
@@ -354,7 +342,6 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   BankExecutiveRoute: typeof BankExecutiveRoute
-  BranchesRoute: typeof BranchesRoute
   ContactRoute: typeof ContactRoute
   ContactsRoute: typeof ContactsRoute
   EnquiryRoute: typeof EnquiryRoute
@@ -402,13 +389,6 @@ declare module '@tanstack/react-router' {
       path: '/bank-executive'
       fullPath: '/bank-executive'
       preLoaderRoute: typeof BankExecutiveRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/branches': {
-      id: '/branches'
-      path: '/branches'
-      fullPath: '/branches'
-      preLoaderRoute: typeof BranchesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -592,7 +572,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   BankExecutiveRoute: BankExecutiveRoute,
-  BranchesRoute: BranchesRoute,
   ContactRoute: ContactRoute,
   ContactsRoute: ContactsRoute,
   EnquiryRoute: EnquiryRoute,
