@@ -14,3 +14,5 @@
 - Resolve only the two public browser connection settings from build env with a checked-in public fallback; blank env values must not erase them, and missing values fail at build time to prevent hosted blank pages.
 - Rewrite asset-pointer URLs only during production builds so local SSR and browser hydration use identical asset addresses.
 - Public directory and opportunity SELECT policies expose only status='available' listings; preserve admin management policies and separate subscription-gated phone access to prevent unpublished listing exposure.
+- Loan imports use normalized phone identities and immutable executive history; allocation and paid-period credits are transactionally enforced in database functions to prevent concurrent or repeat claims.
+- Parse Excel in the browser with positional mapping and preview, then submit retry-safe batches of 500; never embed private uploaded lead workbooks in public assets.
