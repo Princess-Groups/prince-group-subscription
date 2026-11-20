@@ -239,6 +239,27 @@ export type Database = {
         }
         Relationships: []
       }
+      executive_lead_history: {
+        Row: {
+          lead_id: string
+          phone_key: string
+          received_at: string
+          user_id: string
+        }
+        Insert: {
+          lead_id: string
+          phone_key: string
+          received_at?: string
+          user_id: string
+        }
+        Update: {
+          lead_id?: string
+          phone_key?: string
+          received_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       lead_allocations: {
         Row: {
           allocated_at: string
@@ -305,11 +326,98 @@ export type Database = {
         }
         Relationships: []
       }
+      lead_credit_periods: {
+        Row: {
+          id: string
+          period_end: string
+          period_start: string
+          quota: number
+          subscription_id: string
+          used: number
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          period_end: string
+          period_start: string
+          quota: number
+          subscription_id: string
+          used?: number
+          user_id: string
+        }
+        Update: {
+          id?: string
+          period_end?: string
+          period_start?: string
+          quota?: number
+          subscription_id?: string
+          used?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_credit_periods_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lead_identities: {
+        Row: {
+          lead_id: string
+          phone_key: string
+        }
+        Insert: {
+          lead_id: string
+          phone_key: string
+        }
+        Update: {
+          lead_id?: string
+          phone_key?: string
+        }
+        Relationships: []
+      }
+      lead_import_batches: {
+        Row: {
+          admin_id: string
+          created_at: string
+          duplicates: number
+          filename: string
+          id: string
+          imported: number
+          invalid: number
+          record_offset: number
+        }
+        Insert: {
+          admin_id: string
+          created_at?: string
+          duplicates?: number
+          filename: string
+          id: string
+          imported?: number
+          invalid?: number
+          record_offset: number
+        }
+        Update: {
+          admin_id?: string
+          created_at?: string
+          duplicates?: number
+          filename?: string
+          id?: string
+          imported?: number
+          invalid?: number
+          record_offset?: number
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string
           eligibility: string | null
           estimated_amount: number | null
+          extra_details: Json
           id: string
           is_demo: boolean
           lead_code: string
@@ -325,6 +433,7 @@ export type Database = {
           created_at?: string
           eligibility?: string | null
           estimated_amount?: number | null
+          extra_details?: Json
           id?: string
           is_demo?: boolean
           lead_code?: string
@@ -340,6 +449,7 @@ export type Database = {
           created_at?: string
           eligibility?: string | null
           estimated_amount?: number | null
+          extra_details?: Json
           id?: string
           is_demo?: boolean
           lead_code?: string
@@ -1135,6 +1245,7 @@ export type Database = {
         Args: { _lead_id: string; _user_id: string }
         Returns: Json
       }
+      admin_loan_inventory: { Args: never; Returns: Json }
       admin_set_account_status: {
         Args: {
           _status: Database["public"]["Enums"]["account_status"]
@@ -1176,6 +1287,7 @@ export type Database = {
         Args: { _members: string[]; _title: string }
         Returns: Json
       }
+      download_my_loan_leads: { Args: { _ids: string[] }; Returns: Json }
       get_member_profile: { Args: { _user_id: string }; Returns: Json }
       has_active_subscription: { Args: { _user_id: string }; Returns: boolean }
       has_role: {
@@ -1185,14 +1297,26 @@ export type Database = {
         }
         Returns: boolean
       }
+      import_loan_leads: {
+        Args: {
+          _batch_id: string
+          _filename: string
+          _offset: number
+          _rows: Json
+        }
+        Returns: Json
+      }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
       is_conversation_member: {
         Args: { _conversation_id: string; _user_id: string }
         Returns: boolean
       }
       is_phone_verified: { Args: { _user_id: string }; Returns: boolean }
+      lead_phone_key: { Args: { _phone: string }; Returns: string }
+      monthly_lead_quota: { Args: { _code: string }; Returns: number }
       my_conversations: { Args: never; Returns: Json }
       my_dashboard: { Args: never; Returns: Json }
+      my_loan_credits: { Args: never; Returns: Json }
       my_network_access: { Args: never; Returns: Json }
       network_admin_stats: { Args: never; Returns: Json }
       plan_slot_counts: {
