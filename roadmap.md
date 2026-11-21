@@ -1,6 +1,7 @@
 - [ ] Add admin Excel mapping, validation, batched duplicate-safe imports and inventory/history monitoring.
 - [ ] Implement monthly 3/10/50 credits with permanent executive history and automatic fresh/reused lead rotation.
 - [ ] Add executive Excel downloads and verify imports, allocation, permissions and subscription credits end-to-end.
+- [ ] Import all valid numbers from seven approved uploaded workbooks, retaining details and removing duplicates.
 - [x] Reproduce screenshot error and isolate connection-settings packaging failure.
 - [x] Repair packaging without editing generated integration files or changing the UI.
 - [x] Run regression checks: two passing tests, 48 desktop/mobile page checks, 30 footer clicks, primary navigation, searches, and selected-plan payment navigation.

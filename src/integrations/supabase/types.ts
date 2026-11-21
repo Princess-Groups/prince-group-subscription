@@ -1245,6 +1245,7 @@ export type Database = {
         Args: { _lead_id: string; _user_id: string }
         Returns: Json
       }
+      admin_executive_lead_totals: { Args: never; Returns: Json }
       admin_loan_inventory: { Args: never; Returns: Json }
       admin_set_account_status: {
         Args: {

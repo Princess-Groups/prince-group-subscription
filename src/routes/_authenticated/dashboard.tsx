@@ -10,13 +10,13 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
-import { inr, weeklyResetCountdown } from "@/lib/format";
+import { inr, shortDate } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
       { title: "Member Dashboard | PRINCE" },
-      { name: "description", content: "Track your subscription, lead quota, weekly claim attempts and allocations." },
+      { name: "description", content: "Track your monthly subscription, remaining lead credits and unique loan allocations." },
       { property: "og:title", content: "Member Dashboard | PRINCE" },
       { property: "og:description", content: "Track your subscription, lead quota and allocations." },
       { name: "robots", content: "noindex" },
@@ -37,8 +37,8 @@ type Snapshot = {
 
 const CLAIM_ERRORS: Record<string, string> = {
   no_active_subscription: "Your subscription isn't active yet — payment must be verified first.",
-  weekly_attempt_used: "You've used this week's claim attempt. It resets next week.",
-  lead_limit_reached: "You've reached your plan's total lead limit.",
+  phone_not_verified: "Verify your mobile number before claiming leads.",
+  lead_limit_reached: "You've used this month's lead credits.",
   no_leads: "No new leads are available for you right now.",
 };
 
@@ -71,11 +71,16 @@ function DashboardPage() {
     onError: (e: Error) => toast.error(e.message),
   });
 
+  const credits = useQuery({ queryKey: ["loan-credits"], queryFn: async () => {
+    const r = await supabase.rpc("my_loan_credits"); if (r.error) throw r.error;
+    return r.data as { used?: number; quota?: number; remaining?: number; active?: boolean; period_end?: string };
+  } });
+
   const plan = data?.plan;
   const sub = data?.subscription;
-  const used = sub?.leads_used ?? 0;
-  const limit = plan?.lead_limit ?? 0;
-  const attemptsLeft = Math.max((plan?.weekly_attempt_limit ?? 0) - (data?.attempts_used ?? 0), 0);
+  const used = credits.data?.used ?? 0;
+  const limit = credits.data?.quota ?? plan?.lead_limit ?? 0;
+  const remaining = credits.data?.remaining ?? 0;
 
   return (
     <AppShell title="Member Dashboard" subtitle="Your subscription, quota and lead activity">
@@ -107,7 +112,7 @@ function DashboardPage() {
             <Stat
               icon={Gauge}
               label="Subscription Status"
-              value={sub?.status?.replaceAll("_", " ") ?? "—"}
+              value={sub?.status === "active" && !credits.data?.active ? "expired" : sub?.status?.replaceAll("_", " ") ?? "—"}
               hint={
                 sub?.status === "active"
                   ? "Payment verified"
@@ -122,9 +127,9 @@ function DashboardPage() {
             />
             <Stat
               icon={CalendarClock}
-              label="Weekly Attempts Left"
-              value={String(attemptsLeft)}
-              hint={weeklyResetCountdown()}
+              label="Remaining Lead Credits"
+              value={String(remaining)}
+              hint={credits.data?.period_end ? `Monthly period ends ${shortDate(credits.data.period_end)}` : "Payment verification required"}
             />
           </div>
 
@@ -134,7 +139,7 @@ function DashboardPage() {
                 <div>
                   <h2 className="text-lg font-semibold text-primary">Lead quota usage</h2>
                   <p className="text-sm text-foreground/80">
-                    {plan?.leads_per_attempt} lead(s) per weekly claim attempt.
+                    {limit} unique loan leads per paid monthly period.
                   </p>
                 </div>
                 <Badge variant="secondary">{data.total_allocated} allocated all-time</Badge>
@@ -143,10 +148,10 @@ function DashboardPage() {
               <div className="mt-7 flex flex-wrap gap-3">
                 <Button
                   variant="hero"
-                  disabled={claim.isPending || attemptsLeft <= 0 || sub?.status !== "active"}
+                  disabled={claim.isPending || remaining <= 0 || !credits.data?.active}
                   onClick={() => claim.mutate()}
                 >
-                  {attemptsLeft <= 0 ? "Weekly attempt used" : "Claim this week's leads"}
+                  {remaining <= 0 ? "No lead credits remaining" : "Claim monthly leads"}
                 </Button>
                 <Button asChild variant="outline">
                   <Link to="/leads">View my leads</Link>

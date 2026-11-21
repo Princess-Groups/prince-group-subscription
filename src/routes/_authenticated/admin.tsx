@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
+import { LoanImportPanel } from "@/components/app/LoanImportPanel";
 import { AdminManagedNote } from "@/components/site/PublicPage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -174,6 +175,7 @@ function AdminPage() {
         <TabsList>
           <TabsTrigger value="subs">Subscriptions</TabsTrigger>
           <TabsTrigger value="logs">Audit log</TabsTrigger>
+          <TabsTrigger value="loan-leads">Loan leads</TabsTrigger>
         </TabsList>
 
         <TabsContent value="subs">
@@ -226,6 +228,7 @@ function AdminPage() {
           </AdminManagedNote>
         </TabsContent>
 
+        <TabsContent value="loan-leads"><LoanImportPanel /></TabsContent>
         <TabsContent value="logs">
           <div className="mt-4 overflow-x-auto rounded-3xl border border-primary/10 bg-card p-2 shadow-soft sm:p-4">
             <Table>

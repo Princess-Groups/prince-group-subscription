@@ -74,7 +74,7 @@ export function PlanCard({
           ? `Flat ${plan.discount_percentage}% Discount on eligible services`
           : `${plan.discount_percentage}% discount on eligible services`}
         <span className={cn("mt-1 block text-xs font-normal", highlight ? "text-cream/90" : "text-cream/90")}>
-          {plan.lead_limit} lead allocations · {plan.weekly_attempt_limit} claim attempt/week
+          {plan.lead_limit} unique loan leads per month
         </span>
       </div>
 

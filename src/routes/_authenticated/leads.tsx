@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { Eye, Lock } from "lucide-react";
+import { Download, Eye, Lock } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/table";
 import { supabase } from "@/integrations/supabase/client";
 import { inr, shortDate } from "@/lib/format";
+import { Checkbox } from "@/components/ui/checkbox";
+import { downloadBlob } from "@/lib/file-download";
 
 export const Route = createFileRoute("/_authenticated/leads")({
   head: () => ({
@@ -41,28 +43,40 @@ type Row = {
   leads: {
     id: string;
     lead_code: string;
-    customer_name: string | null;
+    name: string | null;
     loan_type: string;
-    loan_amount: number | null;
-    city: string | null;
+    estimated_amount: number | null;
+    location: string | null;
     status: string;
   } | null;
 };
 
 function LeadsPage() {
   const [revealed, setRevealed] = useState<Record<string, string>>({});
+  const [selected, setSelected] = useState<string[]>([]);
+  const [ready, setReady] = useState<Blob | null>(null);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["my-allocations"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("lead_allocations")
-        .select("id,allocated_at,leads(id,lead_code,customer_name,loan_type,loan_amount,city,status)")
-        .order("allocated_at", { ascending: false });
+        .select("id,allocated_at,leads(id,lead_code,name,loan_type,estimated_amount,location,status)")
+        .order("allocated_at", { ascending: false }).limit(1000);
       if (error) throw error;
       return (data ?? []) as unknown as Row[];
     },
   });
+
+  const exportLeads = useMutation({ mutationFn: async () => {
+    const r = await supabase.rpc('download_my_loan_leads', { _ids: selected }); if (r.error) throw r.error;
+    const xlsx = await import('xlsx');
+    const rows = (r.data as Record<string, unknown>[]).map(row => Object.fromEntries(Object.entries(row).map(([k,v]) => [k, v && typeof v === 'object' ? JSON.stringify(v) : v])));
+    const workbook = xlsx.utils.book_new(); const sheet = xlsx.utils.json_to_sheet(rows);
+    sheet['!cols'] = [{ wch: 18 }, { wch: 24 }, { wch: 18 }, { wch: 24 }, { wch: 22 }, { wch: 40 }, { wch: 20 }];
+    xlsx.utils.book_append_sheet(workbook, sheet, 'Allocated leads');
+    return new Blob([xlsx.write(workbook, { type: 'array', bookType: 'xlsx' })], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  }, onSuccess: blob => setReady(blob), onError: (e: Error) => toast.error(e.message) });
 
   const reveal = useMutation({
     mutationFn: async (leadId: string) => {
@@ -83,6 +97,12 @@ function LeadsPage() {
 
   return (
     <AppShell title="My Leads" subtitle="Allocated leads with permanent duplicate prevention">
+      <div className="mb-5 flex flex-wrap items-center gap-3">
+        <Button variant="outline" disabled={!data?.length} onClick={() => { setSelected((data ?? []).slice(0, 500).map(r => r.id)); setReady(null); }}>Select latest {Math.min(data?.length ?? 0, 500)}</Button>
+        <Button variant="hero" disabled={!selected.length || exportLeads.isPending} onClick={() => exportLeads.mutate()}><Download className="size-4" />{exportLeads.isPending ? 'Preparing…' : `Prepare Excel (${selected.length})`}</Button>
+        {ready && <Button variant="outline" onClick={() => downloadBlob(ready, 'prince-allocated-leads.xlsx')}><Download className="size-4" />Download Excel</Button>}
+      </div>
+      {error && <p role="alert" className="mb-4 text-destructive">{error.message}</p>}
       <div className="rounded-3xl border border-primary/10 bg-card p-2 shadow-soft sm:p-4">
         {isLoading ? (
           <div className="space-y-3 p-4">
@@ -94,7 +114,7 @@ function LeadsPage() {
           <div className="p-12 text-center">
             <h2 className="text-lg font-semibold text-primary">No leads allocated yet</h2>
             <p className="mt-2 text-sm text-foreground/80">
-              Use your weekly claim attempt from the dashboard to receive leads.
+              Claim your monthly leads from the dashboard.
             </p>
           </div>
         ) : (
@@ -102,6 +122,7 @@ function LeadsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Select</TableHead>
                   <TableHead>Lead ID</TableHead>
                   <TableHead>Customer</TableHead>
                   <TableHead>Requirement</TableHead>
@@ -117,15 +138,16 @@ function LeadsPage() {
                   if (!lead) return null;
                   return (
                     <TableRow key={row.id}>
+                      <TableCell><Checkbox aria-label={`Select ${lead.lead_code}`} checked={selected.includes(row.id)} disabled={!selected.includes(row.id) && selected.length >= 500} onCheckedChange={v => { setReady(null); setSelected(s => v === true ? [...s, row.id] : s.filter(id => id !== row.id)); }} /></TableCell>
                       <TableCell className="font-mono text-xs font-semibold text-secondary">
                         {lead.lead_code}
                       </TableCell>
-                      <TableCell className="font-medium">{lead.customer_name ?? "—"}</TableCell>
+                      <TableCell className="font-medium">{lead.name ?? "—"}</TableCell>
                       <TableCell>
                         {lead.loan_type}
-                        {lead.loan_amount ? ` · ${inr(lead.loan_amount)}` : ""}
+                        {lead.estimated_amount ? ` · ${inr(lead.estimated_amount)}` : ""}
                       </TableCell>
-                      <TableCell>{lead.city ?? "—"}</TableCell>
+                      <TableCell>{lead.location ?? "—"}</TableCell>
                       <TableCell>
                         <Badge variant="outline" className="capitalize">
                           {lead.status.replaceAll("_", " ")}

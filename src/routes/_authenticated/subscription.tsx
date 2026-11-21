@@ -115,6 +115,10 @@ function SubscriptionPage() {
   });
 
   const sub = subQuery.data;
+  const credits = useQuery({ queryKey: ["loan-credits"], queryFn: async () => {
+    const r = await supabase.rpc("my_loan_credits"); if (r.error) throw r.error;
+    return r.data as { remaining?: number; quota?: number; active?: boolean };
+  } });
 
   return (
     <AppShell title="Subscription & Billing" subtitle="Plan, advance access and payment history">
@@ -147,6 +151,7 @@ function SubscriptionPage() {
               <Item label="Member discount" value={`${sub.plans?.discount_percentage ?? 0}%`} />
               <Item label="Started" value={sub.start_date ? shortDate(sub.start_date) : "—"} />
               <Item label="Renews" value={sub.renewal_date ? shortDate(sub.renewal_date) : "—"} />
+              <Item label="Monthly lead credits" value={`${credits.data?.remaining ?? 0} remaining / ${credits.data?.quota ?? 0}`} />
             </dl>
 
             {sub.status !== "active" ? (

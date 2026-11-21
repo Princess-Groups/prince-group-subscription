@@ -20,7 +20,8 @@ export function sheetGrid(sheet: WorkSheet, decode: (address: string) => { s: { 
     row[pos.c] = cell;
     rows.set(pos.r, row);
   }
-  const last = Math.max(0, ...Array.from(rows.keys()));
+  let last = 0;
+  for (const r of rows.keys()) last = Math.max(last, r);
   if (last > 1_100_000 || range.e.c > 200) throw new Error('Worksheet exceeds the supported range.');
   return Array.from({ length: last + 1 }, (_, r) => rows.get(r) ?? []);
 }

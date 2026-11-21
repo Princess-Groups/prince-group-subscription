@@ -1,0 +1,7 @@
+CREATE INDEX executive_lead_history_phone_idx ON public.executive_lead_history(phone_key);
+CREATE INDEX lead_allocations_user_time_idx ON public.lead_allocations(user_id,allocated_at DESC);
+CREATE OR REPLACE FUNCTION public.serialize_loan_claim() RETURNS trigger LANGUAGE plpgsql SET search_path=public AS $$ BEGIN PERFORM pg_advisory_xact_lock(hashtextextended('prince-loan-rotation',0)); RETURN NEW; END $$;
+CREATE TRIGGER serialize_loan_distribution BEFORE INSERT ON public.lead_allocations FOR EACH STATEMENT EXECUTE FUNCTION public.serialize_loan_claim();
+CREATE OR REPLACE FUNCTION public.admin_executive_lead_totals() RETURNS jsonb LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path=public AS $$ BEGIN IF NOT public.is_admin(auth.uid()) THEN RAISE EXCEPTION 'Administrator access required'; END IF; RETURN coalesce((SELECT jsonb_agg(x ORDER BY x.total DESC) FROM (SELECT h.user_id,coalesce(p.name,'Executive') as name,count(*) as total,max(h.received_at) as latest FROM public.executive_lead_history h LEFT JOIN public.profiles p ON p.id=h.user_id GROUP BY h.user_id,p.name) x),'[]'::jsonb); END $$;
+REVOKE ALL ON FUNCTION public.admin_executive_lead_totals() FROM PUBLIC,anon;
+GRANT EXECUTE ON FUNCTION public.admin_executive_lead_totals() TO authenticated;

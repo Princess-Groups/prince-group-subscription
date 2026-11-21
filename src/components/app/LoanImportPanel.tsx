@@ -62,7 +62,7 @@ export function LoanImportPanel() {
         const r = await supabase.rpc('import_loan_leads', { _batch_id: state.ids[b] ?? '', _filename: `${filename} · ${sheet}`, _offset: b * 500, _rows: rows });
         if (r.error) throw r.error;
         const result = r.data as Record<string, number>;
-        state.imported += result.imported ?? 0; state.duplicates += result.duplicates ?? 0; state.invalid += result.invalid ?? 0; state.next = b + 1;
+        state.imported += result['imported'] ?? 0; state.duplicates += result['duplicates'] ?? 0; state.invalid += result['invalid'] ?? 0; state.next = b + 1;
         setRun({ ...state });
       }
       setProgress(`Saved ${state.imported} · Duplicates ${state.duplicates + preview.duplicates} · Invalid ${state.invalid + preview.errors.length}`);
