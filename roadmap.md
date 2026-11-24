@@ -1,3 +1,8 @@
+- [ ] Unify subscription CTAs around a three-plan selector and direct selected-plan checkout, including bank executives.
+- [ ] Preserve selected checkout through sign-in and redirect verified activated subscriptions to the member dashboard.
+- [ ] Enforce captured-payment-only atomic activation and date-valid plan access; preserve settled records.
+- [ ] Show live available services and permitted allocated loan data in the member dashboard; test access and checkout flows.
+- [ ] Verify live Razorpay checkout; blocked until payment credentials are provided.
 - [ ] Add admin Excel mapping, validation, batched duplicate-safe imports and inventory/history monitoring.
 - [ ] Implement monthly 3/10/50 credits with permanent executive history and automatic fresh/reused lead rotation.
 - [ ] Add executive Excel downloads and verify imports, allocation, permissions and subscription credits end-to-end.
