@@ -58,6 +58,7 @@ function LeadsPage() {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["my-allocations"],
+    refetchInterval: 15_000,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("lead_allocations")

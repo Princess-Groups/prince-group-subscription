@@ -31,8 +31,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
   useBusinesses,
   useOpportunities,
-  useUnlockBusinessContact,
-  useUnlockLeadContact,
+  useUnlockOpportunityContact,
   type Opportunity,
 } from "@/hooks/useDirectory";
 import { phoneDisplay, shortDate } from "@/lib/format";
@@ -90,12 +89,8 @@ function OpportunitiesPage() {
       to: "/payment",
       search: { item: "Candidate / Business Contact Unlock", amount: 10 },
     });
-  const unlockBusiness = useUnlockBusinessContact(
-    (id, phone) => setRevealed((r) => ({ ...r, [`b:${id}`]: phone })),
-    goToPayment,
-  );
-  const unlockLead = useUnlockLeadContact(
-    (id, phone) => setRevealed((r) => ({ ...r, [`l:${id}`]: phone })),
+  const unlock = useUnlockOpportunityContact(
+    (id, phone) => setRevealed((r) => ({ ...r, [id]: phone })),
     goToPayment,
   );
 
@@ -159,21 +154,14 @@ function OpportunitiesPage() {
   }, [rows, q, category, location, type, flag, sort]);
 
   function unlockFor(o: Opportunity) {
-    if (o.lead_id) return unlockLead.mutate(o.lead_id);
-    if (o.business_id) return unlockBusiness.mutate(o.business_id);
-    navigate({
-      to: "/payment",
-      search: { item: `${o.title} Opportunity Unlock`, amount: 10 },
-    });
+    unlock.mutate(o.id);
   }
 
   function revealedFor(o: Opportunity) {
-    if (o.lead_id) return revealed[`l:${o.lead_id}`];
-    if (o.business_id) return revealed[`b:${o.business_id}`];
-    return undefined;
+    return revealed[o.id];
   }
 
-  const pending = unlockBusiness.isPending || unlockLead.isPending;
+  const pending = unlock.isPending;
 
   return (
     <PublicPage>

@@ -113,7 +113,7 @@ export function PlanPromoPopup() {
 
         <Button asChild variant="lime" size="sm" className="relative mt-5 w-full bg-none bg-cream/10 text-accent hover:bg-cream/15">
           <Link to="/payment" search={{ plan: plan.code }} onClick={() => setOpen(false)}>
-            View Plan →
+            Pay Now →
           </Link>
         </Button>
 

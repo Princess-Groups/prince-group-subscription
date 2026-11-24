@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { BadgeCheck, Building2, CreditCard, Mail, ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { useProfile, useSession } from "@/hooks/useAuth";
 import { usePlans } from "@/hooks/usePlatform";
 import { inr } from "@/lib/format";
+import { checkoutReturnPath, subscriptionCode } from "@/lib/subscription-flow";
 import { saveProfileDetails } from "@/lib/profile.functions";
 import {
   createRazorpayOrder,
@@ -71,17 +72,27 @@ export const Route = createFileRoute("/payment")({
 
 function PaymentPage() {
   const { plan: planParam, item: itemParam } = Route.useSearch();
+  const navigate = useNavigate();
   const { user, loading: sessionLoading } = useSession();
   const { data: profile } = useProfile(user?.id);
   const { data: plans } = usePlans();
   const queryClient = useQueryClient();
 
-  const [selectedPlan, setSelectedPlan] = useState(planParam ?? "");
+  const [selectedPlan, setSelectedPlan] = useState(subscriptionCode(planParam) ?? "");
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
   const [paid, setPaid] = useState(false);
+
+  useEffect(() => {
+    setSelectedPlan(subscriptionCode(planParam) ?? "");
+  }, [planParam]);
+
+  function choosePlan(code: string) {
+    setSelectedPlan(code);
+    void navigate({ to: "/payment", search: { plan: code }, replace: true, resetScroll: false });
+  }
 
   useEffect(() => {
     if (!profile) return;
@@ -133,7 +144,7 @@ function PaymentPage() {
       const Razorpay = await loadRazorpayScript();
       const order = await createOrderFn({ data: { planCode: plan.code } });
 
-      return await new Promise<"success" | "failed" | "dismissed">((resolve, reject) => {
+      return await new Promise<"success" | "failed" | "dismissed" | "pending">((resolve, reject) => {
         const checkout = new Razorpay({
           key: order.keyId,
           order_id: order.orderId,
@@ -165,13 +176,16 @@ function PaymentPage() {
         checkout.open();
       });
     },
-    onSuccess: (result) => {
-      queryClient.invalidateQueries();
+    onSuccess: async (result) => {
+      await queryClient.invalidateQueries();
       if (result === "success") {
         toast.success("Payment verified — your subscription is now active.");
         setPaid(true);
+        void navigate({ to: "/dashboard", replace: true });
       } else if (result === "failed") {
         toast.error("The payment did not go through. Please try again.");
+      } else if (result === "pending") {
+        toast.info("Your payment is awaiting confirmation. Your plan will activate only after capture is verified.");
       }
     },
     onError: (e: Error) => toast.error(e.message),
@@ -264,13 +278,31 @@ function PaymentPage() {
                   <Building2 className="size-5 text-secondary" /> Complete &amp; activate
                 </h3>
 
+                <div role="group" aria-label="Subscription plans" className="mt-7 grid grid-cols-3 gap-2">
+                  {(plans ?? []).map((p) => (
+                    <Button
+                      key={p.code}
+                      type="button"
+                      variant={selectedPlan === p.code ? "hero" : "outline"}
+                      aria-pressed={selectedPlan === p.code}
+                      aria-label={`Select ₹${p.daily_display} ${p.name} plan`}
+                      className="h-auto min-h-20 flex-col whitespace-normal rounded-2xl px-2 py-3 text-center"
+                      onClick={() => choosePlan(p.code)}
+                    >
+                      <span className="font-display text-xl font-bold">{inr(p.daily_display)}</span>
+                      <span className="text-xs">{inr(p.price)}/{p.billing_period === "monthly" ? "month" : p.billing_period}</span>
+                      <span className="text-[10px]">{p.lead_limit} leads</span>
+                    </Button>
+                  ))}
+                </div>
+
                 {!user && !sessionLoading ? (
                   <div className="mt-8 rounded-2xl bg-muted p-6 text-center">
                     <p className="text-sm text-foreground/80">
                       Please sign in or create your account to continue.
                     </p>
                     <Button asChild variant="hero" className="mt-4">
-                      <Link to="/auth">Sign in to continue</Link>
+                      <Link to="/auth" search={{ redirect: checkoutReturnPath(selectedPlan) }}>Sign in to continue</Link>
                     </Button>
                   </div>
                 ) : user ? (
@@ -336,12 +368,12 @@ function PaymentPage() {
                           <select
                             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                             value={selectedPlan}
-                            onChange={(e) => setSelectedPlan(e.target.value)}
+                            onChange={(e) => choosePlan(e.target.value)}
                           >
                             <option value="">Select a plan</option>
                             {plans.map((p) => (
                               <option key={p.code} value={p.code}>
-                                {p.name} — {inr(p.price)}/
+                                {inr(p.daily_display)} {p.name} — {inr(p.price)}/
                                 {p.billing_period === "monthly" ? "month" : p.billing_period}
                               </option>
                             ))}
@@ -363,7 +395,7 @@ function PaymentPage() {
 
                     {notConfigured ? (
                       <p className="rounded-2xl bg-destructive/10 px-4 py-3 text-xs text-destructive">
-                        Online payments are not available right now. Please contact support.
+                        Payments are not set up yet.
                       </p>
                     ) : null}
 

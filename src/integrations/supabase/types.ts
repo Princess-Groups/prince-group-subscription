@@ -1241,6 +1241,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      activate_captured_subscription: {
+        Args: {
+          _amount_paise: number
+          _currency: string
+          _order_id: string
+          _payment_id: string
+          _provider_status: string
+        }
+        Returns: Json
+      }
       admin_assign_lead: {
         Args: { _lead_id: string; _user_id: string }
         Returns: Json
@@ -1318,6 +1328,7 @@ export type Database = {
       my_conversations: { Args: never; Returns: Json }
       my_dashboard: { Args: never; Returns: Json }
       my_loan_credits: { Args: never; Returns: Json }
+      my_member_catalog: { Args: never; Returns: Json }
       my_network_access: { Args: never; Returns: Json }
       network_admin_stats: { Args: never; Returns: Json }
       plan_slot_counts: {
@@ -1336,6 +1347,10 @@ export type Database = {
       reserve_advance_period: { Args: { _period: string }; Returns: Json }
       reveal_business_contact: { Args: { _business_id: string }; Returns: Json }
       reveal_lead_contact: { Args: { _lead_id: string }; Returns: Json }
+      reveal_opportunity_contact: {
+        Args: { _opportunity_id: string }
+        Returns: Json
+      }
       search_enquiries: {
         Args: {
           _category?: string

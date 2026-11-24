@@ -4,6 +4,7 @@ import { CalendarClock, Gauge, Ticket, Wallet } from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
+import { MemberCatalog } from "@/components/app/MemberCatalog";
 import { AdminManagedNote } from "@/components/site/PublicPage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 
 type Snapshot = {
   has_subscription: boolean;
+  active: boolean;
   subscription: { id: string; status: string; renewal_date: string | null; leads_used: number; advance_period: string | null } | null;
   plan: { code: string; name: string; price: number; discount_percentage: number; lead_limit: number; weekly_attempt_limit: number; leads_per_attempt: number } | null;
   attempts_used: number;
@@ -46,6 +48,7 @@ function DashboardPage() {
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ["my-dashboard"],
+    refetchInterval: 15_000,
     queryFn: async () => {
       const { data, error } = await supabase.rpc("my_dashboard");
       if (error) throw error;
@@ -71,7 +74,7 @@ function DashboardPage() {
     onError: (e: Error) => toast.error(e.message),
   });
 
-  const credits = useQuery({ queryKey: ["loan-credits"], queryFn: async () => {
+  const credits = useQuery({ queryKey: ["loan-credits"], refetchInterval: 15_000, queryFn: async () => {
     const r = await supabase.rpc("my_loan_credits"); if (r.error) throw r.error;
     return r.data as { used?: number; quota?: number; remaining?: number; active?: boolean; period_end?: string };
   } });
@@ -114,8 +117,8 @@ function DashboardPage() {
               label="Subscription Status"
               value={sub?.status === "active" && !credits.data?.active ? "expired" : sub?.status?.replaceAll("_", " ") ?? "—"}
               hint={
-                sub?.status === "active"
-                  ? "Payment verified"
+                data.active
+                  ? "Current monthly access enabled"
                   : "Activates only after verified payment"
               }
             />
@@ -181,6 +184,7 @@ function DashboardPage() {
           </div>
         </div>
       )}
+      <MemberCatalog />
     </AppShell>
   );
 }

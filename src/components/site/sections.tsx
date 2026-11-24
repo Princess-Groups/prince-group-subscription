@@ -22,8 +22,8 @@ import heroImage from "@/assets/prince-homepage-hero.png.asset.json";
 import { CountUp } from "@/components/site/CountUp";
 import { DemoBadge, SectionHeading } from "@/components/site/PublicPage";
 import { Button } from "@/components/ui/button";
-import { phoneDisplay } from "@/lib/format";
-import { settingString, useSettings } from "@/hooks/usePlatform";
+import { inr, phoneDisplay } from "@/lib/format";
+import { settingString, usePlans, useSettings, useSlots } from "@/hooks/usePlatform";
 
 
 /* ---------------- Hero with live animated statistics ---------------- */
@@ -184,37 +184,19 @@ export function HeroSection() {
 
 /* ---------------- Live plan slot availability ---------------- */
 
-const SLOT_PLANS = [
-  {
-    name: "₹10 Plan",
-    note: "Valid for 1 Day",
-    slots: 500,
-    price: "₹10",
-    per: "per day",
-    badge: "Available now",
-    emphasis: false,
-  },
-  {
-    name: "₹100 Plan",
-    note: "Monthly access",
-    slots: 400,
-    price: "₹100",
-    per: "per month",
-    badge: "Available now",
-    emphasis: false,
-  },
-  {
-    name: "₹100 Yearly Plan",
-    note: "Best value — yearly access",
-    slots: 100,
-    price: "₹100",
-    per: "per year",
-    badge: "Only a few left",
-    emphasis: true,
-  },
-];
-
 export function SlotAvailabilitySection() {
+  const { data: plans } = usePlans();
+  const { data: slots } = useSlots();
+  const list = (plans ?? []).map((plan) => ({
+    code: plan.code,
+    name: `${inr(plan.daily_display)} Plan`,
+    note: `${inr(plan.price)}/${plan.billing_period === "monthly" ? "month" : plan.billing_period} · ${plan.lead_limit} leads`,
+    slots: slots?.find((slot) => slot.plan_code === plan.code)?.remaining ?? plan.slot_limit,
+    price: inr(plan.daily_display),
+    per: "per day",
+    badge: plan.highlight ? "Limited membership" : "Available now",
+    emphasis: plan.highlight,
+  }));
   return (
     <section className="relative overflow-hidden bg-gradient-cream py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
@@ -226,7 +208,7 @@ export function SlotAvailabilitySection() {
         />
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {SLOT_PLANS.map((p, index) => (
+          {list.map((p) => (
             <div
               key={p.name}
               className={`relative overflow-hidden rounded-[2rem] border p-7 shadow-soft transition-shadow duration-500 ${
@@ -285,7 +267,7 @@ export function SlotAvailabilitySection() {
                         p.emphasis ? "text-cream" : "text-primary"
                       }`}
                     >
-                      <CountUp to={p.slots} />
+                      {p.slots === null ? "Open" : <CountUp to={p.slots} />}
                     </span>
                     <span
                       className={`mt-1 block text-[10px] font-semibold uppercase tracking-[0.14em] ${
@@ -325,8 +307,7 @@ export function SlotAvailabilitySection() {
                 <Link
                   to="/payment"
                   search={{
-                    item: `${p.name} Subscription`,
-                    amount: [10, 100, 100][index],
+                    plan: p.code,
                   }}
                 >
                   Claim your slot
@@ -554,8 +535,7 @@ export function BankExecutiveSection() {
               <span className="block text-gradient-olive">bank &amp; finance executives</span>
             </h2>
             <p className="mt-5 text-sm leading-relaxed text-cream/95">
-              Bank Executives subscribe on the Business plan or the Premium plan only. The Starter
-              plan is not offered inside the Bank Executive portal. Every account requires a unique
+              Bank Executives can choose the Starter, Business or Premium plan. Every account requires a unique
               user ID, password and administrator approval before access is granted.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">

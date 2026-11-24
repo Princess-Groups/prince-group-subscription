@@ -101,7 +101,7 @@ export function PlansHero() {
                       variant={featured ? "lime" : "onOlive"}
                       className={cn("mt-7 w-full", !featured && "border-accent/60 bg-accent/15 font-bold")}
                     >
-                      <a href="#plans">View Plan Details</a>
+                      <Link to="/payment" search={{ plan: plan.code }}>Pay Now</Link>
                     </Button>
 
                     {/* podium base */}

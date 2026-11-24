@@ -31,8 +31,9 @@ export type SlotCount = {
 export function usePlans() {
   return useQuery({
     queryKey: ["plans"],
+    refetchInterval: 15_000,
     queryFn: async () => {
-      const { data, error } = await supabase.from("plans").select("*").order("sort_order");
+      const { data, error } = await supabase.from("plans").select("*").eq("active", true).order("sort_order");
       if (error) throw error;
       return (data ?? []) as unknown as Plan[];
     },
@@ -42,6 +43,7 @@ export function usePlans() {
 export function useSlots() {
   return useQuery({
     queryKey: ["slots"],
+    refetchInterval: 15_000,
     queryFn: async () => {
       const { data, error } = await supabase.rpc("plan_slot_counts");
       if (error) throw error;
@@ -66,8 +68,9 @@ export function useSettings() {
 export function useServices() {
   return useQuery({
     queryKey: ["services"],
+    refetchInterval: 15_000,
     queryFn: async () => {
-      const { data, error } = await supabase.from("services").select("*").order("sort_order");
+      const { data, error } = await supabase.from("services").select("*").eq("active", true).order("sort_order");
       if (error) throw error;
       return data ?? [];
     },
@@ -90,8 +93,9 @@ export function useQuote(planCode?: string) {
     queryKey: ["quote", planCode],
     enabled: !!planCode,
     queryFn: async () => {
+      if (!planCode) throw new Error("Choose a plan first.");
       const { data, error } = await supabase.rpc("quote_for_plan", {
-        _plan_code: planCode!,
+        _plan_code: planCode,
         _first_payment: true,
       });
       if (error) throw error;

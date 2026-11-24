@@ -16,3 +16,8 @@
 - Public directory and opportunity SELECT policies expose only status='available' listings; preserve admin management policies and separate subscription-gated phone access to prevent unpublished listing exposure.
 - Loan imports use normalized phone identities and immutable executive history; allocation and paid-period credits are transactionally enforced in database functions to prevent concurrent or repeat claims.
 - Parse Excel in the browser with positional mapping and preview, then submit retry-safe batches of 500; never embed private uploaded lead workbooks in public assets.
+- Keep checkout selections in validated route search and allowlisted sign-in return paths; this preserves the chosen plan without external redirects.
+- Read the member catalog through authenticated database functions and refresh visible inventory queries periodically; this keeps availability current without exposing unallocated candidate identities.
+- Apply date-valid subscription checks and transactional monthly credits to both automatic and manual lead assignments; this prevents alternate allocation paths from bypassing plan quotas.
+- Activate captured payments and their monthly subscriptions through a server-only atomic database function after provider order, currency and stored-amount checks; this prevents authorization-only access and partial activation.
+- Saving customer details preserves phone verification only for the unchanged verified number or an Auth-confirmed matching phone; typed phone numbers are not verification evidence.

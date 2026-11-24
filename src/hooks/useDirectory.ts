@@ -44,10 +44,12 @@ const BUSINESS_FIELDS =
 export function useBusinesses() {
   return useQuery({
     queryKey: ["directory-businesses"],
+    refetchInterval: 15_000,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("business_contacts")
         .select(BUSINESS_FIELDS)
+        .eq("status", "available")
         .order("business_name")
         .limit(500);
       if (error) throw error;
@@ -59,10 +61,12 @@ export function useBusinesses() {
 export function useOpportunities() {
   return useQuery({
     queryKey: ["opportunities"],
+    refetchInterval: 15_000,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("opportunities")
         .select("*")
+        .eq("status", "available")
         .order("created_at", { ascending: false })
         .limit(400);
       if (error) throw error;
@@ -77,6 +81,8 @@ function unlockMessage(code: string) {
       return "Sign in to use your subscription access.";
     case "no_active_subscription":
       return "An active subscription is required to unlock contacts.";
+    case "premium_required":
+      return "Choose the ₹100 Premium plan to unlock this contact.";
     case "contact_not_published":
       return "This contact is pending verification by our team.";
     case "not_allocated":
@@ -84,6 +90,27 @@ function unlockMessage(code: string) {
     default:
       return "Unable to unlock right now.";
   }
+}
+
+export function useUnlockOpportunityContact(onUnlocked: (id: string, phone: string) => void, onNeedPayment?: () => void) {
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { data, error } = await supabase.rpc("reveal_opportunity_contact", { _opportunity_id: id });
+      if (error) throw error;
+      return { id, result: data as Record<string, unknown> };
+    },
+    onSuccess: ({ id, result }) => {
+      const error = result["error"];
+      if (typeof error === "string") {
+        toast.error(unlockMessage(error));
+        if (["not_authenticated", "no_active_subscription", "premium_required"].includes(error)) onNeedPayment?.();
+        return;
+      }
+      onUnlocked(id, String(result["phone"] ?? ""));
+      toast.success("Contact unlocked — this view has been logged.");
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
 }
 
 export function useUnlockBusinessContact(

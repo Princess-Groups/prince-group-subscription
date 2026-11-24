@@ -106,6 +106,7 @@ export const ENQUIRY_TYPES = [
 export function useNetworkAccess() {
   return useQuery({
     queryKey: ["network-access"],
+    refetchInterval: 15_000,
     queryFn: async () => {
       const { data, error } = await supabase.rpc("my_network_access");
       if (error) throw error;

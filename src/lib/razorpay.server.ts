@@ -1,4 +1,5 @@
 // Server-only Razorpay helpers. Never import this from client code.
+import { capturedPaymentMatches } from "./payment-confirmation";
 const RAZORPAY_API = "https://api.razorpay.com/v1";
 
 export type RazorpayConfig = { keyId: string; keySecret: string };
@@ -77,6 +78,7 @@ export type RazorpayPayment = {
   order_id: string | null;
   status: string;
   amount: number;
+  currency: string;
   method?: string;
   error_description?: string | null;
 };
@@ -114,52 +116,23 @@ export async function markPaymentSuccessful(
 ): Promise<{ updated: boolean }> {
   const { data: payment, error } = await admin
     .from("payments")
-    .select("id, subscription_id, status, pending_plan_code")
+    .select("id, subscription_id, status, pending_plan_code, total_amount")
     .eq("razorpay_order_id", args.orderId)
     .maybeSingle();
   if (error) throw error;
   if (!payment) return { updated: false };
   if (payment.status === "success") return { updated: true };
 
-  const now = new Date();
-  const renewal = new Date(now);
-  renewal.setMonth(renewal.getMonth() + 1);
-
-  const { error: payErr } = await admin
-    .from("payments")
-    .update({
-      status: "success",
-      razorpay_payment_id: args.paymentId,
-      paid_at: now.toISOString(),
-    })
-    .eq("id", payment.id);
-  if (payErr) throw payErr;
-
-  if (payment.subscription_id) {
-    // A plan change only moves the subscription once the payment is captured, so
-    // an abandoned checkout leaves the customer's current plan untouched.
-    const planUpdate: { plan_id?: string } = {};
-    if (payment.pending_plan_code) {
-      const { data: targetPlan } = await admin
-        .from("plans")
-        .select("id")
-        .eq("code", payment.pending_plan_code)
-        .maybeSingle();
-      if (targetPlan) planUpdate.plan_id = targetPlan.id;
-    }
-
-    const { error: subErr } = await admin
-      .from("subscriptions")
-      .update({
-        status: "active",
-        start_date: now.toISOString(),
-        renewal_date: renewal.toISOString(),
-        ...planUpdate,
-      })
-      .eq("id", payment.subscription_id);
-    if (subErr) throw subErr;
+  const remote = await fetchPayment(args.paymentId);
+  if (!capturedPaymentMatches(remote, { orderId: args.orderId, totalAmount: Number(payment.total_amount) })) {
+    return { updated: false };
   }
-  return { updated: true };
+  const { data, error: activationError } = await admin.rpc("activate_captured_subscription", {
+    _order_id: args.orderId, _payment_id: remote.id, _amount_paise: remote.amount,
+    _currency: remote.currency, _provider_status: remote.status,
+  });
+  if (activationError) throw activationError;
+  return { updated: Boolean(data && typeof data === "object" && "updated" in data && data["updated"]) };
 }
 
 export async function markPaymentFailed(
@@ -176,7 +149,8 @@ export async function markPaymentFailed(
   await admin
     .from("payments")
     .update({ status: "failed", razorpay_payment_id: args.paymentId ?? null })
-    .eq("id", payment.id);
+    .eq("id", payment.id)
+    .neq("status", "success");
   if (!payment.subscription_id) return;
 
   // A failed plan change must not cancel an access the customer already paid for,
@@ -193,5 +167,6 @@ export async function markPaymentFailed(
   await admin
     .from("subscriptions")
     .update({ status: "payment_failed" })
-    .eq("id", payment.subscription_id);
+    .eq("id", payment.subscription_id)
+    .in("status", ["pending", "payment_failed"]);
 }

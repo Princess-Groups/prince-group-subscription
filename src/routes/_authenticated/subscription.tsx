@@ -47,8 +47,8 @@ type Sub = {
 type Payment = {
   id: string;
   base_amount: number;
-  discount_amount: number;
-  gst_amount: number;
+  discount: number;
+  gst: number;
   application_fee: number;
   total_amount: number;
   status: string;
@@ -60,24 +60,26 @@ function SubscriptionPage() {
 
   const subQuery = useQuery({
     queryKey: ["my-subscription"],
+    refetchInterval: 15_000,
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("subscriptions")
-        .select("id,status,start_date,renewal_date,advance_period,leads_used,plans(name,code,price,discount_percentage)")
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
+      const { data, error } = await supabase.rpc("my_dashboard");
       if (error) throw error;
-      return data as unknown as Sub | null;
+      const snapshot = data as unknown as { subscription: Omit<Sub, "plans"> | null; plan: Sub["plans"]; active: boolean };
+      return snapshot.subscription ? {
+        ...snapshot.subscription,
+        plans: snapshot.plan,
+        status: snapshot.subscription.status === "active" && !snapshot.active ? "expired" : snapshot.subscription.status,
+      } : null;
     },
   });
 
   const paymentsQuery = useQuery({
     queryKey: ["my-payments"],
+    refetchInterval: 15_000,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("payments")
-        .select("id,base_amount,discount_amount,gst_amount,application_fee,total_amount,status,created_at")
+        .select("id,base_amount,discount,gst,application_fee,total_amount,status,created_at")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return (data ?? []) as unknown as Payment[];
@@ -115,7 +117,7 @@ function SubscriptionPage() {
   });
 
   const sub = subQuery.data;
-  const credits = useQuery({ queryKey: ["loan-credits"], queryFn: async () => {
+  const credits = useQuery({ queryKey: ["loan-credits"], refetchInterval: 15_000, queryFn: async () => {
     const r = await supabase.rpc("my_loan_credits"); if (r.error) throw r.error;
     return r.data as { remaining?: number; quota?: number; active?: boolean };
   } });
@@ -231,12 +233,12 @@ function SubscriptionPage() {
                       {shortDate(p.created_at)}
                     </TableCell>
                     <TableCell>{inr(p.base_amount)}</TableCell>
-                    <TableCell>-{inr(p.discount_amount)}</TableCell>
-                    <TableCell>{inr(p.gst_amount)}</TableCell>
+                    <TableCell>-{inr(p.discount)}</TableCell>
+                    <TableCell>{inr(p.gst)}</TableCell>
                     <TableCell>{inr(p.application_fee)}</TableCell>
                     <TableCell className="font-semibold">{inr(p.total_amount)}</TableCell>
                     <TableCell>
-                      <Badge variant={p.status === "paid" ? "default" : "outline"} className="capitalize">
+                      <Badge variant={p.status === "success" ? "default" : "outline"} className="capitalize">
                         {p.status}
                       </Badge>
                     </TableCell>

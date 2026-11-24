@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -10,12 +10,15 @@ import { Label } from "@/components/ui/label";
 import { useSession } from "@/hooks/useAuth";
 import { lovable } from "@/integrations/lovable/index";
 import { supabase } from "@/integrations/supabase/client";
+import { AUTH_RETURN_KEY, authDestination } from "@/lib/subscription-flow";
 
 const title = "Sign In or Create Your Membership | PRINCE";
 const description =
   "Secure sign-in for customers and bank executives. Create an account to subscribe, claim leads and access member pricing.";
+const authSearchSchema = z.object({ redirect: z.string().optional() });
 
 export const Route = createFileRoute("/auth")({
+  validateSearch: (search: Record<string, unknown>) => authSearchSchema.parse(search),
   head: () => ({
     meta: [
       { title },
@@ -32,6 +35,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { redirect } = Route.useSearch();
   const { user, loading } = useSession();
   const [busy, setBusy] = useState(false);
   const [tab, setTab] = useState<"signin" | "signup">("signin");
@@ -40,9 +44,16 @@ function AuthPage() {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
 
+  const goToDestination = useCallback(() => {
+    const requested = redirect || window.sessionStorage.getItem(AUTH_RETURN_KEY);
+    window.sessionStorage.removeItem(AUTH_RETURN_KEY);
+    void navigate({ ...authDestination(requested), replace: true });
+  }, [redirect, navigate]);
+
   useEffect(() => {
-    if (!loading && user) navigate({ to: "/dashboard", replace: true });
-  }, [loading, user, navigate]);
+    if (redirect) window.sessionStorage.setItem(AUTH_RETURN_KEY, redirect);
+    if (!loading && user) goToDestination();
+  }, [redirect, loading, user, goToDestination]);
 
   const signInSchema = z.object({
     email: z.string().trim().email({ message: "Please enter a valid email address." }).max(255),
@@ -87,7 +98,7 @@ function AuthPage() {
         return;
       }
       toast.success("Signed in successfully.");
-      navigate({ to: "/dashboard", replace: true });
+      goToDestination();
     } catch {
       toast.error("Sign in failed. Please try again.");
     } finally {
@@ -113,7 +124,7 @@ function AuthPage() {
         email: parsed.data.email,
         password: parsed.data.password,
         options: {
-          emailRedirectTo: window.location.origin,
+          emailRedirectTo: `${window.location.origin}/auth${redirect ? `?redirect=${encodeURIComponent(redirect)}` : ""}`,
           data: { full_name: parsed.data.fullName, phone: parsed.data.phone },
         },
       });
@@ -127,7 +138,7 @@ function AuthPage() {
       }
       if (data.session) {
         toast.success("Account created. Welcome to PRINCE.");
-        navigate({ to: "/dashboard", replace: true });
+        goToDestination();
         return;
       }
       const signedIn = await supabase.auth.signInWithPassword({
@@ -136,7 +147,7 @@ function AuthPage() {
       });
       if (signedIn.data.session) {
         toast.success("Account created. Welcome to PRINCE.");
-        navigate({ to: "/dashboard", replace: true });
+        goToDestination();
         return;
       }
       toast.success("Account created. Please confirm your email, then sign in.");
@@ -156,7 +167,7 @@ function AuthPage() {
       return;
     }
     if (result.redirected) return;
-    navigate({ to: "/dashboard", replace: true });
+    goToDestination();
   }
 
   return (

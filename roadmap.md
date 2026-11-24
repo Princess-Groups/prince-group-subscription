@@ -1,16 +1,16 @@
-- [ ] Unify subscription CTAs around a three-plan selector and direct selected-plan checkout, including bank executives.
-- [ ] Preserve selected checkout through sign-in and redirect verified activated subscriptions to the member dashboard.
-- [ ] Enforce captured-payment-only atomic activation and date-valid plan access; preserve settled records.
-- [ ] Show live available services and permitted allocated loan data in the member dashboard; test access and checkout flows.
-- [ ] Verify live Razorpay checkout; blocked until payment credentials are provided.
-- [ ] Add admin Excel mapping, validation, batched duplicate-safe imports and inventory/history monitoring.
-- [ ] Implement monthly 3/10/50 credits with permanent executive history and automatic fresh/reused lead rotation.
-- [ ] Add executive Excel downloads and verify imports, allocation, permissions and subscription credits end-to-end.
-- [ ] Import all valid numbers from seven approved uploaded workbooks, retaining details and removing duplicates.
+- [x] Unify subscription CTAs around a three-plan selector and direct selected-plan checkout, including bank executives; desktop/mobile selection checks passed.
+- [x] Preserve all three selected checkout plans through sign-in and connect verified activation to the member dashboard.
+- [x] Enforce captured-payment-only atomic activation and date-valid plan access; preserve settled records. Activation predicate regressions passed; live provider activation remains blocked below.
+- [x] Show live available services and permitted allocated loan data in the member dashboard; verified real claim, Excel export, discounts, Premium denial, expired-access denial and automatic admin availability updates.
+- [ ] Verify live Razorpay checkout and actual new-user mobile verification; blocked because payment setup was declined and no SMS verification service is configured.
+- [x] Add admin Excel mapping, validation, batched duplicate-safe imports and inventory/history monitoring.
+- [x] Implement monthly 3/10/50 credits with permanent executive history and automatic fresh/reused lead rotation.
+- [x] Add executive Excel downloads and verify imports, allocation, permissions and subscription credits end-to-end.
+- [x] Import all valid numbers from seven approved uploaded workbooks: 506,411 valid unique imported identities preserved; one invalid number excluded.
 - [x] Reproduce screenshot error and isolate connection-settings packaging failure.
 - [x] Repair packaging without editing generated integration files or changing the UI.
 - [x] Run regression checks: two passing tests, 48 desktop/mobile page checks, 30 footer clicks, primary navigation, searches, and selected-plan payment navigation.
-- [ ] Verify signed-in workflows; blocked until the user selects an existing account (account question skipped).
+- [x] Verify signed-in member dashboard, subscription history, plan return, lead quota and Excel downloads with an isolated test account; no paid transaction was simulated.
 - [x] Restore readable homepage plan cards; all three buttons preserve selected plans at three screen sizes.
 - [x] Repair preview connection replacement and asset hydration mismatch; three regression tests and 49 local page checks passed. Hosted preview verification unavailable without an active preview tab; recovered member-navigation warnings remain outside fresh-tab checks.
 - [x] Repair recurring hosted missing-public-settings error: public-only build fallback, refreshed Cloud bindings, six passing regression tests, seventeen public pages loaded without runtime errors; hosted update requires publishing.

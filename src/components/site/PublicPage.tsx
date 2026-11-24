@@ -1,10 +1,23 @@
 import type { ReactNode } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { useSession } from "@/hooks/useAuth";
+import { AUTH_RETURN_KEY, authDestination } from "@/lib/subscription-flow";
 
 import { PlanPromoPopup } from "@/components/site/PlanPromoPopup";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 
 export function PublicPage({ children }: { children: ReactNode }) {
+  const { user, loading } = useSession();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (loading || !user || window.location.pathname === "/auth") return;
+    const requested = window.sessionStorage.getItem(AUTH_RETURN_KEY);
+    if (!requested) return;
+    window.sessionStorage.removeItem(AUTH_RETURN_KEY);
+    void navigate({ ...authDestination(requested), replace: true });
+  }, [loading, user, navigate]);
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <SiteHeader />

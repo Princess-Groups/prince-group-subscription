@@ -1,34 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BadgeCheck, Building2, Check, Lock, Users } from "lucide-react";
-
-const EXECUTIVE_PLANS = [
-  {
-    code: "business",
-    badge: "Business",
-    label: "₹10 Plan",
-    priceLabel: "₹300 / year",
-    amount: 300,
-    featured: false,
-    points: [
-      "25% member discount on eligible services",
-      "Allocated customer leads with duplicate protection",
-      "Shared slot availability with the main membership pool",
-    ],
-  },
-  {
-    code: "premium",
-    badge: "Premium",
-    label: "₹100 Plan",
-    priceLabel: "₹3,000 / year",
-    amount: 3000,
-    featured: true,
-    points: [
-      "Flat 50% discount on eligible services",
-      "Highest lead allocation and priority support",
-      "Limited premium slots — availability shown live",
-    ],
-  },
-] as const;
+import { usePlans } from "@/hooks/usePlatform";
+import { inr } from "@/lib/format";
 
 import { AdminManagedNote, PageHero, PublicPage } from "@/components/site/PublicPage";
 import { PlansSection } from "@/components/site/PlansSection";
@@ -36,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const title = "Bank Executive Portal — Leads for Finance Professionals | PRINCE";
 const description =
-  "A dedicated portal for bank and finance executives with approved accounts, Business or Premium plans and allocated customer leads.";
+  "A dedicated portal for bank and finance executives with approved accounts, three monthly subscription plans and allocated customer leads.";
 
 export const Route = createFileRoute("/bank-executive")({
   head: () => ({
@@ -53,12 +26,13 @@ export const Route = createFileRoute("/bank-executive")({
 });
 
 function BankExecutivePage() {
+  const { data: plans } = usePlans();
   return (
     <PublicPage>
       <PageHero
         eyebrow="Bank Executive Portal"
         title="Built for bank and finance executives"
-        subtitle="Executive accounts use a unique ID and password, require administrator approval, and subscribe on the Business or Premium plan only."
+        subtitle="Executive accounts use a unique ID and password, require administrator approval, and can choose Starter, Business or Premium membership."
       />
 
       <section id="executive-plans" className="scroll-mt-28 bg-gradient-olive py-16 text-cream sm:py-20">
@@ -71,30 +45,30 @@ function BankExecutivePage() {
           </p>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {EXECUTIVE_PLANS.map((p) => (
+            {(plans ?? []).map((p) => (
               <div
                 key={p.code}
                 className={`subscription-plan-text flex h-full flex-col rounded-[1.75rem] border p-7 ${
-                  p.featured ? "border-accent/45 bg-cream/10 shadow-lift" : "glass-dark border-cream/12"
+                  p.highlight ? "border-accent/45 bg-cream/10 shadow-lift" : "glass-dark border-cream/12"
                 }`}
               >
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent">
-                  {p.badge}
+                  {p.name}
                 </p>
-                <p className="mt-2 font-display text-4xl font-bold">{p.label}</p>
-                <p className="mt-1 text-sm font-semibold text-accent">{p.priceLabel}</p>
+                <p className="mt-2 font-display text-4xl font-bold">{inr(p.daily_display)} Plan</p>
+                <p className="mt-1 text-sm font-semibold text-accent">{inr(p.price)} / {p.billing_period === "monthly" ? "month" : p.billing_period}</p>
                 <ul className="mt-6 flex-1 space-y-2.5 text-sm font-medium text-cream">
-                  {p.points.map((point) => (
+                  {p.benefits.slice(0, 3).map((point) => (
                     <li key={point} className="flex gap-2">
                       <Check className="mt-0.5 size-4 shrink-0 text-accent" />
                       <span>{point}</span>
                     </li>
                   ))}
                 </ul>
-                <Button asChild variant={p.featured ? "lime" : "onOlive"} className={`mt-7 w-full ${p.featured ? "" : "border-accent/60 bg-accent/15 font-bold"}`}>
+                <Button asChild variant={p.highlight ? "lime" : "onOlive"} className={`mt-7 w-full ${p.highlight ? "" : "border-accent/60 bg-accent/15 font-bold"}`}>
                   <Link
                     to="/payment"
-                    search={{ plan: p.code, item: `${p.label} — Bank Executive`, amount: p.amount }}
+                    search={{ plan: p.code, item: `${inr(p.daily_display)} Plan — Bank Executive` }}
                   >
                     Pay Now
                   </Link>
@@ -111,7 +85,7 @@ function BankExecutivePage() {
             { icon: Lock, title: "Secure executive login", body: "Role-based access separates executives from customer accounts." },
             { icon: BadgeCheck, title: "Administrator approval", body: "New accounts remain pending until approved by an administrator." },
             { icon: Users, title: "Allocated customer leads", body: "Leads arrive with requirement, status and assignment date." },
-            { icon: Building2, title: "Business & Premium only", body: "The Starter plan is not offered in the executive portal." },
+            { icon: Building2, title: "Three membership plans", body: "Starter, Business and Premium use the same secure subscription payment flow." },
           ].map((c) => (
             <div key={c.title} className="card-lift rounded-3xl border border-primary/10 bg-card p-6 shadow-soft">
               <span className="grid size-11 place-items-center rounded-2xl bg-gradient-olive text-accent">
@@ -140,8 +114,7 @@ function BankExecutivePage() {
 
       <PlansSection
         title="Executive Plans"
-        subtitle="Bank Executives subscribe on the Business or Premium plan. Slot availability is shared with the main membership pool."
-        filter={(code) => code !== "starter"}
+        subtitle="Bank Executives can choose Starter, Business or Premium. Slot availability is shared with the main membership pool."
       />
     </PublicPage>
   );

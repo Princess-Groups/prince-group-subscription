@@ -120,6 +120,34 @@
       "when": 1795238365587,
       "tag": "0016_loan_rotation_indexes_and_reserve",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1795534964595,
+      "tag": "0017_member_catalog_and_current_subscription_access",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1795535039162,
+      "tag": "0018_disambiguate_member_catalog_availability",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1795535209249,
+      "tag": "0019_enforce_current_plan_checkout_and_manual_allocation_limits",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1795535633556,
+      "tag": "0020_atomic_captured_subscription_activation",
+      "breakpoints": true
     }
   ]
 }

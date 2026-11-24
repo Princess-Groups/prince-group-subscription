@@ -86,7 +86,7 @@ async function preparePlanChangePayment(
     .maybeSingle();
   if (planErr) throw new Error(planErr.message);
   if (!targetPlan?.active) {
-    throw new Error(planChangeMessages["plan_not_found"]!);
+    throw new Error(planChangeMessages["plan_not_found"] ?? "Plan not found.");
   }
 
   const { data: roles } = await supabaseAdmin
@@ -97,7 +97,7 @@ async function preparePlanChangePayment(
     (r) => r.role === "bank_executive" || r.role === "premium_bank_executive",
   );
   if (isBank && !targetPlan.bank_executive_eligible) {
-    throw new Error(planChangeMessages["plan_not_available_for_bank_executive"]!);
+    throw new Error(planChangeMessages["plan_not_available_for_bank_executive"] ?? "Plan unavailable.");
   }
 
   if (targetPlan.slot_limit !== null) {
@@ -109,11 +109,11 @@ async function preparePlanChangePayment(
     // This user's own subscription stops occupying a slot once it moves plan.
     const occupied = (count ?? 0) - (subscription.plan_id === targetPlan.id ? 1 : 0);
     if (occupied >= targetPlan.slot_limit) {
-      throw new Error(planChangeMessages["slots_full"]!);
+      throw new Error(planChangeMessages["slots_full"] ?? "Slots full.");
     }
   }
 
-  // Reuse an untouched checkout for this plan, otherwise close the stale ones and
+  // Reuse an unpaid checkout for this plan, otherwise close the stale ones and
   // open a fresh payment so the charged amount always matches the chosen plan.
   const { data: openPayments, error: openErr } = await supabaseAdmin
     .from("payments")
@@ -126,9 +126,7 @@ async function preparePlanChangePayment(
   const reusable = (openPayments ?? []).find(
     (p) =>
       p.subscription_id === subscription.id &&
-      !p.razorpay_order_id &&
-      (p.pending_plan_code ?? null) ===
-        (subscription.plan_id === targetPlan.id ? null : targetPlan.code),
+      (p.pending_plan_code ?? currentPlanCode) === targetPlan.code,
   );
   if (reusable) return reusable as OpenPayment;
 
@@ -214,6 +212,11 @@ export const createRazorpayOrder = createServerFn({ method: "POST" })
         : await findOpenPayment(supabaseAdmin, userId);
 
     if (!payment) throw new Error("No pending payment found for your account.");
+
+    // A retry must keep its stored order and amount, not orphan an in-flight UPI payment.
+    if (payment.razorpay_order_id) {
+      return { keyId, orderId: payment.razorpay_order_id, amount: Math.round(Number(payment.total_amount) * 100), currency: "INR", paymentRowId: payment.id };
+    }
 
     const { data: planRow, error: priceErr } = await supabaseAdmin
       .from("plans")
@@ -303,7 +306,8 @@ export const verifyRazorpayPayment = createServerFn({ method: "POST" })
     if (remote.order_id !== data.razorpay_order_id) {
       throw new Error("Payment could not be verified. Please contact support.");
     }
-    if (remote.status !== "captured" && remote.status !== "authorized") {
+    if (remote.status !== "captured") {
+      if (remote.status !== "failed") return { status: "pending" as const };
       await markPaymentFailed(supabaseAdmin, {
         orderId: data.razorpay_order_id,
         paymentId: data.razorpay_payment_id,
@@ -311,9 +315,9 @@ export const verifyRazorpayPayment = createServerFn({ method: "POST" })
       return { status: "failed" as const };
     }
 
-    await markPaymentSuccessful(supabaseAdmin, {
+    const activation = await markPaymentSuccessful(supabaseAdmin, {
       orderId: data.razorpay_order_id,
       paymentId: data.razorpay_payment_id,
     });
-    return { status: "success" as const };
+    return { status: activation.updated ? "success" as const : "pending" as const };
   });
