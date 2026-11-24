@@ -64,8 +64,8 @@ export function PlanPromoPopup() {
       }`}
       aria-hidden={!open}
     >
-      <div className={`subscription-plan-text glass-dark relative max-h-[calc(100dvh-2rem)] overflow-x-hidden overflow-y-auto rounded-3xl border border-accent/30 p-5 text-cream shadow-lift ${open ? "pointer-events-auto" : "pointer-events-none"}`}>
-        <div className="hero-orb -right-10 -top-10 size-32 bg-accent/25" />
+      <div className={`subscription-plan-text glass-plan-popup relative max-h-[calc(100dvh-2rem)] overflow-x-hidden overflow-y-auto rounded-3xl border border-accent/30 p-5 text-cream shadow-lift ${open ? "pointer-events-auto" : "pointer-events-none"}`}>
+        <div className="hero-orb -right-10 -top-10 size-32 bg-accent/5" />
         <button
           type="button"
           onClick={() => setOpen(false)}
@@ -75,7 +75,7 @@ export function PlanPromoPopup() {
           <X className="size-3.5" />
         </button>
 
-        <span className="relative inline-flex items-center gap-1.5 rounded-full bg-gradient-lime px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
+        <span className="relative inline-flex items-center gap-1.5 rounded-full bg-cream/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-accent">
           <Crown className="size-3" /> Limited Membership
         </span>
 
@@ -111,7 +111,7 @@ export function PlanPromoPopup() {
           ))}
         </ul>
 
-        <Button asChild variant="lime" size="sm" className="relative mt-5 w-full">
+        <Button asChild variant="lime" size="sm" className="relative mt-5 w-full bg-none bg-cream/10 text-accent hover:bg-cream/15">
           <Link to="/payment" search={{ plan: plan.code }} onClick={() => setOpen(false)}>
             View Plan →
           </Link>
@@ -122,7 +122,7 @@ export function PlanPromoPopup() {
             <span
               key={p.id}
               className={`h-1 rounded-full transition-all ${
-                i === index ? "w-5 bg-accent" : "w-1.5 bg-cream/25"
+                i === index ? "w-5 bg-accent" : "w-1.5 bg-cream/60"
               }`}
             />
           ))}
