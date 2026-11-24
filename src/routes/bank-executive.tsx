@@ -83,7 +83,7 @@ function BankExecutivePage() {
                 </p>
                 <p className="mt-2 font-display text-4xl font-bold">{p.label}</p>
                 <p className="mt-1 text-sm font-semibold text-accent">{p.priceLabel}</p>
-                <ul className="mt-6 flex-1 space-y-2.5 text-sm text-cream/95">
+                <ul className="mt-6 flex-1 space-y-2.5 text-sm font-medium text-cream">
                   {p.points.map((point) => (
                     <li key={point} className="flex gap-2">
                       <Check className="mt-0.5 size-4 shrink-0 text-accent" />
@@ -91,7 +91,7 @@ function BankExecutivePage() {
                     </li>
                   ))}
                 </ul>
-                <Button asChild variant={p.featured ? "lime" : "onOlive"} className="mt-7 w-full">
+                <Button asChild variant={p.featured ? "lime" : "onOlive"} className={`mt-7 w-full ${p.featured ? "" : "border-accent/60 bg-accent/15 font-bold"}`}>
                   <Link
                     to="/payment"
                     search={{ plan: p.code, item: `${p.label} — Bank Executive`, amount: p.amount }}

@@ -74,15 +74,15 @@ export function PlansHero() {
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent">
                       {plan.name}
                     </p>
-                    <p className="mt-1 text-xs text-cream/90">{plan.tagline}</p>
+                    <p className="mt-1 text-xs font-medium text-cream">{plan.tagline}</p>
 
                     <p className="mt-6 font-display text-5xl font-bold shimmer-gold">
                       {inr(plan.daily_display)}
                     </p>
-                    <p className="text-xs uppercase tracking-[0.18em] text-cream/95">per day</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cream">per day</p>
 
-                    <p className="mt-4 text-sm text-cream/95">
-                      {inr(plan.price)} <span className="text-cream/95">/ {plan.billing_period}</span>
+                    <p className="mt-4 text-sm font-medium text-cream">
+                      {inr(plan.price)} <span className="text-cream">/ {plan.billing_period}</span>
                     </p>
 
                     <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-[11px] font-semibold">
@@ -90,7 +90,7 @@ export function PlansHero() {
                         {plan.discount_percentage}% service discount
                       </span>
                       {plan.slot_limit != null ? (
-                        <span className="rounded-full border border-cream/15 px-3 py-1 text-cream/90">
+                        <span className="rounded-full border border-cream/15 px-3 py-1 text-cream">
                           {remaining ?? plan.slot_limit} slots left
                         </span>
                       ) : null}
@@ -99,7 +99,7 @@ export function PlansHero() {
                     <Button
                       asChild
                       variant={featured ? "lime" : "onOlive"}
-                      className="mt-7 w-full"
+                      className={cn("mt-7 w-full", !featured && "border-accent/60 bg-accent/15 font-bold")}
                     >
                       <a href="#plans">View Plan Details</a>
                     </Button>

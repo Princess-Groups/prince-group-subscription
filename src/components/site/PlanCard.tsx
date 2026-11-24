@@ -44,22 +44,22 @@ export function PlanCard({
       <p
         className={cn(
           "text-xs font-bold uppercase tracking-[0.2em]",
-          highlight ? "text-accent" : "text-accent/85",
+          highlight ? "text-accent" : "text-accent",
         )}
       >
         {plan.name}
       </p>
-      <p className={cn("mt-1 text-sm", highlight ? "text-cream/95" : "text-cream/90")}>
+      <p className="mt-1 text-sm font-medium text-cream">
         {plan.tagline}
       </p>
 
       <div className="mt-6 flex items-end gap-2">
-        <span className="font-display text-4xl font-bold">{inr(plan.daily_display)}</span>
-        <span className={cn("pb-1.5 text-sm", highlight ? "text-cream/90" : "text-cream/90")}>
+        <span className="font-display text-4xl font-bold text-cream">{inr(plan.daily_display)}</span>
+        <span className="pb-1.5 text-sm font-medium text-cream">
           /day
         </span>
       </div>
-      <p className={cn("text-sm font-semibold", highlight ? "text-accent" : "text-accent/85")}>
+      <p className="text-sm font-semibold text-accent">
         {inr(plan.price)}/{plan.billing_period === "monthly" ? "month" : plan.billing_period}
         {plan.code === "premium" ? ` · ${inr(plan.daily_display * 365)}/year equivalent` : ""}
       </p>
@@ -67,13 +67,13 @@ export function PlanCard({
       <div
         className={cn(
           "mt-5 rounded-2xl px-4 py-3 text-sm font-semibold",
-          highlight ? "bg-cream/12 text-accent" : "bg-cream/8 text-cream",
+          highlight ? "bg-cream/12 text-accent" : "bg-cream/10 text-accent",
         )}
       >
         {plan.code === "premium"
           ? `Flat ${plan.discount_percentage}% Discount on eligible services`
           : `${plan.discount_percentage}% discount on eligible services`}
-        <span className={cn("mt-1 block text-xs font-normal", highlight ? "text-cream/90" : "text-cream/90")}>
+        <span className="mt-1 block text-xs font-normal text-cream">
           {plan.lead_limit} unique loan leads per month
         </span>
       </div>
@@ -81,20 +81,20 @@ export function PlanCard({
       {limited ? (
         <div className="mt-5">
           <div className="flex items-center justify-between text-xs font-semibold">
-            <span className={highlight ? "text-cream/95" : "text-cream/90"}>
+            <span className="text-cream">
               {full ? (plan.code === "premium" ? "Premium Slots Full" : "Limit Reached") : `${remaining} / ${plan.slot_limit} Slots Available`}
             </span>
-            <span className={highlight ? "text-accent" : "text-accent/85"}>{occupied} occupied</span>
+            <span className="text-accent">{occupied} occupied</span>
           </div>
-          <Progress value={((occupied / (plan.slot_limit || 1)) * 100) | 0} className="mt-2 h-2 bg-cream/15" />
+          <Progress value={((occupied / (plan.slot_limit || 1)) * 100) | 0} className="mt-2 h-2 bg-cream/20" />
         </div>
       ) : null}
 
-      <ul className="mt-6 flex-1 space-y-2.5 text-sm">
+      <ul className="mt-6 flex-1 space-y-2.5 text-sm font-medium">
         {plan.benefits.map((b) => (
           <li key={b} className="flex gap-2">
-            <Check className={cn("mt-0.5 size-4 shrink-0", highlight ? "text-accent" : "text-accent/85")} />
-            <span className={highlight ? "text-cream/90" : "text-cream/95"}>{b}</span>
+            <Check className="mt-0.5 size-4 shrink-0 text-accent" />
+            <span className="text-cream">{b}</span>
           </li>
         ))}
       </ul>
@@ -102,31 +102,31 @@ export function PlanCard({
       <div className="mt-7">
         {full ? (
           <div className="space-y-2">
-            <Button disabled variant="outline" className="w-full border-cream/25 text-cream/90">
+            <Button disabled variant="outline" className="w-full border-cream/30 text-cream">
               <Lock className="size-4" />
               {plan.code === "premium" ? "Premium Slots Full" : "Limit Reached"}
             </Button>
-            <Button asChild variant={highlight ? "lime" : "onOlive"} className="w-full">
+            <Button asChild variant={highlight ? "lime" : "onOlive"} className={cn("w-full", !highlight && "border-accent/60 bg-accent/15 font-bold")}>
               <a href={`tel:${supportPhone}`}>Contact Us for Availability</a>
             </Button>
           </div>
         ) : onSubscribe ? (
           <Button
             variant={highlight ? "lime" : "onOlive"}
-            className="w-full"
+            className={cn("w-full", !highlight && "border-accent/60 bg-accent/15 font-bold")}
             disabled={busy}
             onClick={() => onSubscribe(plan.code)}
           >
             {plan.code === "starter" ? "Start for ₹1" : "Subscribe Now"}
           </Button>
         ) : (
-          <Button asChild variant={highlight ? "lime" : "onOlive"} className="w-full">
+          <Button asChild variant={highlight ? "lime" : "onOlive"} className={cn("w-full", !highlight && "border-accent/60 bg-accent/15 font-bold")}>
             <Link to="/payment" search={{ plan: plan.code }}>
               {plan.code === "starter" ? "Start for ₹1" : "Subscribe Now"}
             </Link>
           </Button>
         )}
-        <p className={cn("mt-3 text-center text-[11px]", highlight ? "text-cream/90" : "text-cream/95")}>
+        <p className="mt-3 text-center text-[11px] font-medium text-cream">
           Recurring payment enabled · GST &amp; application fee calculated at checkout
         </p>
       </div>
