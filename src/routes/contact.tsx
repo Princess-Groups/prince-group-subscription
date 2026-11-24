@@ -62,7 +62,7 @@ function ContactPage() {
   const { data: settings } = useSettings();
   const phone = settingString(settings, "support_phone", "9559155535");
   const email = settingString(settings, "support_email", "jp@princegroup.net");
-  const address = settingString(settings, "support_address", "Kanyakumari, Tamil Nadu");
+  const address = settingString(settings, "support_address", "Prince Group, Monday Market, Opposite To bharath Hospital, Anbu Complex, Pincode : 629802");
   const waNumber = `91${phone.replace(/\D/g, "").slice(-10)}`;
 
   const channels = [

@@ -41,7 +41,7 @@ function OfficePage() {
   const address = settingString(
     settings,
     "office_address",
-    "PRINCE Corporate Office, Main Road, Nagercoil, Kanyakumari, Tamil Nadu",
+    "Prince Group, Monday Market, Opposite To bharath Hospital, Anbu Complex, Pincode : 629802",
   );
 
   const cards = [
