@@ -148,6 +148,13 @@
       "when": 1795535633556,
       "tag": "0020_atomic_captured_subscription_activation",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1795600208454,
+      "tag": "0021_remove_prepayment_phone_check",
+      "breakpoints": true
     }
   ]
 }
