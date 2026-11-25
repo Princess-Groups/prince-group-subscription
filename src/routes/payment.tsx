@@ -100,8 +100,9 @@ function PaymentPage() {
 
   useEffect(() => {
     if (!profile) return;
+    const syntheticEmail = (profile.email ?? "").endsWith("@members.princegroup.app");
     setName((v) => v || (profile.name ?? ""));
-    setEmail((v) => v || (profile.email ?? ""));
+    setEmail((v) => v || (syntheticEmail ? "" : (profile.email ?? "")));
     setMobile((v) => v || (profile.phone ?? ""));
     setLocation((v) => v || (profile.location ?? ""));
   }, [profile]);
