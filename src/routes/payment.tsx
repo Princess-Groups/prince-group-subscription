@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { BadgeCheck, Building2, CreditCard, Mail, ShieldCheck } from "lucide-react";
+import { BadgeCheck, Building2, CreditCard, ShieldCheck, UserCheck } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -15,6 +15,8 @@ import { usePlans } from "@/hooks/usePlatform";
 import { inr } from "@/lib/format";
 import { checkoutReturnPath, subscriptionCode } from "@/lib/subscription-flow";
 import { saveProfileDetails } from "@/lib/profile.functions";
+import { loginEmail, registrationSchema } from "@/lib/member-registration";
+import { supabase } from "@/integrations/supabase/client";
 import {
   createRazorpayOrder,
   getRazorpayKeyId,
@@ -83,6 +85,8 @@ function PaymentPage() {
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [paid, setPaid] = useState(false);
 
   useEffect(() => {
@@ -123,21 +127,40 @@ function PaymentPage() {
 
   const payOnline = useMutation({
     mutationFn: async () => {
-      if (!user) throw new Error("Please sign in to pay.");
       if (!plan) throw new Error("Please choose a subscription plan to pay for.");
-      if (!name.trim() || !mobile.trim() || !email.trim() || !location.trim()) {
-        throw new Error("Please fill in your name, mobile number, location and email.");
-      }
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) {
-        throw new Error("Please enter a valid email address.");
+      const details = registrationSchema.safeParse({
+        name, phone: mobile, location, email,
+        username: user ? "member" : username,
+        password: user ? "signed-in" : password,
+      });
+      if (!details.success) throw new Error(details.error.issues[0]?.message ?? "Please check your details.");
+
+      if (!user) {
+        const authEmail = loginEmail(details.data.username);
+        const { data, error } = await supabase.auth.signUp({
+          email: authEmail,
+          password: details.data.password,
+          options: { data: { full_name: details.data.name, phone: details.data.phone, username: details.data.username.toLowerCase() } },
+        });
+        if (error) {
+          throw new Error(
+            error.message.toLowerCase().includes("already registered")
+              ? "This username is taken. Choose another or sign in."
+              : error.message,
+          );
+        }
+        if (!data.session) {
+          const signedIn = await supabase.auth.signInWithPassword({ email: authEmail, password: details.data.password });
+          if (!signedIn.data.session) throw new Error("Registration done, but sign-in failed. Please sign in.");
+        }
       }
 
       await saveDetailsFn({
         data: {
-          name: name.trim(),
-          phone: mobile.trim(),
-          email: email.trim(),
-          location: location.trim(),
+          name: details.data.name,
+          phone: details.data.phone,
+          email: details.data.email ?? "",
+          location: details.data.location ?? "",
         },
       });
 
@@ -152,7 +175,7 @@ function PaymentPage() {
           currency: order.currency,
           name: "PRINCE GROUP",
           description: `${plan.name} Subscription`,
-          prefill: { name: name.trim(), email: email.trim(), contact: mobile.trim() },
+          prefill: { name: name.trim(), contact: mobile.trim(), ...(email.trim() ? { email: email.trim() } : {}) },
           theme: { color: "#3f5b1f" },
           modal: { ondismiss: () => resolve("dismissed") },
           handler: (response: unknown) => {
@@ -199,7 +222,7 @@ function PaymentPage() {
         eyebrow="Secure Payment"
         title="Complete Your Payment"
         highlight="Pay & Activate."
-        subtitle="Sign in with the email address you registered with, choose your plan and pay securely by card, UPI, net banking or wallet through Razorpay."
+        subtitle="Choose your plan, register in seconds and pay securely by card, UPI, net banking or wallet through Razorpay."
       />
 
       <section className="bg-gradient-cream py-16 sm:py-20">
@@ -224,172 +247,112 @@ function PaymentPage() {
             </div>
           ) : (
             <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr]">
-              {/* Left: order summary */}
+              {/* Left: plan choice + summary */}
               <div className="space-y-6">
+                <div className="rounded-3xl border border-primary/10 bg-card p-7 shadow-soft">
+                  <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
+                    <CreditCard className="size-5 text-secondary" /> 1. Choose your plan
+                  </h3>
+                  <div role="group" aria-label="Subscription plans" className="mt-5 grid gap-3">
+                    {(plans ?? []).map((p) => (
+                      <Button
+                        key={p.code}
+                        type="button"
+                        variant={selectedPlan === p.code ? "hero" : "outline"}
+                        aria-pressed={selectedPlan === p.code}
+                        aria-label={`Select ₹${p.daily_display} ${p.name} plan`}
+                        className="h-auto justify-between whitespace-normal rounded-2xl px-5 py-4 text-left"
+                        onClick={() => choosePlan(p.code)}
+                      >
+                        <span className="font-display text-lg font-bold">
+                          {inr(p.daily_display)}/day
+                        </span>
+                        <span className="text-sm font-semibold">= {inr(p.price)}/month</span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="rounded-3xl bg-gradient-olive p-7 text-cream shadow-lift">
                   <p className="text-xs font-bold uppercase tracking-[0.22em] text-accent">
                     You are paying for
                   </p>
                   <h2 className="mt-2 text-2xl font-bold">{itemLabel}</h2>
                   <p className="mt-4 flex items-end gap-2">
-                    <span className="font-display text-5xl font-bold text-accent">
-                      {inr(amount)}
-                    </span>
-                    {plan ? (
-                      <span className="pb-2 text-sm text-cream/90">
-                        /{plan.billing_period === "monthly" ? "month" : plan.billing_period}
-                      </span>
-                    ) : null}
+                    <span className="font-display text-5xl font-bold text-accent">{inr(amount)}</span>
+                    {plan ? <span className="pb-2 text-sm text-cream/90">/month</span> : null}
                   </p>
                   {plan ? (
                     <p className="mt-2 text-sm text-cream/95">
-                      {plan.discount_percentage}% member discount · {plan.lead_limit} lead
-                      allocations
+                      {inr(plan.daily_display)}/day × 30 days · {plan.discount_percentage}% member discount
                     </p>
                   ) : (
-                    <p className="mt-2 text-sm text-cream/95">
-                      Pick a plan on the right to see the exact amount, including GST and any
-                      offers.
-                    </p>
+                    <p className="mt-2 text-sm text-cream/95">Pick a plan above to see the amount.</p>
                   )}
                   <p className="mt-4 flex items-center gap-2 text-xs text-cream/90">
                     <ShieldCheck className="size-4 text-accent" />
-                    Payments run through Razorpay checkout and are activated only after Razorpay
-                    confirms the capture.
+                    Secure Razorpay payment. Your plan activates only after Razorpay confirms it.
                   </p>
-                </div>
-
-                <div className="rounded-3xl border border-primary/10 bg-card p-7 shadow-soft">
-                  <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
-                    <CreditCard className="size-5 text-secondary" /> How payment works
-                  </h3>
-                  <ol className="mt-4 list-decimal space-y-1 pl-5 text-xs leading-relaxed text-foreground/80">
-                    <li>Sign in with the email address you registered with.</li>
-                    <li>Choose your plan and confirm your contact details.</li>
-                    <li>Pay by card, UPI, net banking or wallet in the Razorpay window.</li>
-                    <li>Your plan activates as soon as Razorpay confirms the payment.</li>
-                  </ol>
                 </div>
               </div>
 
-              {/* Right: sign in → plan → Razorpay */}
+              {/* Right: registration details → Pay & Activate */}
               <div className="rounded-3xl border border-primary/10 bg-card p-7 shadow-soft sm:p-8">
                 <h3 className="flex items-center gap-2 text-lg font-semibold text-primary">
-                  <Building2 className="size-5 text-secondary" /> Complete &amp; activate
+                  <Building2 className="size-5 text-secondary" /> 2. {user ? "Your details" : "Register"}
                 </h3>
-
-                <div role="group" aria-label="Subscription plans" className="mt-7 grid grid-cols-3 gap-2">
-                  {(plans ?? []).map((p) => (
-                    <Button
-                      key={p.code}
-                      type="button"
-                      variant={selectedPlan === p.code ? "hero" : "outline"}
-                      aria-pressed={selectedPlan === p.code}
-                      aria-label={`Select ₹${p.daily_display} ${p.name} plan`}
-                      className="h-auto min-h-20 flex-col whitespace-normal rounded-2xl px-2 py-3 text-center"
-                      onClick={() => choosePlan(p.code)}
-                    >
-                      <span className="font-display text-xl font-bold">{inr(p.daily_display)}</span>
-                      <span className="text-xs">{inr(p.price)}/{p.billing_period === "monthly" ? "month" : p.billing_period}</span>
-                      <span className="text-[10px]">{p.lead_limit} leads</span>
-                    </Button>
-                  ))}
-                </div>
-
-                {!user && !sessionLoading ? (
-                  <div className="mt-8 rounded-2xl bg-muted p-6 text-center">
-                    <p className="text-sm text-foreground/80">
-                      Please sign in or create your account to continue.
-                    </p>
-                    <Button asChild variant="hero" className="mt-4">
-                      <Link to="/auth" search={{ redirect: checkoutReturnPath(selectedPlan) }}>Sign in to continue</Link>
-                    </Button>
-                  </div>
-                ) : user ? (
+                {sessionLoading ? null : (
                   <form
-                    className="mt-7 space-y-5"
+                    className="mt-6 space-y-5"
                     onSubmit={(e) => {
                       e.preventDefault();
                       payOnline.mutate();
                     }}
                   >
-                    <div className="flex items-center gap-2 rounded-2xl bg-muted/60 px-4 py-3 text-xs text-foreground/80">
-                      <Mail className="size-4 text-secondary" />
-                      You are signed in as {user.email}. Confirm your details below to continue.
-                    </div>
+                    {user ? (
+                      <div className="flex items-center gap-2 rounded-2xl bg-muted/60 px-4 py-3 text-xs text-foreground/80">
+                        <UserCheck className="size-4 text-secondary" />
+                        You are signed in. Confirm your details to continue.
+                      </div>
+                    ) : (
+                      <p className="text-xs text-foreground/80">
+                        Already registered?{" "}
+                        <Link
+                          to="/auth"
+                          search={{ redirect: checkoutReturnPath(selectedPlan) }}
+                          className="font-semibold text-secondary underline"
+                        >
+                          Sign in
+                        </Link>
+                      </p>
+                    )}
 
                     <div className="grid gap-5 sm:grid-cols-2">
                       <Field label="Name" required>
-                        <Input
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          maxLength={100}
-                          required
-                          placeholder="Your full name"
-                        />
+                        <Input value={name} onChange={(e) => setName(e.target.value)} maxLength={100} required placeholder="Your full name" />
                       </Field>
                       <Field label="Contact Number" required>
-                        <Input
-                          value={mobile}
-                          onChange={(e) => setMobile(e.target.value)}
-                          maxLength={15}
-                          required
-                          inputMode="tel"
-                          placeholder="10-digit mobile number"
-                        />
+                        <Input value={mobile} onChange={(e) => setMobile(e.target.value)} maxLength={15} required inputMode="tel" placeholder="10-digit mobile number" />
                       </Field>
                     </div>
 
-                    <div className="grid gap-5 sm:grid-cols-2">
-                      <Field label="Location" required>
-                        <Input
-                          value={location}
-                          onChange={(e) => setLocation(e.target.value)}
-                          maxLength={120}
-                          required
-                          placeholder="City / District"
-                        />
-                      </Field>
-                      <Field label="Email ID" required>
-                        <Input
-                          type="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          maxLength={255}
-                          required
-                          placeholder="you@example.com"
-                        />
-                      </Field>
-                    </div>
+                    {!user ? (
+                      <div className="grid gap-5 sm:grid-cols-2">
+                        <Field label="Username" required>
+                          <Input value={username} onChange={(e) => setUsername(e.target.value)} maxLength={30} required autoComplete="username" placeholder="Choose a username" />
+                        </Field>
+                        <Field label="Password" required>
+                          <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} maxLength={72} required autoComplete="new-password" placeholder="Min. 6 characters" />
+                        </Field>
+                      </div>
+                    ) : null}
 
                     <div className="grid gap-5 sm:grid-cols-2">
-                      <Field label="Selected Plan / Service" required>
-                        {plans && plans.length > 0 ? (
-                          <select
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                            value={selectedPlan}
-                            onChange={(e) => choosePlan(e.target.value)}
-                          >
-                            <option value="">Select a plan</option>
-                            {plans.map((p) => (
-                              <option key={p.code} value={p.code}>
-                                {inr(p.daily_display)} {p.name} — {inr(p.price)}/
-                                {p.billing_period === "monthly" ? "month" : p.billing_period}
-                              </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <Input value={itemParam ?? ""} readOnly />
-                        )}
+                      <Field label="Location (optional)">
+                        <Input value={location} onChange={(e) => setLocation(e.target.value)} maxLength={120} placeholder="City / District" />
                       </Field>
-                      <Field label="Amount (₹)" required>
-                        <Input
-                          value={plan ? String(plan.price) : ""}
-                          readOnly
-                          inputMode="numeric"
-                          required
-                          placeholder="Select a plan"
-                        />
+                      <Field label="Email ID (optional)">
+                        <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} maxLength={255} placeholder="you@example.com" />
                       </Field>
                     </div>
 
@@ -399,24 +362,18 @@ function PaymentPage() {
                       </p>
                     ) : null}
 
-                    <Button
-                      type="submit"
-                      variant="hero"
-                      size="lg"
-                      className="w-full"
-                      disabled={payOnline.isPending || notConfigured || !plan}
-                    >
+                    <Button type="submit" variant="hero" size="lg" className="w-full" disabled={payOnline.isPending || notConfigured || !plan}>
                       {payOnline.isPending
                         ? "Opening payment…"
                         : plan
-                          ? `Pay Now — ${inr(amount)}`
+                          ? `Pay & Activate — ${inr(amount)}`
                           : "Select a plan to pay"}
                     </Button>
                     <p className="text-center text-[11px] text-foreground/80">
-                      You will be taken to Razorpay to complete the payment securely.
+                      You will complete the payment securely in the Razorpay window.
                     </p>
                   </form>
-                ) : null}
+                )}
               </div>
             </div>
           )}

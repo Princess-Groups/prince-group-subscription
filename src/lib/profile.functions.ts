@@ -7,7 +7,7 @@ import { retainPhoneVerification } from "./phone-verification";
 export const saveProfileDetails = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
-    (input: unknown) => z.object({ name: z.string().trim().min(2).max(100), phone: z.string().trim().regex(/^[0-9+\s-]{10,20}$/), email: z.string().trim().email().max(255), location: z.string().trim().min(1).max(120) }).parse(input),
+    (input: unknown) => z.object({ name: z.string().trim().min(2).max(100), phone: z.string().trim().regex(/^[0-9+\s-]{10,20}$/), email: z.string().trim().email().max(255).optional().or(z.literal("")), location: z.string().trim().max(120).optional().or(z.literal("")) }).parse(input),
   )
   .handler(async ({ data, context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
