@@ -5,8 +5,8 @@ const RAZORPAY_API = "https://api.razorpay.com/v1";
 export type RazorpayConfig = { keyId: string; keySecret: string };
 
 export function getRazorpayConfig(): RazorpayConfig {
-  const keyId = process.env["RAZORPAY_KEY_ID"];
-  const keySecret = process.env["RAZORPAY_KEY_SECRET"];
+  const keyId = (process.env["RAZORPAY_KEY_ID"] || process.env["RAZOPAYKEY_ID"]);
+  const keySecret = (process.env["RAZORPAY_KEY_SECRET"] || process.env["RAZOPAYSECRET"]);
   if (!keyId || !keySecret) {
     throw new Error(
       "Razorpay is not configured yet. Please add the Razorpay Key ID and Key Secret.",

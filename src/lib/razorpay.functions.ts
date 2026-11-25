@@ -5,8 +5,8 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 /** Publishable Razorpay Key ID for Checkout. The secret never leaves the server. */
 export const getRazorpayKeyId = createServerFn({ method: "GET" }).handler(async () => {
-  const keyId = process.env["RAZORPAY_KEY_ID"] ?? "";
-  return { keyId, configured: Boolean(keyId && process.env["RAZORPAY_KEY_SECRET"]) };
+  const keyId = (process.env["RAZORPAY_KEY_ID"] || process.env["RAZOPAYKEY_ID"]) ?? "";
+  return { keyId, configured: Boolean(keyId && (process.env["RAZORPAY_KEY_SECRET"] || process.env["RAZOPAYSECRET"])) };
 });
 
 const createOrderInput = z.object({ planCode: z.string().min(1).max(64) });
