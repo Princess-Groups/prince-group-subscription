@@ -155,6 +155,13 @@
       "when": 1795600208454,
       "tag": "0021_remove_prepayment_phone_check",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1795709357196,
+      "tag": "0022_remove_mobile_verification_requirement",
+      "breakpoints": true
     }
   ]
 }

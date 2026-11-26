@@ -39,7 +39,7 @@ type Snapshot = {
 
 const CLAIM_ERRORS: Record<string, string> = {
   no_active_subscription: "Your subscription isn't active yet — payment must be verified first.",
-  phone_not_verified: "Verify your mobile number before claiming leads.",
+  
   lead_limit_reached: "You've used this month's lead credits.",
   no_leads: "No new leads are available for you right now.",
 };

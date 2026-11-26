@@ -198,7 +198,7 @@ export const createRazorpayOrder = createServerFn({ method: "POST" })
     const started = (startResult ?? {}) as { error?: string; subscription_id?: string };
     if (started.error && started.error !== "subscription_already_exists") {
       const messages: Record<string, string> = {
-        phone_not_verified: "Please verify your mobile number before paying.",
+        
         ...planChangeMessages,
       };
       throw new Error(messages[started.error] ?? "Could not start this subscription.");
